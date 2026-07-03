@@ -18,7 +18,7 @@ LOW_YIELD_CHARS_PER_UNIT = 40  # min avg chars per page/slide/sheet before flagg
 ENCODING_SUSPECT_RATIO = 0.02  # fraction of replacement/control chars before flagging
 
 # --- concurrency ---
-PDF_WORKERS = 8      # ProcessPoolExecutor, CPU-bound (pymupdf4llm)
+PDF_WORKERS = 10     # ProcessPoolExecutor, CPU-bound (fitz text/table/image extraction); machine has 12 cores
 GENERIC_WORKERS = 8  # ThreadPoolExecutor, for docx/xlsx/pptx/xls/image (I/O + C-ext)
 
 # --- known file-signature bytes ---

@@ -43,9 +43,27 @@ def discover_files() -> List[Path]:
     return sorted(p for p in INPUT_ROOT.rglob("*") if p.is_file())
 
 
+def _sanitize_parts(p: Path) -> Path:
+    """Strip trailing spaces/periods from every path component.
+
+    Windows silently drops a trailing space/period from a path component
+    when it's the *last* segment of a path, but not necessarily when the
+    same component is followed by more path — so a source name like
+    "22 Резерв .docm" produces an images/ folder name "22 Резерв " (trailing
+    space intact once with_suffix("") removes the extension) that `mkdir`
+    and a later `write_bytes` can each normalize differently, causing a
+    FileNotFoundError despite the mkdir "succeeding" (confirmed empirically
+    on this exact file during implementation). Applied to every component,
+    not just the last, in case an intermediate folder name has the same
+    issue independent of any extension-stripping.
+    """
+    return Path(*(part.rstrip(" .") or "_" for part in p.parts))
+
+
 def _paths_for(rel: Path):
-    md_path = TEXTS_DIR / rel.with_suffix(".md")
-    img_dir = IMAGES_DIR / rel.with_suffix("")
+    rel = _sanitize_parts(rel)
+    md_path = TEXTS_DIR / _sanitize_parts(rel.with_suffix(".md"))
+    img_dir = IMAGES_DIR / _sanitize_parts(rel.with_suffix(""))
     return md_path, img_dir
 
 
@@ -124,6 +142,22 @@ def _run_pool(executor_cls, worker_fn, files: List[Path], max_workers: int, labe
 
 
 def write_report(entries: List[dict]) -> dict:
+    """Merges into any existing report (keyed by relative file path) instead
+    of overwriting it, so running `--ext` in batches (small formats, then
+    xls/docx, then pdf) accumulates into one complete final report covering
+    the whole corpus rather than only the most recent batch."""
+    if REPORT_PATH.is_file():
+        try:
+            prior = json.loads(REPORT_PATH.read_text(encoding="utf-8")).get("entries", [])
+        except Exception:
+            prior = []
+    else:
+        prior = []
+    merged = {e["file"]: e for e in prior}
+    for e in entries:
+        merged[e["file"]] = e
+    entries = list(merged.values())
+
     by_status = Counter(e["status"] for e in entries)
     by_ext = defaultdict(lambda: Counter())
     flag_counts = Counter()
