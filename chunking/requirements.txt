@@ -1,0 +1,5 @@
+# chunking/ stage dependencies
+# natasha pulls in razdel (segmentation), navec + slovnet (NER/morph models,
+# auto-downloaded on first use), and pymorphy2 (lemmatisation) transitively.
+natasha>=1.6
+pydantic>=2.5
