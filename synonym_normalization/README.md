@@ -1,90 +1,95 @@
-# synonym_normalization/ — Stage 2: The synonym problem
+# synonym_normalization/ — Этап 2: Проблема синонимов
 
-A problem statement + proposed design for handling entity synonymy, written up
-after it surfaced repeatedly during manual NER/RE annotation (see
-`../ner_re_extraction/`). **Not implemented yet** — this is the design that the
-extraction pipeline and graph schema both need to honor once built, per the
-hackathon brief's explicit requirement (CLAUDE.md Core Principle 5: *"RU and EN
-terms for the same concept must resolve to one entity, not two... normalize
-synonyms during extraction, not as a bolt-on later"*).
+Постановка проблемы + предлагаемое решение для обработки синонимии сущностей,
+написанное после того, как проблема неоднократно всплывала во время ручной
+разметки NER/RE (см. `../ner_re_extraction/`). **Ещё не реализовано** — это
+проект, который должны соблюдать и пайплайн извлечения, и схема графа, как
+только они будут построены, согласно явному требованию задания хакатона
+(CLAUDE.md, принцип 5: *"термины на русском и английском для одного и того же
+понятия должны сходиться в одну сущность, а не в две... нормализовать синонимы
+на этапе извлечения, а не добавлять как заплатку позже"*).
 
-## The problem
+## Проблема
 
-Every recurring entity in this corpus has multiple surface forms, and different
-articles/authors pick different ones freely, often in the same sentence:
+У каждой повторяющейся сущности в этом корпусе несколько поверхностных форм, и
+разные статьи/авторы свободно выбирают разные варианты, часто в одном и том же
+предложении:
 
-| Canonical concept | Surface forms actually seen in the corpus |
+| Каноническое понятие | Поверхностные формы, реально встреченные в корпусе |
 |---|---|
 | Печь Ванюкова конвертерная | `ПВК`, `печь Ванюкова конвертерная`, "конвертерная печь Ванюкова" |
 | Печь Ванюкова обеднительная | `ПВО`, `печь Ванюкова обеднительная`, "обеднительная печь Ванюкова" |
 | Цех электролиза никеля №2 | `ЦЭН-2`, "цех электролиза никеля №2" |
-| Атомно-эмиссионная спектрометрия с индуктивно связанной плазмой | `ИСП-АЭС`, `ICP-AES` (RU/EN pair) |
-| Электроэкстракция | `electrowinning` (RU/EN pair — named explicitly in the hackathon brief itself) |
-| Печь взвешенной плавки | `ПВП`, `fluidized bed furnace` (RU abbreviation **and** an EN translation for the same equipment — also named in the brief) |
+| Атомно-эмиссионная спектрометрия с индуктивно связанной плазмой | `ИСП-АЭС`, `ICP-AES` (пара RU/EN) |
+| Электроэкстракция | `electrowinning` (пара RU/EN — прямо названная в самом задании хакатона) |
+| Печь взвешенной плавки | `ПВП`, `fluidized bed furnace` (и русская аббревиатура, и английский перевод для одного и того же оборудования — тоже названы в задании) |
 | Порошок никелевый трубчатых печей | `ПНТП` |
 | Кислородно-воздушная смесь | `КВС` |
 | АО «Кольская ГМК» | "Кольская ГМК", "Кольская гидрометаллургическая компания" |
 | Институт Гипроникель | `ООО «Институт Гипроникель»`, "Гипроникель" |
 
-This is not a handful of special cases — it's the *default* state of technical
-writing in this domain. Any query like "какие технические решения... описаны в
-мировой практике" (a query form the brief requires supporting) will silently miss
-half the relevant literature if `ПВК` and `печь Ванюкова конвертерная` are stored
-as two unrelated nodes.
+Это не горстка особых случаев — это *обычное* состояние технического текста в
+этой предметной области. Любой запрос вида "какие технические решения... описаны
+в мировой практике" (форма запроса, которую задание требует поддерживать)
+молча потеряет половину релевантной литературы, если `ПВК` и
+`печь Ванюкова конвертерная` хранятся как два несвязанных узла.
 
-## Why this has to be handled at extraction time, not after
+## Почему это нужно решать на этапе извлечения, а не после
 
-If the NER step stores whatever surface string it saw as the node's identity, the
-graph ends up with N near-duplicate nodes for one real-world entity, each with a
-*partial* set of the relations/facts that actually belong to the single concept.
-Merging them after the fact requires re-deriving which surface forms co-refer —
-strictly harder than getting it right once during extraction, when the
-abbreviation and its expansion are usually sitting in the same paragraph (often
-literally "ПВК (печь Ванюкова конвертерная)").
+Если шаг NER сохраняет ту строку, которую он увидел, как идентичность узла, граф
+получает N почти-дублирующих узлов на одну реальную сущность, каждый с
+*частичным* набором отношений/фактов, которые на самом деле принадлежат одному
+понятию. Объединение их постфактум требует заново выводить, какие поверхностные
+формы кореферентны — строго сложнее, чем сделать это правильно один раз при
+извлечении, когда аббревиатура и её расшифровка обычно находятся в одном и том же
+абзаце (часто буквально "ПВК (печь Ванюкова конвертерная)").
 
-## Proposed design
+## Предлагаемое решение
 
-1. **One canonical node per concept, with an `aliases` list**, not a separate node
-   per surface form:
+1. **Один канонический узел на понятие, со списком `aliases`**, а не отдельный
+   узел на каждую поверхностную форму:
    ```
    (:Material {name: "никель", aliases: ["Ni", "nickel"]})
    (:Equipment {name: "печь Ванюкова конвертерная", aliases: ["ПВК"]})
    (:Process   {name: "электроэкстракция", aliases: ["electrowinning"]})
    ```
-   This is also exactly the format already used in `../ner_re_extraction/ner_re_examples.md`
-   (`главное название (уточнение)`) — the manual annotation was already choosing a
-   canonical form and parenthesizing the alias, which maps directly onto this schema.
+   Это ровно тот же формат, что уже используется в
+   `../ner_re_extraction/ner_re_examples.md` (`главное название (уточнение)`) —
+   ручная разметка уже выбирала каноническую форму и указывала алиас в скобках,
+   это напрямую ложится на такую схему.
 
-2. **A lexicon/gazetteer built bottom-up from what's already been extracted**,
-   not a fixed dictionary written in advance. Every time extraction sees a pattern
-   like `X (Y)` or `X, также известный как Y` for a recognized entity type, `Y`
-   gets added to `X`'s alias list (or, if `Y` already exists as its own canonical
-   node, the two nodes get merged and the graph keeps a record of the merge).
+2. **Лексикон/газеттир, строящийся снизу вверх из уже извлечённого**, а не
+   фиксированный словарь, написанный заранее. Каждый раз, когда извлечение видит
+   паттерн вроде `X (Y)` или `X, также известный как Y` для распознанного типа
+   сущности, `Y` добавляется в список алиасов `X` (или, если `Y` уже существует
+   как отдельный канонический узел, оба узла объединяются, и граф сохраняет
+   запись об этом объединении).
 
-3. **Two consumers need this alias list for different reasons**, matching the
-   "semantic+lexic index" half of the project paradigm:
-   - **Lexical index** (exact/fuzzy string match, e.g. Elasticsearch) — indexes
-     every alias, not just the canonical name, so a search for `ПВК` and a search
-     for `печь Ванюкова конвертерная` both hit the same node.
-   - **Semantic index** (embedding search) — canonical name + aliases are
-     embedded together (or aliases are used to pull the query into the same
-     embedding neighborhood as the canonical term), so RU/EN paraphrases that
-     don't share a lexical root (`электроэкстракция` / `electrowinning`) still
-     resolve to the same node via meaning rather than string match.
+3. **Список алиасов нужен двум потребителям по разным причинам**, что
+   соответствует половине парадигмы проекта про "semantic+lexic индекс":
+   - **Lexical индекс** (точное/нечёткое совпадение строк, например
+     Elasticsearch) — индексирует каждый алиас, а не только каноническое имя, так
+     что поиск по `ПВК` и поиск по `печь Ванюкова конвертерная` оба попадают в
+     один и тот же узел.
+   - **Semantic индекс** (поиск по эмбеддингам) — каноническое имя + алиасы
+     эмбеддятся вместе (либо алиасы используются, чтобы притянуть запрос в ту же
+     область эмбеддингов, что и канонический термин), так что RU/EN парафразы, не
+     имеющие общего корня (`электроэкстракция` / `electrowinning`), всё равно
+     сходятся в один узел через смысл, а не через совпадение строк.
 
-4. **Bilingual pairs specifically**: since this corpus mixes RU and EN documents,
-   the alias list should carry a `lang` tag per alias (`{"text": "electrowinning",
-   "lang": "en"}`) rather than being a flat list of strings — this is what lets a
-   comparative "отечественная практика" vs "мировая практика" query filter
-   correctly without the language of the surface form leaking into the geography
-   filter (a RU article can cite a foreign `electrowinning` process, and an EN
-   source can describe a domestic one).
+4. **Отдельно про пары RU/EN**: поскольку в этом корпусе смешаны русские и
+   английские документы, список алиасов должен нести тег `lang` на каждый алиас
+   (`{"text": "electrowinning", "lang": "en"}`), а не быть плоским списком строк —
+   именно это позволяет сравнительному запросу "отечественная практика" vs
+   "мировая практика" фильтровать корректно, не давая языку поверхностной формы
+   протечь в фильтр по географии (русская статья может цитировать зарубежный
+   процесс `electrowinning`, а англоязычный источник — описывать отечественный).
 
-## Open question for whoever picks this up next
+## Открытый вопрос для того, кто продолжит эту работу
 
-Whether alias merging should be **fully automatic** (extraction pipeline commits
-merges on its own confidence threshold) or require a **human-in-the-loop
-confirmation** before two nodes are merged — the hackathon brief's "ручная
-корректировка графа экспертами" (manual graph correction by experts) requirement
-suggests the latter should at least be available, with the automatic merge as a
-suggestion rather than a silent action.
+Должно ли объединение алиасов быть **полностью автоматическим** (пайплайн
+извлечения сам фиксирует объединения по своему порогу уверенности) или требовать
+**подтверждения человеком** перед объединением двух узлов — требование задания
+"ручная корректировка графа экспертами" предполагает, что второй вариант должен
+быть доступен как минимум, а автоматическое объединение — работать как
+предложение, а не тихое действие.

@@ -1,61 +1,68 @@
-# elt/ — Stage 1: Download
+# elt/ — Этап 1: Скачивание
 
-Downloads the hackathon's source corpus (a public Yandex.Disk folder, ~170 nested
-category/year folders, several GB) onto local disk, fast and safely re-runnable.
+Скачивает исходный корпус хакатона (публичная папка на Яндекс.Диске, ~170
+вложенных папок категорий/годов, несколько гигабайт) на локальный диск — быстро
+и с возможностью безопасно перезапускать.
 
-## What it does
+## Что делает
 
-- **`yandex_downloader.py` (`ParallelYandexDiskDownloader`)** — walks the remote
-  tree breadth-first, listing sibling folders **concurrently**
-  (`ThreadPoolExecutor`), then downloads files in parallel
-  (`DOWNLOAD_WORKERS` concurrent workers).
-- **Mirrors the remote folder structure locally** — each file lands at the same
-  nested path it has on the Yandex.Disk source, under `input_docs/`. This matters:
-  ~50 filenames on this source repeat across *different* remote folders, so
-  flattening everything into one folder (as a naive downloader would) silently
-  overwrites files. Mirroring the real path is the fix.
-- **Safe to interrupt / re-run** — every download writes to a `.part` sibling file
-  and atomically renames on success, so a killed process leaves an inert `.part`,
-  never a corrupt "real" file. Re-running skips anything already on disk at the
-  size the API reports, so it's cheap to resume.
-- **`reorganize_existing()`** runs automatically at the start of a download: if
-  files were previously pulled down flat (e.g. by an earlier/legacy run), it moves
-  them into their correct nested location by matching size, instead of
-  re-downloading multiple GB that's already local. Truly ambiguous cases (same
-  name *and* same size in two different remote folders) are left alone and logged.
-- **`extract_archives.py`** — some source folders are uploaded as `.rar`/`.zip`
-  archives, including multi-volume RAR sets (`name.part1.rar`, `name.part2.rar`, ...).
-  Each archive is integrity-tested, extracted into a hidden staging folder, and only
-  then swapped in for the archive (which is deleted) once 7-Zip confirms both steps
-  succeeded and at least one file came out. Any failure leaves the original archive
-  untouched. Runs in passes to catch archives-within-archives.
+- **`yandex_downloader.py` (`ParallelYandexDiskDownloader`)** — обходит удалённое
+  дерево в ширину, **параллельно** листингуя соседние папки
+  (`ThreadPoolExecutor`), затем скачивает файлы параллельно (`DOWNLOAD_WORKERS`
+  одновременных воркеров).
+- **Повторяет структуру удалённых папок локально** — каждый файл ложится по тому
+  же вложенному пути, что и на Яндекс.Диске, внутри `input_docs/`. Это важно:
+  ~50 имён файлов в источнике повторяются в *разных* удалённых папках, поэтому
+  наивный downloader, сглаживающий всё в одну папку, молча перезаписывает файлы.
+  Повторение реального пути — это и есть исправление.
+- **Безопасен для прерывания/перезапуска** — каждое скачивание пишется во
+  временный файл-спутник `.part` и атомарно переименовывается при успехе, так что
+  убитый процесс оставляет только неактивный `.part`, а не битый "настоящий" файл.
+  Повторный запуск пропускает всё, что уже лежит на диске с размером, который
+  сообщает API — так что докачка дешёвая.
+- **`reorganize_existing()`** запускается автоматически в начале скачивания: если
+  файлы ранее были скачаны плоско (например, более ранним/легаси запуском), она
+  переносит их в правильное вложенное расположение по совпадению размера, вместо
+  повторного скачивания уже имеющихся на диске гигабайт. По-настоящему
+  неоднозначные случаи (одинаковое имя *и* размер в двух разных удалённых папках)
+  оставляются как есть и логируются.
+- **`extract_archives.py`** — некоторые папки источника загружены как
+  `.rar`/`.zip` архивы, включая многотомные RAR-наборы (`name.part1.rar`,
+  `name.part2.rar`, ...). Каждый архив проверяется на целостность, распаковывается
+  во временную скрытую папку и только затем подменяет собой архив (который
+  удаляется) — и только после того, как 7-Zip подтвердит успех обоих шагов и хотя
+  бы один файл был извлечён. При любой ошибке исходный архив остаётся нетронутым.
+  Работает проходами, чтобы поймать архивы внутри архивов.
 
-## Requirements
+## Требования
 
 - `requests`
-- A **RAR5-capable 7-Zip** (this source's RAR archives are RAR5; an old bundled
-  7-Zip build only reads RAR3/4 and fails without a clear error). `config.py`'s
-  `SEVEN_ZIP_CANDIDATES` prefers `C:\Program Files\7-Zip\7z.exe` (v22.01+) before
-  falling back to `7z` on `PATH`, and raises a clear error if neither qualifies.
+- **7-Zip с поддержкой RAR5** (RAR-архивы в этом источнике — RAR5; старая сборка
+  7-Zip, идущая в комплекте с другими программами, читает только RAR3/4 и падает
+  без внятной ошибки). `SEVEN_ZIP_CANDIDATES` в `config.py` сначала пробует
+  `C:\Program Files\7-Zip\7z.exe` (v22.01+), затем откатывается на `7z` из `PATH`,
+  и выдаёт понятную ошибку, если ни один вариант не подходит.
 
-## How to run
+## Как запустить
 
 ```bash
-python -m elt.download            # discover + download everything, in parallel
-python -m elt.extract_archives    # unpack any .rar/.zip pulled down, in place
+python -m elt.download            # найти + скачать всё, параллельно
+python -m elt.extract_archives    # распаковать все скачанные .rar/.zip на месте
 ```
 
-Both commands are idempotent — safe to re-run after a partial/interrupted run.
+Обе команды идемпотентны — можно безопасно перезапускать после частичного/
+прерванного запуска.
 
-Tunables (worker counts, timeouts, paths) live in `config.py`.
+Настраиваемые параметры (количество воркеров, таймауты, пути) — в `config.py`.
 
-## Output
+## Результат
 
-Files land in `input_docs/` (not included in this repo — the corpus is several GB;
-see the top-level README for why data isn't checked in). Run the commands above
-against a real Yandex.Disk public link to regenerate it locally.
+Файлы оказываются в `input_docs/` (не включена в этот репозиторий — корпус весит
+несколько гигабайт; см. корневой README о том, почему данные не коммитятся).
+Чтобы воспроизвести локально, запустите команды выше на реальную публичную
+ссылку Яндекс.Диска.
 
-## Status
+## Статус
 
-Done and working. This is a clean rewrite of the download stage only — it does not
-parse/convert anything (see `../parsing/` for that).
+Готово и работает. Это чистая переработка только этапа скачивания — она ничего
+не парсит/конвертирует (см. `../parsing/` для этого).

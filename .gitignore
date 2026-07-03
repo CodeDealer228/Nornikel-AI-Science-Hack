@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Project-specific: data, never commit ---
+# elt/download.py and parsing/run.py regenerate these locally; see README.md
+/input_docs/
+/parsed_data/
+/output/
+/scratch_extract/
+*.7z
+*.rar
+

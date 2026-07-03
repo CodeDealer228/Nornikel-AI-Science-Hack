@@ -1,71 +1,76 @@
-# parsing/ — Stage 1.1: Parsing into Markdown
+# parsing/ — Этап 1.1: Парсинг в Markdown
 
-Converts every source document under `input_docs/Источники информации/` into a
-Markdown file (`parsed_data/texts/...md`) with `[IMAGE_NNNN]` placeholders, plus
-the actual extracted image files (`parsed_data/images/...`), and a machine-readable
-`parsed_data/parse_report.json` covering every file that was attempted.
+Конвертирует каждый исходный документ из `input_docs/Источники информации/` в
+Markdown-файл (`parsed_data/texts/...md`) с плейсхолдерами `[IMAGE_NNNN]`, плюс
+реально извлечённые файлы изображений (`parsed_data/images/...`), и
+машиночитаемый `parsed_data/parse_report.json`, покрывающий каждый
+обработанный файл.
 
-## What it does
+## Что делает
 
-One deterministic parser per format — no OCR, no ML, same library every time so
-output is reproducible:
+По одному детерминированному парсеру на формат — никакого OCR, никакого ML,
+одна и та же библиотека каждый раз, чтобы результат был воспроизводим:
 
-| Format | Library | Notes |
+| Формат | Библиотека | Примечания |
 |---|---|---|
-| `.docx` | `python-docx` | paragraphs, headings (by style), tables, inline images |
-| `.docm` | `python-docx` | same OOXML container as `.docx`; macro part is simply ignored |
-| `.doc` (legacy binary) | MS Word via COM automation | no pure-Python library reads old binary `.doc` reliably; converts to `.docx` via a real Word instance, then reuses the `.docx` parser |
+| `.docx` | `python-docx` | абзацы, заголовки (по стилю), таблицы, встроенные изображения |
+| `.docm` | `python-docx` | тот же OOXML-контейнер, что и `.docx`; часть с макросами просто игнорируется |
+| `.doc` (легаси бинарный) | MS Word через COM | ни одна чисто-питоновская библиотека не читает старый бинарный `.doc` надёжно; конвертирует в `.docx` через реальный экземпляр Word, затем переиспользует парсер `.docx` |
 | `.pptx` | `python-pptx` | |
 | `.xlsx` | `openpyxl` | |
-| `.xls` (legacy binary) | `xlrd` | |
-| `.pdf` | `pymupdf4llm` | **extracts real embedded images**, not just placeholders — a real improvement over the old `a.py` pipeline, which only emitted PDF image placeholders without pulling the bytes out |
-| `.gif` / stray images | passthrough | some source files are images mislabeled with a document extension (see signature gate below) |
+| `.xls` (легаси бинарный) | `xlrd` | |
+| `.pdf` | `pymupdf4llm` | **извлекает реальные встроенные изображения**, а не только плейсхолдеры — реальное улучшение по сравнению со старым пайплайном `a.py`, который только расставлял плейсхолдеры для изображений PDF, не вытаскивая сами байты |
+| `.gif` / случайные изображения | passthrough | некоторые исходные файлы — это изображения, ошибочно названные с расширением документа (см. проверку сигнатуры ниже) |
 
-**Signature gate (`signatures.py`)** — before any parser touches a file, its first
-bytes are checked against what the extension implies. Found empirically necessary:
-one file in this corpus (`MBR_Cu-forecast_23feb10.xls`) is a BMP image mislabeled
-`.xls`. A full corpus scan found no other mismatches, but the check stays on for
-every file since a silent mis-dispatch is exactly the kind of error that's easy to
-miss without it.
+**Проверка сигнатуры (`signatures.py`)** — прежде чем какой-либо парсер коснётся
+файла, его первые байты сверяются с тем, что подразумевает расширение. Эмпирически
+оказалось необходимым: один файл в этом корпусе (`MBR_Cu-forecast_23feb10.xls`) —
+это BMP-изображение, ошибочно названное `.xls`. Полное сканирование корпуса не
+нашло других несовпадений, но проверка остаётся включённой для каждого файла,
+поскольку тихий неверный диспатч (не тот парсер на не те байты) — это именно тот
+класс ошибки, который легко пропустить без неё.
 
-**Concurrency (`orchestrator.py`)**, split by cost profile:
-- `.pdf` → `ProcessPoolExecutor` (CPU-bound, and the long pole — ~1400 files)
-- `.docx`/`.pptx`/`.xlsx`/`.xls`/`.gif` → `ThreadPoolExecutor` (I/O-ish)
-- `.doc` + `.docm` → **serial**, sharing one Word COM instance (COM automation
-  under concurrency is fragile; serial is fast enough at this volume — only ~21 files)
+**Конкурентность (`orchestrator.py`)**, разделённая по профилю затрат:
+- `.pdf` → `ProcessPoolExecutor` (CPU-bound, и самая долгая часть — ~1400 файлов)
+- `.docx`/`.pptx`/`.xlsx`/`.xls`/`.gif` → `ThreadPoolExecutor` (скорее I/O)
+- `.doc` + `.docm` → **последовательно**, с общим экземпляром Word COM (COM
+  automation под конкурентностью хрупок; последовательная обработка достаточно
+  быстра при таком объёме — всего ~21 файл)
 
-**Validation (`validate.py`)** runs on every successfully parsed document (not a
-sample) and appends non-fatal flags to its report entry rather than raising —
-consistent with the project's "fail loud per item, keep the batch going" rule:
-- `LOW_YIELD` — suspiciously little text per page/slide/sheet (likely a
-  no-text-layer scan)
-- `IMAGE_MISMATCH` — placeholders with no file on disk, or vice versa
-- `ENCODING_SUSPECT` — too many replacement/control characters
-- `XLS_IMAGES_SKIPPED` — legacy `.xls` image extraction is a known gap
+**Валидация (`validate.py`)** запускается для каждого успешно распарсенного
+документа (не выборочно) и добавляет неблокирующие флаги в его запись отчёта,
+а не бросает исключение — это согласуется с принципом проекта "громко падать на
+каждом элементе, но продолжать батч":
+- `LOW_YIELD` — подозрительно мало текста на страницу/слайд/лист (вероятно,
+  скан без текстового слоя)
+- `IMAGE_MISMATCH` — плейсхолдеры без файла на диске, или наоборот
+- `ENCODING_SUSPECT` — слишком много символов замены/управляющих символов
+- `XLS_IMAGES_SKIPPED` — извлечение изображений из легаси `.xls` — известный пробел
 
-## How to run
+## Как запустить
 
 ```bash
-python -m parsing.run                              # everything
-python -m parsing.run --ext .pptx .xlsx .docm .doc .gif   # restrict to these extensions
+python -m parsing.run                              # всё
+python -m parsing.run --ext .pptx .xlsx .docm .doc .gif   # только эти расширения
 ```
 
-## Output
+## Результат
 
-`parsed_data/texts/`, `parsed_data/images/`, `parsed_data/parse_report.json` — **not
-included in this repo** (213 MB with images; see the top-level README for why data
-isn't checked in). Run against a populated `input_docs/` (see `../elt/`) to regenerate.
+`parsed_data/texts/`, `parsed_data/images/`, `parsed_data/parse_report.json` —
+**не включены в этот репозиторий** (213 МБ с изображениями; см. корневой README о
+том, почему данные не коммитятся). Чтобы воспроизвести, запустите на заполненный
+`input_docs/` (см. `../elt/`).
 
-## Status: not finished
+## Статус: не закончено
 
-Only a partial batch has been run so far — `.doc`/`.docm`/`.xlsx`/`.pptx`/`.gif`
-(34 files). **The ~1400 PDFs (the long pole of the corpus) have not been run yet.**
-The pipeline itself is complete and working for every format it claims to support;
-what's missing is simply the full corpus run, which takes real wall-clock time.
+Пока прогнан только частичный батч — `.doc`/`.docm`/`.xlsx`/`.pptx`/`.gif`
+(34 файла). **~1400 PDF (самая долгая часть корпуса) ещё не обработаны.**
+Сам пайплайн полностью готов и работает для каждого формата, который заявлен;
+не хватает только полного прогона по корпусу, а это требует реального времени.
 
-## Artifact: `extensions.md`
+## Артефакт: `extensions.md`
 
-A full manifest of every source file in the corpus, grouped by extension
-(2021 lines). Generated by walking `input_docs/`. Useful for scoping parser
-coverage and estimating remaining work (e.g. exactly which extensions/how many
-files are left to run through the PDF pool).
+Полный перечень всех исходных файлов корпуса, сгруппированных по расширению
+(2021 строка). Сгенерирован обходом `input_docs/`. Полезен для оценки покрытия
+парсерами и объёма оставшейся работы (например, какие именно расширения/сколько
+файлов осталось прогнать через пул PDF).

@@ -1,61 +1,63 @@
-# ner_re_extraction/ — Stage 2: Manual NER+RE calibration
+# ner_re_extraction/ — Этап 2: Ручная калибровка NER+RE
 
-A hand-built, high-quality Named Entity Recognition + Relation Extraction pass
-over 7 real articles from the corpus, done by careful multi-step reading rather
-than a single LLM call. It's slower than one LLM pass would be, but it gives a
-**verified, ontology-correct ground truth** — both to sanity-check the eventual
-automated pipeline against, and to serve directly as the few-shot seed bank for
-that pipeline (see `../llm_pipeline_fewshot/`).
+Вручную выполненный, качественный проход NER (распознавание именованных
+сущностей) + RE (извлечение отношений) по 7 реальным статьям из корпуса,
+сделанный внимательным многошаговым чтением, а не одним вызовом LLM. Это
+медленнее, чем один проход LLM, но даёт **проверенную, корректную по онтологии
+эталонную разметку** — и для сверки будущего автоматического пайплайна, и как
+готовый банк примеров для few-shot этого пайплайна (см.
+`../llm_pipeline_fewshot/`).
 
-## Ontology used (from the hackathon brief)
+## Используемая онтология (из задания хакатона)
 
-- **Entities**: `Material, Process, Equipment, Property, Experiment, Publication, Expert, Facility`
-- **Relations**: `uses_material, operates_at_condition, produces_output, described_in, validated_by, contradicts`
+- **Сущности**: `Material, Process, Equipment, Property, Experiment, Publication, Expert, Facility`
+- **Отношения**: `uses_material, operates_at_condition, produces_output, described_in, validated_by, contradicts`
 
-## Contents
+## Содержимое
 
-- **`ner_re_examples.md`** — the annotation itself. 7 articles, each with:
-  - every entity type populated with **concrete named entities** (not entity
-    categories) pulled straight from the article text, formatted
-    `главное название (уточнение/аббревиатура/формула)` — e.g.
+- **`ner_re_examples.md`** — сама разметка. 7 статей, в каждой:
+  - каждый тип сущности заполнен **конкретными именованными сущностями** (а не
+    категориями сущностей), взятыми прямо из текста статьи, в формате
+    `главное название (уточнение/аббревиатура/формула)` — например,
     `печь Ванюкова конвертерная (ПВК)`, `анионит Lewatit А365 (акрилатная матрица)`
-  - a `### Отношения (triples)` block per article: concrete
-    `entity —relation_type→ entity` triples, each traceable back to its source
-    document
-  - a closing "Наблюдения" section with cross-cutting findings (see below)
-- **`source_texts/`** — the raw plain text extracted from each of the 7 source
-  `.docx` files (via `python-docx`), so the annotation can be checked against the
-  actual article text without needing the full (multi-GB) `input_docs/` corpus.
+  - блок `### Отношения (triples)` на статью: конкретные триплеты
+    `сущность —тип_отношения→ сущность`, каждый привязан к своему исходному документу
+  - завершающий раздел "Наблюдения" со сквозными выводами (см. ниже)
+- **`source_texts/`** — сырой текст, извлечённый из каждого из 7 исходных
+  `.docx`-файлов (через `python-docx`), чтобы разметку можно было сверить с
+  реальным текстом статьи, не имея под рукой полный (многогигабайтный) корпус
+  `input_docs/`.
 
-## Articles covered
+## Охваченные статьи
 
 1. Технология непрерывного конвертирования медного никельсодержащего сырья
 2. Сорбционная очистка хлоридно-сульфатных никелевых растворов от примеси свинца
 3. Результаты исследований в области перспективного производства никеля высокопремиальных марок
 4. Определение меди и никеля в медно-никелевом файнштейне (способ ограничивающих стандартов)
 5–6. Влияние различных факторов на окисление железа в высококонцентрированных хлоридных никелевых растворах, части 1 и 2
-7. Влияние отставания вентиляционного трубопровода на эффективность проветривания тупиковой горной выработки (mine ventilation — deliberately a **different** technological domain from the other 6, to stress-test the ontology's extensibility claim)
+7. Влияние отставания вентиляционного трубопровода на эффективность проветривания тупиковой горной выработки (горная вентиляция — намеренно **другой** технологический домен по сравнению с остальными 6, чтобы проверить утверждение о расширяемости онтологии)
 
-## Key findings (see `ner_re_examples.md`'s "Наблюдения" section for full detail)
+## Ключевые находки (полный текст — в разделе "Наблюдения" файла `ner_re_examples.md`)
 
-- **Synonym/bilingual pressure is real and immediate** — abbreviation ↔ full-name
-  pairs (`ПВК` ↔ `печь Ванюкова конвертерная`, `ЦЭН-2` ↔ `цех электролиза никеля №2`,
-  `ИСП-АЭС` ↔ `ICP-AES`) show up in nearly every article. This is explored further
-  in `../synonym_normalization/`.
-- **Numeric ranges + units are everywhere** (г/дм³, мг/л, °C, Вт/м³, кДж/моль, А/м²)
-  — confirms the brief's "extraction errors here are unacceptable" requirement has
-  to be a first-class extraction concern, not a post-process.
-- **`contradicts` is not a rare edge case.** One article (doc 5) has two numeric
-  values for the *same* quantity (activation energy) that directly contradict each
-  other until a methodological correction is applied — a clean real-world test case
-  for the ontology's `contradicts` relation, and a reminder that resolving a
-  contradiction means adding context, not deleting one of the facts.
-  Multi-part articles (docs 5+6, parts 1 and 2 of the same study) instead need a
-  **non**-`contradicts` link, or the graph will wrongly split one continuous
-  experiment into two disconnected ones.
-- **Cross-domain extensibility holds**: the mine-ventilation article (doc 7) uses
-  the exact same 8 entity types / 6 relation types as the metallurgy articles —
-  only the vocabulary changes, not the schema.
-- **Expert↔Facility affiliation** surfaces as an implicit relation the base 6
-  relation types don't cover (an author's institutional affiliation), worth a
-  decision call before graph load.
+- **Проблема синонимов/билингвизма реальна и проявляется немедленно** — пары
+  "аббревиатура ↔ полное название" (`ПВК` ↔ `печь Ванюкова конвертерная`, `ЦЭН-2` ↔
+  `цех электролиза никеля №2`, `ИСП-АЭС` ↔ `ICP-AES`) встречаются почти в каждой
+  статье. Подробнее разобрано в `../synonym_normalization/`.
+- **Числовые диапазоны и единицы измерения — повсюду** (г/дм³, мг/л, °C, Вт/м³,
+  кДж/моль, А/м²) — подтверждает, что требование задания "ошибки в извлечении
+  недопустимы" должно быть первоочередной заботой на этапе извлечения, а не
+  постобработкой.
+- **`contradicts` — не редкий крайний случай.** В одной статье (документ 5) два
+  числовых значения одной и той же величины (энергия активации) прямо
+  противоречат друг другу до применения методологической поправки — чистый
+  реальный тест-кейс для отношения `contradicts` в онтологии, и напоминание, что
+  разрешение противоречия означает добавление контекста, а не удаление одного из
+  фактов. Многочастные статьи (документы 5+6, части 1 и 2 одного исследования)
+  наоборот нуждаются в связи, **отличной** от `contradicts` — иначе граф ошибочно
+  разобьёт один непрерывный эксперимент на два несвязанных.
+- **Расширяемость на смежные домены подтверждена**: статья про горную вентиляцию
+  (документ 7) использует ровно те же 8 типов сущностей / 6 типов отношений, что
+  и статьи по металлургии — меняется только словарь, а не схема.
+- **Принадлежность эксперта организации (Expert↔Facility)** всплывает как
+  неявное отношение, которое базовые 6 типов отношений не покрывают
+  (институциональная аффилиация автора) — стоит решить этот вопрос до загрузки в граф.

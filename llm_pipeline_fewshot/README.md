@@ -1,28 +1,55 @@
-# llm_pipeline_fewshot/ — Stage 2: Automated NER+RE pipeline design
+# llm_pipeline_fewshot/ — Этап 2: Проект автоматического пайплайна NER+RE
 
-Design for the automated LLM-based NER+RE pipeline that will eventually replace/
-scale up the manual work in `../ner_re_extraction/`. **Not implemented — blocked on
-API token access.** This folder is the plan + prompt design + few-shot bank to run
-the moment tokens are available, so no time is lost re-deriving it then.
+Проект автоматического LLM-пайплайна NER+RE, который со временем заменит/
+масштабирует ручную работу из `../ner_re_extraction/`. **Не реализовано — работа
+заблокирована отсутствием доступа к API.** Эта папка — план + проект промпта +
+банк few-shot примеров, чтобы запустить всё в момент появления токенов, не
+теряя время на повторное продумывание.
 
-## Why a manual pass came first
+## Почему сначала был сделан ручной проход
 
-`../ner_re_extraction/` exists specifically so this pipeline has a **verified,
-ontology-correct few-shot bank** to draw on, instead of hand-written toy examples.
-Every few-shot example below is a real triple pulled from a real article, already
-checked against the source text.
+`../ner_re_extraction/` существует именно для того, чтобы у этого пайплайна был
+**проверенный, корректный по онтологии банк few-shot примеров**, вместо
+придуманных вручную игрушечных примеров. Каждый пример few-shot ниже — это
+реальный триплет, взятый из реальной статьи и уже сверенный с исходным текстом.
 
-## Requirements this pipeline must meet
+## Готовый промпт: `ner_re_extraction_prompt.md`
 
-1. **Chunking.** Parsed documents (`parsed_data/texts/*.md`, output of `../parsing/`)
-   run from a couple pages to tens of pages. An LLM call needs a bounded window, so
-   documents get split into overlapping chunks (overlap so an entity/relation whose
-   two ends land on opposite sides of a chunk boundary isn't lost). Chunk boundaries
-   should prefer paragraph/heading breaks over hard character cuts — the parser
-   already emits headings and paragraph-level blocks, so splitting can respect that
-   structure instead of cutting mid-sentence.
-2. **Structured output.** The model must return JSON matching the ontology
-   directly loadable into the graph — not prose to be re-parsed. Roughly:
+Полностью готовый к использованию system+user промпт для одного вызова LLM на
+один чанк (не на весь документ — качество извлечения падает на длинных
+контекстах, а спаны/вложенность сущностей теряются). Включает:
+- контракт выходных данных (строгий JSON: `entities[]` с `local_id`, `type`,
+  `canonical_name`, `mentions[]` для синонимов, `attributes`; `relations[]` с
+  `subject`/`predicate`/`object`);
+- определение и разобранный пример для каждого из 8 типов сущностей и 8 типов
+  связи (6 базовых из задания + расширения `affiliated_with`/`authored_by`);
+- 10 реальных few-shot примеров "текст → JSON", включая два случая `contradicts`
+  внутри одного чанка;
+- явный список того, чего этот промпт **не решает** (межчанковая синонимия,
+  межчанковые `contradicts`, валидация чисел, проверка на галлюцинации) и что
+  для каждого из этих пунктов нужно как отдельный шаг постобработки/entity
+  resolution при загрузке в граф;
+- чек-лист постобработки каждого ответа LLM (парсинг JSON, проверка что каждый
+  `mentions` — точная подстрока входного чанка, проверка ссылок
+  `subject`/`object` внутри чанка, whitelist единиц измерения, `MERGE` в Neo4j
+  по `(type, canonical_name)` со слиянием `mentions` в `aliases` узла).
+
+Раздел "Скелет промпта" ниже — краткая версия для быстрой ориентации; для
+реального запуска используйте `ner_re_extraction_prompt.md` целиком.
+
+## Требования, которым должен соответствовать пайплайн
+
+1. **Чанкинг.** Распарсенные документы (`parsed_data/texts/*.md`, результат
+   `../parsing/`) занимают от пары страниц до десятков страниц. Вызову LLM нужно
+   ограниченное окно, поэтому документы разбиваются на перекрывающиеся чанки
+   (перекрытие — чтобы сущность/отношение, оба конца которого попали по разные
+   стороны границы чанка, не потерялись). Границы чанков должны предпочитать
+   разрывы по абзацам/заголовкам, а не жёсткую нарезку по символам — парсер уже
+   выдаёт заголовки и блоки на уровне абзацев, так что разбиение может уважать эту
+   структуру, а не резать посреди предложения.
+2. **Структурированный вывод.** Модель должна возвращать JSON, соответствующий
+   онтологии, который можно сразу загрузить в граф — а не прозу, которую потом
+   надо парсить заново. Примерно так:
    ```json
    {
      "entities": [
@@ -33,56 +60,58 @@ checked against the source text.
      ]
    }
    ```
-   `span` (character offsets into the chunk) is what preserves traceability back to
-   the source document — required by CLAUDE.md Core Principle 1 ("every extracted
-   entity/relation/fact must carry a pointer back to its source").
-3. **Async + worker pool.** With ~2000 documents once the full corpus is parsed,
-   calls have to run concurrently, not one at a time. This mirrors the concurrency
-   pattern `../parsing/orchestrator.py` already uses (worker pool per cost profile,
-   one report entry per unit of work, a failure on one document never aborts the
-   batch) — the same "fail loud per item, keep the batch going" convention should
-   carry over here: one bad chunk/LLM error becomes a logged failure entry, not a
-   crashed run.
-4. **Per-chunk provenance carried through.** Every LLM call's input should include
-   the source document name + chunk offset, and the output should be joined back to
-   that metadata *before* being merged into the graph — this is what lets
-   `described_in`/`validated_by` point at an actual document+location rather than
-   just "some article".
+   `span` (смещения символов внутри чанка) — это то, что сохраняет
+   прослеживаемость до исходного документа — требование принципа 1 из
+   CLAUDE.md ("каждая извлечённая сущность/отношение/факт должны нести указатель
+   на свой источник").
+3. **Асинхронность + пул воркеров.** При ~2000 документах после полного парсинга
+   корпуса вызовы должны идти параллельно, а не по одному. Это повторяет паттерн
+   конкурентности, уже используемый в `../parsing/orchestrator.py` (пул воркеров
+   по профилю затрат, одна запись отчёта на единицу работы, ошибка на одном
+   документе никогда не прерывает батч) — то же правило "громко падать на каждом
+   элементе, но продолжать батч" должно перейти и сюда: один плохой чанк/ошибка
+   LLM становится записью об ошибке в логе, а не падением всего прогона.
+4. **Провенанс на уровне чанка сохраняется до конца.** Каждый вызов LLM должен
+   нести на входе имя исходного документа + смещение чанка, а результат должен
+   быть связан с этими метаданными *до* слияния в граф — именно это позволяет
+   `described_in`/`validated_by` указывать на реальный документ+расположение, а
+   не просто на "какую-то статью".
 
-## Prompt skeleton
+## Скелет промпта
 
 ```
 SYSTEM:
-  You are extracting entities and relations from R&D documents in the mining/
-  metallurgy domain for a knowledge graph. Use exactly these entity types:
+  Ты извлекаешь сущности и отношения из R&D-документов горно-металлургической
+  отрасли для графа знаний. Используй ровно эти типы сущностей:
   Material, Process, Equipment, Property, Experiment, Publication, Expert, Facility.
-  Use exactly these relation types: uses_material, operates_at_condition,
+  Используй ровно эти типы отношений: uses_material, operates_at_condition,
   produces_output, described_in, validated_by, contradicts.
-  Rules:
-  - Extract concrete named entities, not category names (e.g. "печь Ванюкова
-    конвертерная (ПВК)", not "оборудование").
-  - Preserve numeric values with their units exactly as written — never round,
-    approximate, or drop units.
-  - When an entity has an abbreviation or a RU/EN synonym pair, record it as an
-    alias of one canonical entity, not two separate entities.
-  - Return valid JSON matching the provided schema. No prose.
+  Правила:
+  - Извлекай конкретные именованные сущности, а не названия категорий (например,
+    "печь Ванюкова конвертерная (ПВК)", а не "оборудование").
+  - Сохраняй числовые значения с единицами измерения ровно как написано — никогда
+    не округляй, не приближай и не отбрасывай единицы.
+  - Когда у сущности есть аббревиатура или пара синонимов RU/EN, записывай её как
+    алиас одной канонической сущности, а не как две отдельные сущности.
+  - Возвращай валидный JSON по предоставленной схеме. Без прозы.
 
-  [few-shot examples: 2-3 full entity+relation blocks pulled verbatim from
-   ../ner_re_extraction/ner_re_examples.md, chosen to cover different entity/
-   relation types and at least one `contradicts` case]
+  [few-shot примеры: 2-3 полных блока сущностей+отношений, взятых дословно из
+   ../ner_re_extraction/ner_re_examples.md, выбранных так, чтобы покрыть разные
+   типы сущностей/отношений и как минимум один случай `contradicts`]
 
 USER:
-  Document: {source_filename}
-  Chunk offset: {start}-{end}
+  Документ: {source_filename}
+  Смещение чанка: {start}-{end}
   ---
   {chunk_text}
 ```
 
-## Status
+## Статус
 
-Design only. Once API tokens are available: implement `run.py` (async, worker
-pool matching `../parsing/orchestrator.py`'s pattern), wire the few-shot block to
-pull directly from `../ner_re_extraction/ner_re_examples.md` rather than being
-copy-pasted (so future manual annotations automatically improve the few-shot bank),
-and validate a sample of LLM output against the manual annotations as a quality
-check before running the full corpus.
+Только проектирование. Как только появятся API-токены: реализовать `run.py`
+(асинхронно, пул воркеров по паттерну `../parsing/orchestrator.py`), подключить
+блок few-shot так, чтобы он брался прямо из
+`../ner_re_extraction/ner_re_examples.md`, а не копипастился (тогда будущие
+ручные разметки автоматически улучшают банк few-shot), и провалидировать выборку
+результатов LLM против ручной разметки как проверку качества перед прогоном по
+всему корпусу.
