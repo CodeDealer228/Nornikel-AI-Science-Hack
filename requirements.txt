@@ -1,0 +1,9 @@
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.5
+pydantic-settings>=2.1
+neo4j>=5.15
+python-dotenv>=1.0
+requests>=2.31
+natasha>=1.6
+setuptools>=70,<81

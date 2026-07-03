@@ -80,6 +80,9 @@ class EntityType(StrEnum):
     FACILITY = "Facility"
     ORGANIZATION = "Organization"
     EXPERT = "Expert"
+    GEOGRAPHY = "Geography"
+    YEAR = "Year"
+    NUMERIC_VALUE = "NumericValue"
 
 
 class RelationType(StrEnum):
@@ -111,6 +114,9 @@ class RelationType(StrEnum):
     AFFILIATED_WITH = "affiliated_with"
     USED_IN_FACILITY = "used_in_facility"
     CONTRADICTS = "contradicts"
+    HAS_GEOGRAPHY = "has_geography"
+    PUBLISHED_IN_YEAR = "published_in_year"
+    HAS_NUMERIC_VALUE = "has_numeric_value"
 
 
 class BaseStrictModel(BaseModel):

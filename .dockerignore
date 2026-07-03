@@ -1,0 +1,63 @@
+# Docker build context exclusions.
+# Keep images small and build context fast.
+
+# Git / VCS
+.git/
+.gitignore
+.gitattributes
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.cache
+*.egg-info/
+*.egg
+build/
+dist/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Local data / secrets
+.env
+*.log
+parsed_chunks/
+input_docs/
+parsed_data/
+Доклады/
+Статьи/
+*.md
+!llm_pipeline_fewshot/ner_re_extraction_prompt.md
+!README.md
+!hackathon_task.md
+
+# Test artifacts
+tests/__pycache__/
+**/__pycache__/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (kept in repo but not needed in image)
+docs/_build/
