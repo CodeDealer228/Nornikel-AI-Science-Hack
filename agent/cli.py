@@ -23,10 +23,30 @@ import json
 import logging
 import os
 import sys
+from pathlib import Path
 from typing import Any, Sequence
 
+# Windows console defaults to cp1251; force UTF-8 so Cyrillic queries and the
+# arrows in the help text don't crash with UnicodeEncodeError.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+# Load .env (YANDEX_GPT_API_KEY / NEO4J_* etc.) before any client reads
+# os.environ. No-op if python-dotenv is missing or no .env exists; inline env
+# vars win.
+try:  # pragma: no cover - environment-specific
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env", override=False)
+except Exception:  # pragma: no cover - dotenv absent
+    pass
+
 from graph_reasoning.neo4j_subgraph import Neo4jSubgraphExtractor
-from llm_pipeline_fewshot.llm_parser import YandexGPTClient
+from llm_pipeline_fewshot.llm_parser import (
+    MockLLMClient,
+    create_llm_client,
+)
 from neo4j_integration.neo4j_config import Neo4jConfig
 from neo4j_integration.neo4j_loader import Neo4jLoader
 from routing import build_query_router
@@ -62,8 +82,15 @@ def _build_dispatcher(
         synth = synthesizer
     elif not no_synthesis:
         try:
-            client = YandexGPTClient()
-            synth = AnswerSynthesizer(client=client)
+            # Honor LLM_CLIENT_MODE (so synthesis can use DeepSeek-on-Yandex
+            # via `LLM_CLIENT_MODE=deepseek`), but skip MockLLMClient — it
+            # emits a NER/RE JSON fixture, not a user-facing answer, so for
+            # synthesis we fall back to context-only render instead.
+            client = create_llm_client()
+            if isinstance(client, MockLLMClient):
+                synth = None
+            else:
+                synth = AnswerSynthesizer(client=client)
         except Exception:
             synth = None  # fall back to context-only render
     return Dispatcher(

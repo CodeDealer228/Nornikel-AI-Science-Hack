@@ -33,6 +33,21 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
+# Windows console defaults to cp1251; force UTF-8 so Cyrillic and symbols in
+# help/log output do not fail with UnicodeEncodeError.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+# Load .env before create_llm_client() reads os.environ. Inline environment
+# variables still win over values from .env.
+try:  # pragma: no cover - environment-specific
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env", override=False)
+except Exception:  # pragma: no cover - optional dependency/runtime setup
+    pass
+
 from chunking.chunker import build_raw_chunks
 from chunking.config import default_config as default_chunk_config
 from chunking.natasha_pipeline import get_pipeline
@@ -41,8 +56,8 @@ from ensemble import EnsembleMerger, EnsembleResult
 from llm_pipeline_fewshot.llm_parser import (
     ChunkExtractor,
     ChunkInput,
-    YandexGPTClient,
     YandexGPTError,
+    create_llm_client,
 )
 from llm_pipeline_fewshot.models import (
     EnrichedEntity,
@@ -297,7 +312,7 @@ def ingest(
     extractor: ChunkExtractor | None = None
     if not skip_llm:
         try:
-            client = YandexGPTClient()
+            client = create_llm_client()
             extractor = ChunkExtractor(client=client)
         except YandexGPTError as exc:
             log.warning("YandexGPT unavailable (%s); falling back to Natasha-only", exc)

@@ -1,0 +1,18 @@
+{
+  "started_at": 1783128179.3553932,
+  "finished_at": 1783146897.2233176,
+  "duration_sec": 18717.87,
+  "files_total": 16,
+  "files_processed": 16,
+  "files_empty": 0,
+  "files_errored": 0,
+  "chunks_total": 283,
+  "entities_total": 747,
+  "relations_total": 44,
+  "by_source": {
+    "ensemble:natasha,yandex_llm": 9,
+    "ensemble:natasha": 592,
+    "ensemble:yandex_llm": 190
+  },
+  "skipped": []
+}

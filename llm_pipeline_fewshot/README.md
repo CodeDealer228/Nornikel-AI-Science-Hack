@@ -1,10 +1,36 @@
-# llm_pipeline_fewshot/ — Этап 2: Проект автоматического пайплайна NER+RE
+# llm_pipeline_fewshot/ — Этап 2: Автоматический пайплайн NER+RE (LLM)
 
-Проект автоматического LLM-пайплайна NER+RE, который со временем заменит/
-масштабирует ручную работу из `../ner_re_extraction/`. **Не реализовано — работа
-заблокирована отсутствием доступа к API.** Эта папка — план + проект промпта +
-банк few-shot примеров, чтобы запустить всё в момент появления токенов, не
-теряя время на повторное продумывание.
+Автоматический LLM-пайплайн NER+RE, масштабирующий ручную работу из
+`../ner_re_extraction/`. **Реализован и прогнан по корпусу.** Эта папка содержит
+готовый промпт, банк few-shot примеров и рабочий код (`llm_parser.py`):
+`YandexGPTClient` (реальный вызов Yandex Foundation Models — один и тот же
+`/completion` endpoint + `Api-Key` auth обслуживает и YandexGPT, и DeepSeek,
+хостимый на Yandex Cloud / Yandex AI Studio; для DeepSeek передаётся `ds://`
+model URI вместо `gpt://`), `MockLLMClient` (детерминированный, для smoke-test
+без API-ключей), фабрика `create_llm_client()` (выбор по `LLM_CLIENT_MODE`/
+`LLM_MODE`/`YANDEX_GPT_USE_MOCK`; режимы `mock`/`real`/`deepseek`), `ChunkExtractor`
+и `ChunkBatchRunner` (асинхронно, пул воркеров, ошибка на одном чанке не роняет батч).
+
+**DeepSeek здесь — это модель на Yandex, а не отдельный сервис.** Промпт
+`ner_re_extraction_prompt.md` с самого начала написан под DeepSeek («один вызов
+DeepSeek на один чанк»), а файлы `extraction_results_*_batch.jsonl` уже в
+DeepSeek-формате выхода (`{doc_id, parsed:{entities,relations}}`). DeepSeek
+вызывается тем же `YandexGPTClient` (не отдельным клиентом и не
+`api.deepseek.com`): режим `LLM_CLIENT_MODE=deepseek` собирает клиент с
+`ds://`-URI (берётся готовый из `YANDEX_GPT_MODEL_URI` или строится как
+`ds://<YANDEX_GPT_FOLDER_ID>/<DEEPSEEK_MODEL>`), аутентификация — обычным
+`YANDEX_GPT_API_KEY`. Раньше в репо были только *читатели* этого формата
+(`../run_natasha_eval.py::load_deepseek_predictions`, `../frontend.py`);
+проброшенный в фабрику режим `deepseek` закрывает пробел — когда появится
+ключ от Yandex AI Studio, `scripts.ingest` прогоняет реальный экстрактор
+DeepSeek, а не падает или уходит в mock.
+
+Пайплайн встроен в `../scripts/ingest.py` (этап LLM включается по умолчанию;
+`--skip-llm` оставляет только Natasha). Результаты реальных прогонов:
+`extraction_results_statyi_batch.jsonl` (1314 чанков: 1303 OK, 1177 с сущностями,
+694 со связями, ср. задержка ~355 c) и `extraction_results_obzory_batch.jsonl`
+(1341 чанк; в последней строке файла зафиксирована усечённая JSON-запись —
+пересобрать батч или отфильтровать при загрузке).
 
 ## Почему сначала был сделан ручной проход
 
@@ -108,10 +134,14 @@ USER:
 
 ## Статус
 
-Только проектирование. Как только появятся API-токены: реализовать `run.py`
-(асинхронно, пул воркеров по паттерну `../parsing/orchestrator.py`), подключить
-блок few-shot так, чтобы он брался прямо из
-`../ner_re_extraction/ner_re_examples.md`, а не копипастился (тогда будущие
-ручные разметки автоматически улучшают банк few-shot), и провалидировать выборку
-результатов LLM против ручной разметки как проверку качества перед прогоном по
-всему корпусу.
+Реализовано (`llm_parser.py`). Пайплайн асинхронный, пул воркеров по паттерну
+`../parsing/orchestrator.py` ("громко падать на каждом элементе, но продолжать
+батч"), few-shot берётся прямо из промпта `ner_re_extraction_prompt.md`. Прогон
+по корпусу выполнен (см. `extraction_results_*_batch.jsonl`).
+
+Что осталось:
+- сверить выборку результатов LLM против ручной разметки
+  `../ner_re_extraction/ner_re_examples.md` и golden_set как проверку качества
+  (`../run_natasha_eval.py --predictions <jsonl>`);
+- пересобрать `extraction_results_obzory_batch.jsonl` (последняя строка усечена)
+  или отфильтровать усечённые записи при загрузке.

@@ -18,6 +18,19 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
+# Load a local .env file into os.environ before any settings dataclass reads
+# it. No-op if python-dotenv is missing or no .env exists; safe to call at
+# import. ``override=False`` keeps inline env vars winning over .env. Explicit
+# path (repo-root .env) so it works regardless of the cwd the app is launched
+# from. Must run before get_settings() is first called, hence module-level here
+# rather than inside get_settings() (which is lru_cache'd).
+try:  # pragma: no cover - environment-specific
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).resolve().parent / ".env", override=False)
+except Exception:  # pragma: no cover - dotenv absent
+    pass
+
 
 def _env(key: str, default: str | None = None) -> str | None:
     val = os.environ.get(key)

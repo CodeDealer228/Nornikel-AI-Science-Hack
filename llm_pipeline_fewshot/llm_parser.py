@@ -32,7 +32,7 @@ import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
-from typing import Any, Callable, Iterable, Sequence
+from typing import Any, Callable, Iterable, Protocol, Sequence
 
 from .models import (
     ChunkExtractionResult,
@@ -99,7 +99,42 @@ class CompletionResponse:
 
 
 class YandexGPTError(RuntimeError):
-    """Raised when the Yandex Foundation Models API returns an error."""
+    """Raised when the Yandex Foundation Models API returns an error.
+
+    DeepSeek hosted on Yandex Cloud surfaces through the same endpoint and
+    auth, so its failures raise ``YandexGPTError`` too — no separate
+    DeepSeek-specific error type.
+    """
+
+
+class LLMClient(Protocol):
+    """Минимальный интерфейс LLM-клиента для извлечения NER+RE.
+
+    Реализация может быть реальной (YandexGPT) или детерминированной mock-
+    версией для smoke-test без токенов и сетевых вызовов.
+    """
+
+    model_uri: str
+
+    def complete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        """Вернуть завершение модели в едином формате."""
+        ...
+
+    async def acomplete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        """Асинхронная обёртка над ``complete``."""
+        ...
 
 
 class YandexGPTClient:
@@ -109,6 +144,14 @@ class YandexGPTClient:
     third-party HTTP client. Supports API-key auth (header) and
     the legacy ``/completion`` endpoint, which is the most stable
     across YandexGPT generations.
+
+    The same ``/completion`` endpoint and ``Api-Key`` auth serve every
+    Foundation Model hosted on Yandex Cloud / Yandex AI Studio — including
+    DeepSeek, whose model URI uses a ``ds://`` scheme. Pass a full
+    ``ds://<folder>/deepseek...`` URI as ``model_uri`` (or via
+    ``YANDEX_GPT_MODEL_URI``) and the same client works for DeepSeek without
+    a separate class; auth is the regular ``YANDEX_GPT_API_KEY``, not a
+    DeepSeek-issued key.
     """
 
     def __init__(
@@ -131,12 +174,19 @@ class YandexGPTClient:
             raise YandexGPTError(
                 "YandexGPT API key is required (set YANDEX_GPT_API_KEY)."
             )
-        if not self.folder_id and not self.model_uri.startswith("gpt://"):
-            # Allow pre-resolved model URIs (gpt://folder/model) without
-            # a separate folder_id.
+        if "://" in self.model_uri:
+            # A pre-resolved URI with a scheme (gpt://, ds://, etc.) is used
+            # verbatim — this is how DeepSeek-on-Yandex (ds://<folder>/...)
+            # and any folder-qualified YandexGPT URI are passed in.
+            pass
+        elif self.folder_id:
             self.model_uri = f"gpt://{self.folder_id}/{self.model_uri}"
-        elif self.folder_id and not self.model_uri.startswith("gpt://"):
-            self.model_uri = f"gpt://{self.folder_id}/{self.model_uri}"
+        else:
+            raise YandexGPTError(
+                "model_uri must be a full URI (e.g. 'gpt://<folder>/<model>' "
+                "or 'ds://<folder>/deepseek...') or a bare model name with "
+                "YANDEX_GPT_FOLDER_ID set."
+            )
 
         self.endpoint = endpoint
         self.max_tokens = max_tokens
@@ -258,6 +308,344 @@ class YandexGPTClient:
             model_version=result.get("modelVersion", ""),
             raw=payload,
         )
+
+
+# ---------------------------------------------------------------------------
+# DeepSeek (hosted on Yandex Cloud / Yandex AI Studio)
+# ---------------------------------------------------------------------------
+#
+# DeepSeek is NOT called via the public api.deepseek.com endpoint here. In this
+# project it is hosted on Yandex Foundation Models, so it reuses the same
+# ``/completion`` endpoint, ``Api-Key`` auth and ``{modelUri, completionOptions,
+# messages}`` request shape as ``YandexGPTClient`` — only the model URI changes
+# to a ``ds://`` scheme (e.g. ``ds://<folder_id>/deepseek-v3`` etc.). Select it
+# through ``create_llm_client("deepseek")`` or ``LLM_CLIENT_MODE=deepseek``;
+# auth is the regular ``YANDEX_GPT_API_KEY``, not a DeepSeek-issued key.
+
+
+# ---------------------------------------------------------------------------
+# Mock client and provider switch
+# ---------------------------------------------------------------------------
+
+_TRUTHY_ENV_VALUES = {"1", "true", "yes", "y", "on", "mock"}
+_MOCK_MODEL_URI = "mock://ner-re-examples"
+
+
+class MockLLMClient:
+    """Детерминированный LLM-клиент для smoke-test без токенов и сети.
+
+    Клиент возвращает JSON в той же схеме, что и реальный NER+RE промпт. Фикстуры
+    составлены по ручным примерам из ``ner_re_extraction/ner_re_examples.md`` и
+    небольшому fallback-набору общеупотребимых терминов, чтобы end-to-end прогон
+    мог проверить связку chunking → llm_parser → ensemble без доступа к API.
+    """
+
+    def __init__(
+        self,
+        model_uri: str = _MOCK_MODEL_URI,
+        examples_path: str | os.PathLike[str] | None = None,
+    ) -> None:
+        self.model_uri = model_uri
+        self.examples_path = os.fspath(examples_path) if examples_path else ""
+
+    def complete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        """Вернуть заранее подготовленное извлечение для текста чанка."""
+        del system_prompt, max_tokens, temperature
+        payload = self._build_payload(user_prompt)
+        text = json.dumps(payload, ensure_ascii=False, indent=2)
+        return CompletionResponse(
+            text=text,
+            usage=CompletionUsage(input_tokens=0, output_tokens=0, total_tokens=0),
+            model_version="mock-v1",
+            raw={"provider": "mock", "examples_path": self.examples_path},
+        )
+
+    async def acomplete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        """Асинхронная обёртка над mock-ответом."""
+        return self.complete(system_prompt, user_prompt, max_tokens, temperature)
+
+    def _build_payload(self, user_prompt: str) -> dict[str, list[dict[str, Any]]]:
+        chunk_text = _extract_chunk_text_from_prompt(user_prompt)
+        entities: list[dict[str, Any]] = []
+        relations: list[dict[str, Any]] = []
+
+        if self._looks_like_lead_sorption(chunk_text):
+            entities, relations = self._lead_sorption_fixture(chunk_text)
+        elif self._looks_like_vanyukov_furnace(chunk_text):
+            entities, relations = self._vanyukov_fixture(chunk_text)
+        else:
+            entities, relations = self._keyword_fallback(chunk_text)
+
+        return {"entities": entities, "relations": relations}
+
+    @staticmethod
+    def _looks_like_lead_sorption(text: str) -> bool:
+        lower = text.lower()
+        return any(token in lower for token in ("lewatit", "свин", "сорбц"))
+
+    @staticmethod
+    def _looks_like_vanyukov_furnace(text: str) -> bool:
+        lower = text.lower()
+        return "ванюков" in lower or "пвк" in lower or "медный штейн" in lower
+
+    def _lead_sorption_fixture(
+        self,
+        text: str,
+    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        entities: list[dict[str, Any]] = []
+        relations: list[dict[str, Any]] = []
+
+        process = _make_mock_entity(
+            "e1",
+            "Process",
+            "очистка сорбционная от свинца",
+            text,
+            ("очистка сорбционная от свинца", "сорбционная очистка", "сорбция свинца", "десорбция свинца"),
+        )
+        material = _make_mock_entity(
+            "e2",
+            "Material",
+            "анионит Lewatit А365",
+            text,
+            ("анионит Lewatit А365", "Lewatit А365", "Lewatit A365"),
+        )
+        condition = _make_mock_entity(
+            "e3",
+            "Condition",
+            "pH 3,0–3,5",
+            text,
+            ("pH 3,0–3,5", "pH 3,0-3,5", "pH 3,0", "pH"),
+            attributes={"value_raw": "pH 3,0–3,5"},
+        )
+
+        for entity in (process, material, condition):
+            if entity is not None:
+                entities.append(entity)
+
+        ids = {entity["local_id"] for entity in entities}
+        if {"e1", "e2"} <= ids:
+            relations.append({
+                "subject": "e1",
+                "predicate": "uses_material",
+                "object": "e2",
+                "quote": _short_quote(text, (process, material)),
+            })
+        if {"e1", "e3"} <= ids:
+            relations.append({
+                "subject": "e1",
+                "predicate": "operates_at_condition",
+                "object": "e3",
+                "quote": _short_quote(text, (process, condition)),
+            })
+        return entities, relations
+
+    def _vanyukov_fixture(
+        self,
+        text: str,
+    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        entities: list[dict[str, Any]] = []
+        relations: list[dict[str, Any]] = []
+
+        equipment = _make_mock_entity(
+            "e1",
+            "Equipment",
+            "печь Ванюкова конвертерная (ПВК)",
+            text,
+            ("печь Ванюкова конвертерная", "ПВК", "печь Ванюкова"),
+        )
+        material = _make_mock_entity(
+            "e2",
+            "Material",
+            "медный штейн",
+            text,
+            ("медный штейн", "медных штейнов", "штейн"),
+        )
+        output = _make_mock_entity(
+            "e3",
+            "Material",
+            "черновая медь",
+            text,
+            ("черновая медь", "черновой меди", "медь"),
+        )
+
+        for entity in (equipment, material, output):
+            if entity is not None:
+                entities.append(entity)
+
+        ids = {entity["local_id"] for entity in entities}
+        if {"e1", "e2"} <= ids:
+            relations.append({
+                "subject": "e1",
+                "predicate": "uses_material",
+                "object": "e2",
+                "quote": _short_quote(text, (equipment, material)),
+            })
+        if {"e1", "e3"} <= ids:
+            relations.append({
+                "subject": "e1",
+                "predicate": "produces_output",
+                "object": "e3",
+                "quote": _short_quote(text, (equipment, output)),
+            })
+        return entities, relations
+
+    def _keyword_fallback(
+        self,
+        text: str,
+    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        specs: tuple[tuple[str, str, str, tuple[str, ...]], ...] = (
+            ("e1", "Material", "никель", ("никель", "никеля", "никелевый")),
+            ("e2", "Material", "медь", ("медь", "меди", "медный")),
+            ("e3", "Process", "флотация", ("флотация", "флотации")),
+            ("e4", "Property", "температура", ("температура", "°C")),
+            ("e5", "Condition", "pH", ("pH", "рН")),
+        )
+        entities: list[dict[str, Any]] = []
+        for local_id, entity_type, canonical_name, candidates in specs:
+            entity = _make_mock_entity(local_id, entity_type, canonical_name, text, candidates)
+            if entity is not None:
+                entities.append(entity)
+        return entities, []
+
+
+def _extract_chunk_text_from_prompt(user_prompt: str) -> str:
+    """Достать исходный текст чанка из user prompt, созданного ``_build_user_prompt``."""
+    lines = user_prompt.splitlines()
+    for index, line in enumerate(lines):
+        if line.startswith("# ID чанка:"):
+            return "\n".join(lines[index + 2:]).strip()
+    return user_prompt.strip()
+
+
+def _find_first_mention(text: str, candidates: Sequence[str]) -> str | None:
+    """Найти первую форму сущности, реально встречающуюся в чанке."""
+    lower = text.lower()
+    for candidate in candidates:
+        if candidate and candidate.lower() in lower:
+            start = lower.index(candidate.lower())
+            return text[start:start + len(candidate)]
+    return None
+
+
+def _make_mock_entity(
+    local_id: str,
+    entity_type: str,
+    canonical_name: str,
+    text: str,
+    mention_candidates: Sequence[str],
+    attributes: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Собрать сущность mock-ответа только если mention найден в тексте."""
+    mention = _find_first_mention(text, mention_candidates)
+    if mention is None:
+        return None
+    payload: dict[str, Any] = {
+        "local_id": local_id,
+        "type": entity_type,
+        "canonical_name": canonical_name,
+        "mentions": [mention],
+        "attributes": attributes or {},
+    }
+    return payload
+
+
+def _short_quote(
+    text: str,
+    entities: Sequence[dict[str, Any] | None],
+    max_chars: int = 240,
+) -> str:
+    """Вернуть короткую цитату вокруг первого найденного mention."""
+    mentions = [
+        entity["mentions"][0]
+        for entity in entities
+        if entity and entity.get("mentions")
+    ]
+    lower = text.lower()
+    positions = [lower.find(mention.lower()) for mention in mentions if mention]
+    positions = [pos for pos in positions if pos >= 0]
+    if not positions:
+        return text[:max_chars].strip()
+    start = max(0, min(positions) - 80)
+    end = min(len(text), start + max_chars)
+    return text[start:end].strip()
+
+
+def _env_requests_mock() -> bool:
+    """Проверить env-переключатели mock-режима."""
+    explicit = os.environ.get("YANDEX_GPT_USE_MOCK", "").strip().lower()
+    if explicit in _TRUTHY_ENV_VALUES:
+        return True
+    return False
+
+
+def create_llm_client(mode: str | None = None) -> LLMClient:
+    """Создать LLM-клиент по режиму ``mock``/``real``/``deepseek``.
+
+    Режим берётся из аргумента или env-переменных ``LLM_CLIENT_MODE`` / ``LLM_MODE``.
+    Дополнительно ``YANDEX_GPT_USE_MOCK=1`` принудительно включает mock. По
+    умолчанию используется реальный YandexGPT-клиент, чтобы не менять поведение
+    существующего продового кода.
+
+    ``deepseek`` — DeepSeek, хостится на Yandex Cloud / Yandex AI Studio: тот же
+    ``/completion`` endpoint и ``Api-Key`` auth, что и YandexGPT, только
+    ``modelUri`` в схеме ``ds://``. Аутентификация — обычным
+    ``YANDEX_GPT_API_KEY`` (не DeepSeek-ключом). URI модели разрешается так:
+    если ``YANDEX_GPT_MODEL_URI`` уже задаёт ``ds://``-URI — он используется
+    as-is; иначе собирается ``ds://<YANDEX_GPT_FOLDER_ID>/<DEEPSEEK_MODEL>``
+    (``DEEPSEEK_MODEL`` по умолчанию ``deepseek-v3``).
+    """
+    selected = (
+        mode
+        or os.environ.get("LLM_CLIENT_MODE")
+        or os.environ.get("LLM_MODE")
+        or ("mock" if _env_requests_mock() else "real")
+    )
+    normalized = selected.strip().lower()
+    if normalized in {"mock", "offline", "test", "fake"}:
+        examples_path = os.environ.get("LLM_MOCK_EXAMPLES_PATH")
+        return MockLLMClient(examples_path=examples_path)
+    if normalized in {"real", "yandex", "yandexgpt", "yandexgpt-lite"}:
+        return YandexGPTClient()
+    if normalized in {"deepseek", "deepseek-chat", "deepseek-reasoner", "deepseek-v3"}:
+        return _build_deepseek_via_yandex()
+    raise YandexGPTError(
+        "Unsupported LLM client mode "
+        f"'{selected}'. Use 'mock', 'real'/'yandex' or 'deepseek'."
+    )
+
+
+def _build_deepseek_via_yandex() -> YandexGPTClient:
+    """DeepSeek-on-Yandex: a ``YandexGPTClient`` with a ``ds://`` model URI.
+
+    Auth is ``YANDEX_GPT_API_KEY``. Model URI resolution:
+      * ``YANDEX_GPT_MODEL_URI`` starting with ``ds://`` → used verbatim;
+      * otherwise ``ds://<YANDEX_GPT_FOLDER_ID>/<DEEPSEEK_MODEL>``
+        (``DEEPSEEK_MODEL`` default ``deepseek-v3``), requiring folder_id.
+    """
+    env_uri = os.environ.get("YANDEX_GPT_MODEL_URI", "")
+    if env_uri.startswith("ds://"):
+        return YandexGPTClient(model_uri=env_uri)
+    folder_id = os.environ.get("YANDEX_GPT_FOLDER_ID", "")
+    if not folder_id:
+        raise YandexGPTError(
+            "DeepSeek-on-Yandex needs either a ds:// YANDEX_GPT_MODEL_URI or "
+            "YANDEX_GPT_FOLDER_ID set (to build ds://<folder>/<model>)."
+        )
+    deepseek_model = os.environ.get("DEEPSEEK_MODEL", "deepseek-v3")
+    model_uri = f"ds://{folder_id}/{deepseek_model}"
+    return YandexGPTClient(model_uri=model_uri)
 
 
 def _safe_int(value: Any) -> int:
@@ -465,7 +853,7 @@ class ChunkExtractor:
 
     def __init__(
         self,
-        client: YandexGPTClient,
+        client: LLMClient,
         prompt_name: str = "ner_re",
         default_entity_confidence: float = _DEFAULT_ENTITY_CONFIDENCE,
         default_relation_confidence: float = _DEFAULT_RELATION_CONFIDENCE,
@@ -645,7 +1033,7 @@ class ChunkBatchRunner:
 
     def __init__(
         self,
-        client: YandexGPTClient,
+        client: LLMClient,
         prompt_name: str = "ner_re",
         max_concurrency: int = 4,
     ) -> None:

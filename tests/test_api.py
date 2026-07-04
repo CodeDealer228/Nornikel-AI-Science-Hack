@@ -5,7 +5,7 @@ from typing import Any
 
 try:
     from fastapi.testclient import TestClient  # type: ignore
-    from api.server import STATE, app, lifespan  # type: ignore
+    from api.server import STATE, app  # type: ignore
     _FASTAPI_AVAILABLE = True
     _SKIP_REASON = ""
 except Exception as exc:  # pragma: no cover - environment-specific
@@ -15,18 +15,25 @@ except Exception as exc:  # pragma: no cover - environment-specific
 
 @unittest.skipUnless(_FASTAPI_AVAILABLE, _SKIP_REASON)
 class APISmokeTest(unittest.TestCase):
+    _client_ctx: "TestClient | None" = None
+
     @classmethod
     def setUpClass(cls):
-        # Run the lifespan to set up the dispatcher.
-        cls._lifespan_ctx = lifespan(app)
-        cls._lifespan_ctx.__enter__()
+        # Driving TestClient as a context manager runs the FastAPI lifespan
+        # (async) in the same loop that serves the requests, which sets up
+        # STATE.driver / STATE.dispatcher. Calling lifespan(app).__enter__
+        # directly fails because lifespan is an async context manager.
+        cls._client_ctx = TestClient(app)
+        cls._client_ctx.__enter__()
 
     @classmethod
     def tearDownClass(cls):
-        cls._lifespan_ctx.__exit__(None, None, None)
+        if cls._client_ctx is not None:
+            cls._client_ctx.__exit__(None, None, None)
+            cls._client_ctx = None
 
     def setUp(self):
-        self.client = TestClient(app)
+        self.client = self._client_ctx
 
     def test_health(self):
         r = self.client.get("/health")
@@ -105,15 +112,19 @@ class APIAuthTest(unittest.TestCase):
     def setUp(self):
         from config import get_settings
         self._original_key = get_settings().api.api_key
+        # Enter the lifespan so STATE.dispatcher is initialised; otherwise
+        # /query would return 503 regardless of auth.
+        self._client_ctx = TestClient(app)
+        self._client_ctx.__enter__()
 
     def tearDown(self):
         from config import get_settings, reset_settings_cache
         reset_settings_cache()
+        self._client_ctx.__exit__(None, None, None)
 
     def test_auth_when_disabled(self):
         # No key set — should still work.
-        client = TestClient(app)
-        r = client.post("/query", json={"query": "никель", "synthesize": False})
+        r = self._client_ctx.post("/query", json={"query": "никель", "synthesize": False})
         self.assertEqual(r.status_code, 200)
 
 

@@ -257,7 +257,7 @@ class QueryEntityExtractor:
             or _RANGE_RE.search(query)
             or _UNIT_FIRST_RE.search(query)
         )
-        has_geo_marker = bool(_GEO_RE.search(query))
+        has_geo_marker = bool(_GEO_RE.search(query) or _GEO_COMPARISON_RE.search(query))
         has_temporal_marker = bool(_TEMPORAL_RE.search(query))
         is_definitional = bool(_DEFINITIONAL_RE.search(query))
         is_causal = bool(_CAUSAL_RE.search(query))

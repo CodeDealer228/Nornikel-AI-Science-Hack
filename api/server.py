@@ -38,6 +38,11 @@ from agent import (
     StubRAGClient,
 )
 from agent.rag_factory import build_rag_client
+try:
+    # Auto-register hybrid edge RAG backend (BM25 over graph edges).
+    import search.rag_backend_register  # noqa: F401
+except Exception as exc:  # pragma: no cover - defensive
+    log.debug("search.rag_backend_register import failed: %s", exc)
 from config import APISettings, get_settings
 from graph_reasoning import (
     Neo4jSubgraphExtractor,
@@ -48,7 +53,10 @@ from graph_reasoning import (
     graph_statistics,
 )
 from logging_setup import configure_logging, get_logger, set_request_id
-from llm_pipeline_fewshot.llm_parser import YandexGPTClient
+from llm_pipeline_fewshot.llm_parser import (
+    MockLLMClient,
+    create_llm_client,
+)
 from neo4j_integration.neo4j_config import Neo4jConfig
 from neo4j_integration.neo4j_loader import Neo4jLoader
 from ontology import EntityType
@@ -170,17 +178,19 @@ def _build_dispatcher() -> Dispatcher:
         rag = StubRAGClient()
 
     synth: AnswerSynthesizer | None = None
-    if STATE.settings.yandex_gpt.is_configured:
-        try:
-            client = YandexGPTClient(
-                api_key=STATE.settings.yandex_gpt.api_key,
-                folder_id=STATE.settings.yandex_gpt.folder_id,
-                model_uri=STATE.settings.yandex_gpt.model_uri,
-            )
+    # Synthesis follows LLM_CLIENT_MODE (so `LLM_CLIENT_MODE=deepseek` makes
+    # the API synthesize answers via DeepSeek-on-Yandex, same as ingest).
+    # MockLLMClient is skipped — it emits a NER/RE JSON fixture, not a
+    # user-facing answer, so we fall back to context-only render instead.
+    try:
+        client = create_llm_client()
+        if isinstance(client, MockLLMClient):
+            log.info("AnswerSynthesizer skipped (LLM client is mock).")
+        else:
             synth = AnswerSynthesizer(client=client)
             log.info("AnswerSynthesizer configured with %s", client.model_uri)
-        except Exception as exc:
-            log.warning("AnswerSynthesizer setup failed: %s: %s", type(exc).__name__, exc)
+    except Exception as exc:
+        log.warning("AnswerSynthesizer setup failed: %s: %s", type(exc).__name__, exc)
 
     if STATE.driver is None:
         log.info("Building dispatcher in offline mode (no Neo4j).")
@@ -373,8 +383,6 @@ async def query_endpoint(req: QueryRequest) -> QueryResponse:
         result: DispatchResult = await STATE.dispatcher.dispatch(
             req.query, synthesize=req.synthesize,
         )
-        if req.synthesis_calls:  # type: ignore[attr-defined]
-            STATE.synthesis_calls += 1
     except Exception as exc:
         STATE.error_count += 1
         log.exception("Dispatch failed for query=%r", req.query)
@@ -382,6 +390,8 @@ async def query_endpoint(req: QueryRequest) -> QueryResponse:
 
     answer = result.synthesis.answer if result.synthesis is not None else ""
     used_llm = bool(result.synthesis and result.synthesis.used_llm)
+    if result.synthesis is not None:
+        STATE.synthesis_calls += 1
 
     rag_docs: list[dict[str, Any]] = []
     if result.rag_result is not None:

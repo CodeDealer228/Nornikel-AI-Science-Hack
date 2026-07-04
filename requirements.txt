@@ -7,3 +7,4 @@ python-dotenv>=1.0
 requests>=2.31
 natasha>=1.6
 setuptools>=70,<81
+streamlit>=1.30

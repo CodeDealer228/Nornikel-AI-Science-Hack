@@ -1,9 +1,14 @@
 """Unit tests for the Yandex AI extraction pipeline (no real API calls)."""
 
 import json
+import os
 import unittest
+from unittest.mock import patch
 
 from llm_pipeline_fewshot.llm_parser import (
+    ChunkExtractor,
+    MockLLMClient,
+    create_llm_client,
     extract_json_object,
     make_chunk_input,
     parse_llm_json,
@@ -88,6 +93,33 @@ class RelationValidationTest(unittest.TestCase):
             {"e1"},
         )
         self.assertTrue(any(issue.code == "relation_endpoint_missing" for issue in issues))
+
+
+class MockClientTest(unittest.TestCase):
+    def test_mock_client_returns_valid_extraction_without_tokens(self):
+        text = (
+            "Сорбционная очистка от свинца выполнялась с использованием "
+            "анионита Lewatit А365 при pH 3,0–3,5."
+        )
+        chunk = make_chunk_input(
+            chunk_id="mock-1",
+            text=text,
+            source_document="doc.md",
+        )
+        extractor = ChunkExtractor(client=MockLLMClient())
+
+        result = extractor.extract_chunk(chunk)
+
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.model_uri, "mock://ner-re-examples")
+        self.assertEqual(result.usage["total_tokens"], 0)
+        self.assertGreaterEqual(len(result.entities), 2)
+        self.assertTrue(any(entity.entity == "анионит Lewatit А365" for entity in result.entities))
+        self.assertTrue(any(relation.relation_type == RelationType.USES_MATERIAL for relation in result.relations))
+
+    def test_create_llm_client_env_switches_to_mock(self):
+        with patch.dict(os.environ, {"LLM_CLIENT_MODE": "mock"}, clear=False):
+            self.assertIsInstance(create_llm_client(), MockLLMClient)
 
 
 class MakeChunkInputTest(unittest.TestCase):
