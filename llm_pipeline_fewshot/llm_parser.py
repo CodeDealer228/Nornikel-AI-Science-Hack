@@ -55,6 +55,7 @@ COMPLETION_ENDPOINT = (
 )
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_DEFAULT_MODEL = "poolside/laguna-xs-2.1:free"
+YANDEX_OPENAI_BASE_URL = "https://ai.api.cloud.yandex.net/v1"
 DEFAULT_MAX_TOKENS = 3000
 DEFAULT_TEMPERATURE = 0.0
 DEFAULT_TIMEOUT = 60.0
@@ -167,6 +168,8 @@ class YandexGPTClient:
         temperature: float = DEFAULT_TEMPERATURE,
         timeout: float = DEFAULT_TIMEOUT,
         max_retries: int = MAX_RETRIES,
+        reasoning_mode: str | None = None,
+        reasoning_effort: str | None = None,
     ) -> None:
         self.api_key = api_key or os.environ.get("YANDEX_GPT_API_KEY", "")
         self.folder_id = folder_id or os.environ.get("YANDEX_GPT_FOLDER_ID", "")
@@ -196,6 +199,45 @@ class YandexGPTClient:
         self.temperature = temperature
         self.timeout = timeout
         self.max_retries = max(1, max_retries)
+        self.reasoning_mode = (
+            reasoning_mode
+            if reasoning_mode is not None
+            else os.environ.get("YANDEX_REASONING_MODE", "")
+        ).strip()
+        self.reasoning_effort = (
+            reasoning_effort
+            if reasoning_effort is not None
+            else (
+                os.environ.get("YANDEX_REASONING_EFFORT")
+                or os.environ.get("REASONING_EFFORT")
+                or ""
+            )
+        ).strip()
+
+    def _reasoning_options(self) -> dict[str, str] | None:
+        mode = self.reasoning_mode.upper()
+        effort = self.reasoning_effort.lower()
+
+        if mode in {"DISABLED", "NONE", "OFF"} or effort in {
+            "none",
+            "disabled",
+            "disable",
+            "off",
+            "false",
+            "0",
+        }:
+            return {"mode": "DISABLED"}
+
+        if mode:
+            options = {"mode": mode}
+            if effort in {"low", "medium", "high"}:
+                options["effort"] = effort
+            return options
+
+        if effort in {"low", "medium", "high"}:
+            return {"mode": "ENABLED_HIDDEN", "effort": effort}
+
+        return None
 
     def _build_payload(
         self,
@@ -204,15 +246,20 @@ class YandexGPTClient:
         max_tokens: int | None = None,
         temperature: float | None = None,
     ) -> dict[str, Any]:
+        completion_options: dict[str, Any] = {
+            "stream": False,
+            "temperature": (
+                self.temperature if temperature is None else temperature
+            ),
+            "maxTokens": str(max_tokens or self.max_tokens),
+        }
+        reasoning_options = self._reasoning_options()
+        if reasoning_options:
+            completion_options["reasoningOptions"] = reasoning_options
+
         return {
             "modelUri": self.model_uri,
-            "completionOptions": {
-                "stream": False,
-                "temperature": (
-                    self.temperature if temperature is None else temperature
-                ),
-                "maxTokens": str(max_tokens or self.max_tokens),
-            },
+            "completionOptions": completion_options,
             "messages": [
                 {"role": "system", "text": system_prompt},
                 {"role": "user", "text": user_prompt},
@@ -482,17 +529,170 @@ class OpenRouterClient:
         )
 
 
+class YandexAIStudioChatClient:
+    """OpenAI-compatible Chat Completions client for Yandex AI Studio.
+
+    Model Gallery models such as DeepSeek V4 Flash are served through
+    ``https://ai.api.cloud.yandex.net/v1/chat/completions`` and use the
+    OpenAI-compatible request shape. The API key is still the regular
+    ``YANDEX_GPT_API_KEY``.
+    """
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        folder_id: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+        max_tokens: int = DEFAULT_MAX_TOKENS,
+        temperature: float = DEFAULT_TEMPERATURE,
+        timeout: float = DEFAULT_TIMEOUT,
+        max_retries: int = MAX_RETRIES,
+        reasoning_effort: str | None = None,
+    ) -> None:
+        self.api_key = api_key or os.environ.get("YANDEX_GPT_API_KEY", "")
+        if not self.api_key:
+            raise YandexGPTError(
+                "Yandex AI Studio API key is required (set YANDEX_GPT_API_KEY)."
+            )
+        self.folder_id = folder_id or os.environ.get("YANDEX_GPT_FOLDER_ID", "")
+        raw_model = (
+            model
+            or os.environ.get("YANDEX_GPT_MODEL_URI")
+            or os.environ.get("DEEPSEEK_MODEL")
+            or "deepseek-v4-flash/latest"
+        )
+        self.model_uri = self._resolve_model_uri(raw_model)
+        root = (
+            base_url
+            or os.environ.get("YANDEX_OPENAI_BASE_URL")
+            or YANDEX_OPENAI_BASE_URL
+        ).rstrip("/")
+        self.endpoint = f"{root}/chat/completions"
+        self.max_tokens = int(os.environ.get("YANDEX_OPENAI_MAX_TOKENS") or max_tokens)
+        self.temperature = float(
+            os.environ.get("YANDEX_OPENAI_TEMPERATURE") or temperature
+        )
+        self.timeout = float(os.environ.get("YANDEX_OPENAI_TIMEOUT") or timeout)
+        self.max_retries = max(
+            1,
+            int(os.environ.get("YANDEX_OPENAI_MAX_RETRIES") or max_retries),
+        )
+        self.reasoning_effort = (
+            reasoning_effort
+            if reasoning_effort is not None
+            else (
+                os.environ.get("YANDEX_REASONING_EFFORT")
+                or os.environ.get("REASONING_EFFORT")
+                or "none"
+            )
+        ).strip().lower()
+
+    def _resolve_model_uri(self, model: str) -> str:
+        if "://" in model:
+            return model
+        if not self.folder_id:
+            raise YandexGPTError(
+                "Yandex AI Studio chat models need a full gpt:// model URI or "
+                "YANDEX_GPT_FOLDER_ID set."
+            )
+        return f"gpt://{self.folder_id}/{model}"
+
+    def _build_payload(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "model": self.model_uri,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "max_tokens": int(max_tokens or self.max_tokens),
+            "temperature": self.temperature if temperature is None else temperature,
+            "stream": False,
+        }
+        if self.reasoning_effort:
+            payload["reasoning_effort"] = self.reasoning_effort
+        return payload
+
+    def _post(self, payload: dict[str, Any]) -> dict[str, Any]:
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        request = urllib.request.Request(
+            self.endpoint,
+            data=body,
+            method="POST",
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.api_key}",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:500]
+            raise YandexGPTError(
+                f"Yandex AI Studio HTTP {exc.code} on {self.endpoint}: {detail}"
+            ) from exc
+        except urllib.error.URLError as exc:
+            raise YandexGPTError(
+                f"Yandex AI Studio network error on {self.endpoint}: {exc.reason}"
+            ) from exc
+
+    def complete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        payload = self._build_payload(system_prompt, user_prompt, max_tokens, temperature)
+        last_exc: Exception | None = None
+        backoff = 1.0
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                response = self._post(payload)
+                return OpenRouterClient._parse_response(response)
+            except YandexGPTError as exc:
+                last_exc = exc
+                if "HTTP 4" in str(exc) and "HTTP 429" not in str(exc):
+                    raise
+                if attempt < self.max_retries:
+                    log.warning(
+                        "Yandex AI Studio attempt %d/%d failed (%s), retrying in %.1fs",
+                        attempt,
+                        self.max_retries,
+                        exc,
+                        backoff,
+                    )
+                    time.sleep(backoff)
+                    backoff *= RETRY_BACKOFF
+        raise YandexGPTError(
+            f"Yandex AI Studio failed after {self.max_retries} attempts: {last_exc}"
+        )
+
+    async def acomplete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        return self.complete(system_prompt, user_prompt, max_tokens, temperature)
+
+
 # ---------------------------------------------------------------------------
 # DeepSeek (hosted on Yandex Cloud / Yandex AI Studio)
 # ---------------------------------------------------------------------------
 #
-# DeepSeek is NOT called via the public api.deepseek.com endpoint here. In this
-# project it is hosted on Yandex Foundation Models, so it reuses the same
-# ``/completion`` endpoint, ``Api-Key`` auth and ``{modelUri, completionOptions,
-# messages}`` request shape as ``YandexGPTClient`` — only the model URI changes
-# to a ``ds://`` scheme (e.g. ``ds://<folder_id>/deepseek-v3`` etc.). Select it
-# through ``create_llm_client("deepseek")`` or ``LLM_CLIENT_MODE=deepseek``;
-# auth is the regular ``YANDEX_GPT_API_KEY``, not a DeepSeek-issued key.
+# DeepSeek is NOT called via the public api.deepseek.com endpoint here. Model
+# Gallery models in Yandex AI Studio use the OpenAI-compatible Chat Completions
+# endpoint with regular ``YANDEX_GPT_API_KEY`` auth. Select it through
+# ``create_llm_client("deepseek")`` or ``LLM_CLIENT_MODE=deepseek``.
 
 
 # ---------------------------------------------------------------------------
@@ -804,26 +1004,20 @@ def create_llm_client(mode: str | None = None) -> LLMClient:
     )
 
 
-def _build_deepseek_via_yandex() -> YandexGPTClient:
-    """DeepSeek-on-Yandex: a ``YandexGPTClient`` with a ``ds://`` model URI.
+def _build_deepseek_via_yandex() -> LLMClient:
+    """DeepSeek-on-Yandex via the AI Studio OpenAI-compatible API.
 
     Auth is ``YANDEX_GPT_API_KEY``. Model URI resolution:
-      * ``YANDEX_GPT_MODEL_URI`` starting with ``ds://`` → used verbatim;
-      * otherwise ``ds://<YANDEX_GPT_FOLDER_ID>/<DEEPSEEK_MODEL>``
-        (``DEEPSEEK_MODEL`` default ``deepseek-v3``), requiring folder_id.
+      * full ``YANDEX_GPT_MODEL_URI`` is used verbatim;
+      * otherwise ``gpt://<YANDEX_GPT_FOLDER_ID>/<DEEPSEEK_MODEL>``
+        (``DEEPSEEK_MODEL`` default ``deepseek-v4-flash/latest``).
     """
     env_uri = os.environ.get("YANDEX_GPT_MODEL_URI", "")
-    if env_uri.startswith("ds://"):
-        return YandexGPTClient(model_uri=env_uri)
-    folder_id = os.environ.get("YANDEX_GPT_FOLDER_ID", "")
-    if not folder_id:
-        raise YandexGPTError(
-            "DeepSeek-on-Yandex needs either a ds:// YANDEX_GPT_MODEL_URI or "
-            "YANDEX_GPT_FOLDER_ID set (to build ds://<folder>/<model>)."
-        )
-    deepseek_model = os.environ.get("DEEPSEEK_MODEL", "deepseek-v3")
-    model_uri = f"ds://{folder_id}/{deepseek_model}"
-    return YandexGPTClient(model_uri=model_uri)
+    deepseek_model = os.environ.get("DEEPSEEK_MODEL", "deepseek-v4-flash/latest")
+    model = env_uri or deepseek_model
+    if model.startswith("ds://"):
+        model = "gpt://" + model.removeprefix("ds://")
+    return YandexAIStudioChatClient(model=model)
 
 
 def _safe_int(value: Any) -> int:
