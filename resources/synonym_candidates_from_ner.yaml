@@ -1,0 +1,4340 @@
+candidates:
+- aliases:
+  - ПМ
+  - переходные металлы
+  source_type: abbreviation_initials_ner
+  count: 1
+  examples:
+  - node_id: Material::пм
+  - node_id: Material::переходные металлы
+- aliases:
+  - СО
+  - сельскохозяйственные отходы
+  source_type: abbreviation_initials_ner
+  count: 1
+  examples:
+  - node_id: Material::со
+  - node_id: Material::сельскохозяйственные отходы
+- aliases:
+  - GSI
+  - geological strength index
+  source_type: abbreviation_initials_ner
+  count: 1
+  examples:
+  - node_id: Property::gsi
+  - node_id: Property::geological strength index
+- aliases:
+  - детектор EDS
+  - детектор WDS
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::детектор eds
+  - node_id: Equipment::детектор wds
+- aliases:
+  - испаритель (III)
+  - испаритель III
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::испаритель (iii)
+  - node_id: Equipment::испаритель iii
+- aliases:
+  - мешалка – турбина открытого типа диаметром 12 см
+  - мешалка – турбина открытого типа диаметром 5 см
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::мешалка - турбина открытого типа диаметром 12 см
+  - node_id: Equipment::мешалка - турбина открытого типа диаметром 5 см
+- aliases:
+  - Нутч-фильтр (Н/Ф-50)
+  - Нутч-фильтр Н/Ф-50
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::нутч-фильтр (н/ф-50)
+  - node_id: Equipment::нутч-фильтр н/ф-50
+- aliases:
+  - обеднительная электропечь
+  - обеднительная электропечь НМЗ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::обеднительная электропечь
+  - node_id: Equipment::обеднительная электропечь нмз
+- aliases:
+  - платиновый анод
+  - платиновый катод
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::платиновый анод
+  - node_id: Equipment::платиновый катод
+- aliases:
+  - приставка искрового пробоотбора
+  - приставка искрового пробоотбора SSEA
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::приставка искрового пробоотбора
+  - node_id: Equipment::приставка искрового пробоотбора ssea
+- aliases:
+  - растровый электронный микроскоп Tescan 5130MM
+  - растровый электронный микроскоп Tescan TS 5130MM
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::растровый электронный микроскоп tescan 5130mm
+  - node_id: Equipment::растровый электронный микроскоп tescan ts 5130mm
+- aliases:
+  - реактор Клауса R-6201/1
+  - реактор Клауса R-6201/1 SRU
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::реактор клауса r-6201/1
+  - node_id: Equipment::реактор клауса r-6201/1 sru
+- aliases:
+  - реактор Клауса R-6201/1 SRU ЦУПХП-2 КХП ММК
+  - реактор Клауса R-6201/1 ЦУПХП-2 КХП ММК
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::реактор клауса r-6201/1 sru цупхп-2 кхп ммк
+  - node_id: Equipment::реактор клауса r-6201/1 цупхп-2 кхп ммк
+- aliases:
+  - реактор Р-1-I УПС МЗ
+  - реактор Р-1-I УПЭС МЗ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::реактор р-1-i упс мз
+  - node_id: Equipment::реактор р-1-i упэс мз
+- aliases:
+  - реактор Р-1-I УПЭС МЗ ГМК НН
+  - реактор Р-1-I УПЭС МЗ ЗФ НН
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::реактор р-1-i упэс мз гмк нн
+  - node_id: Equipment::реактор р-1-i упэс мз зф нн
+- aliases:
+  - Реактор с мешалкой РТ-250
+  - Реактор с мешалкой РТ-50
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::реактор с мешалкой рт-250
+  - node_id: Equipment::реактор с мешалкой рт-50
+- aliases:
+  - редуктор 1
+  - редуктор 4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::редуктор 1
+  - node_id: Equipment::редуктор 4
+- aliases:
+  - рентгеноспектральный микроанализатор
+  - рентгеноспектральный микроанализатор (РСМА)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::рентгеноспектральный микроанализатор
+  - node_id: Equipment::рентгеноспектральный микроанализатор (рсма)
+- aliases:
+  - сканирующий двулучевой электронно-ионный микроскоп TESCAN LYRA3 GMH
+  - сканирующий двулучевой электронно-ионный микроскоп TESCAN LYRA3GMH
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::сканирующий двулучевой электронно-ионный микроскоп tescan
+      lyra3 gmh
+  - node_id: Equipment::сканирующий двулучевой электронно-ионный микроскоп tescan
+      lyra3gmh
+- aliases:
+  - сканирующий двулучевой электронно-ионный микроскоп TESCAN LYRA3GMH
+  - сканирующий электронно-ионный микроскоп TESCAN LYRA3 GMH
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::сканирующий двулучевой электронно-ионный микроскоп tescan
+      lyra3gmh
+  - node_id: Equipment::сканирующий электронно-ионный микроскоп tescan lyra3 gmh
+- aliases:
+  - сканирующий электронно-ионный микроскоп LYRA3 GMH
+  - сканирующий электронно-ионный микроскоп TESCAN LYRA3 GMH
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::сканирующий электронно-ионный микроскоп lyra3 gmh
+  - node_id: Equipment::сканирующий электронно-ионный микроскоп tescan lyra3 gmh
+- aliases:
+  - скважина ЗВТ-13
+  - скважина ЗВТ-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-13
+  - node_id: Equipment::скважина звт-15
+- aliases:
+  - скважина ЗВТ-13
+  - скважина ЗВТ-16
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-13
+  - node_id: Equipment::скважина звт-16
+- aliases:
+  - скважина ЗВТ-13
+  - скважина ЗВТ-18
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-13
+  - node_id: Equipment::скважина звт-18
+- aliases:
+  - скважина ЗВТ-13
+  - скважина ЗВТ-21
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-13
+  - node_id: Equipment::скважина звт-21
+- aliases:
+  - скважина ЗВТ-15
+  - скважина ЗВТ-16
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-15
+  - node_id: Equipment::скважина звт-16
+- aliases:
+  - скважина ЗВТ-15
+  - скважина ЗВТ-18
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-15
+  - node_id: Equipment::скважина звт-18
+- aliases:
+  - скважина ЗВТ-15
+  - скважина ЗВТ-21
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-15
+  - node_id: Equipment::скважина звт-21
+- aliases:
+  - скважина ЗВТ-16
+  - скважина ЗВТ-18
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-16
+  - node_id: Equipment::скважина звт-18
+- aliases:
+  - скважина ЗВТ-16
+  - скважина ЗВТ-21
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-16
+  - node_id: Equipment::скважина звт-21
+- aliases:
+  - скважина ЗВТ-18
+  - скважина ЗВТ-21
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::скважина звт-18
+  - node_id: Equipment::скважина звт-21
+- aliases:
+  - спектрометр iCAP 6000
+  - спектрометр iCAP 6000 Duo
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::спектрометр icap 6000
+  - node_id: Equipment::спектрометр icap 6000 duo
+- aliases:
+  - спектрометр iCAP 6000
+  - спектрометр iCAP 7000
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::спектрометр icap 6000
+  - node_id: Equipment::спектрометр icap 7000
+- aliases:
+  - спектрометр iCAP 6000 Duo
+  - спектрометр iCAP 6500 Duo
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::спектрометр icap 6000 duo
+  - node_id: Equipment::спектрометр icap 6500 duo
+- aliases:
+  - экстензомер Epsilon 3542RA2-100M-600M-HT2
+  - экстензомер Epsilon 3544-100M-060M-HT2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::экстензомер epsilon 3542ra2-100m-600m-ht2
+  - node_id: Equipment::экстензомер epsilon 3544-100m-060m-ht2
+- aliases:
+  - энергодисперсионный детектор
+  - энергодисперсионный детектор X-Act
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Equipment::энергодисперсионный детектор
+  - node_id: Equipment::энергодисперсионный детектор x-act
+- aliases:
+  - лабораторные испытания реагента Rutrol AD 171
+  - лабораторные исследования реагента Rutrol AD 171
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::лабораторные испытания реагента rutrol ad 171
+  - node_id: Experiment::лабораторные исследования реагента rutrol ad 171
+- aliases:
+  - непрерывный лабораторный опыт нейтрализации (125 г/л)
+  - непрерывный лабораторный опыт нейтрализации (195 г/л)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::непрерывный лабораторный опыт нейтрализации (125 г/л)
+  - node_id: Experiment::непрерывный лабораторный опыт нейтрализации (195 г/л)
+- aliases:
+  - опыт 1 (лабораторное выщелачивание)
+  - опыт 2 (лабораторное выщелачивание)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 1 (лабораторное выщелачивание)
+  - node_id: Experiment::опыт 2 (лабораторное выщелачивание)
+- aliases:
+  - опыт 1 (промышленное выщелачивание)
+  - опыт 2 (промышленное выщелачивание)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 1 (промышленное выщелачивание)
+  - node_id: Experiment::опыт 2 (промышленное выщелачивание)
+- aliases:
+  - опыт 22-Au-1
+  - опыт 22-Au-1-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 22-au-1-1
+- aliases:
+  - опыт 22-Au-1
+  - опыт 22-Au-1-2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 22-au-1-2
+- aliases:
+  - опыт 22-Au-1
+  - опыт 22-Au-1-3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 22-au-1-3
+- aliases:
+  - опыт 22-Au-1
+  - опыт 22-Au-1-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 22-au-1-4
+- aliases:
+  - опыт 22-Au-1
+  - опыт 22-Au-2-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 22-au-2-1
+- aliases:
+  - опыт 22-Au-1
+  - опыт 22-Au-3-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 22-au-3-1
+- aliases:
+  - опыт 22-Au-1
+  - опыт 24-Au-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 24-au-1
+- aliases:
+  - опыт 22-Au-1
+  - опыт 25-Au-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1
+  - node_id: Experiment::опыт 25-au-1
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-1-1.1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-1-1.1
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-1-2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-1-2
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-1-2.1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-1-2.1
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-1-3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-1-3
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-1-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-1-4
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-2-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-2-1
+- aliases:
+  - опыт 22-Au-1-1
+  - опыт 22-Au-3-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1
+  - node_id: Experiment::опыт 22-au-3-1
+- aliases:
+  - опыт 22-Au-1-1.1
+  - опыт 22-Au-1-2.1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-1.1
+  - node_id: Experiment::опыт 22-au-1-2.1
+- aliases:
+  - опыт 22-Au-1-2
+  - опыт 22-Au-1-2.1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-2
+  - node_id: Experiment::опыт 22-au-1-2.1
+- aliases:
+  - опыт 22-Au-1-2
+  - опыт 22-Au-1-3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-2
+  - node_id: Experiment::опыт 22-au-1-3
+- aliases:
+  - опыт 22-Au-1-2
+  - опыт 22-Au-1-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-2
+  - node_id: Experiment::опыт 22-au-1-4
+- aliases:
+  - опыт 22-Au-1-3
+  - опыт 22-Au-1-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-1-3
+  - node_id: Experiment::опыт 22-au-1-4
+- aliases:
+  - опыт 22-Au-2-1
+  - опыт 22-Au-3-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 22-au-2-1
+  - node_id: Experiment::опыт 22-au-3-1
+- aliases:
+  - опыт 24-Au-1
+  - опыт 24-Au-2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 24-au-1
+  - node_id: Experiment::опыт 24-au-2
+- aliases:
+  - опыт 24-Au-1
+  - опыт 25-Au-1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 24-au-1
+  - node_id: Experiment::опыт 25-au-1
+- aliases:
+  - опыт 24-Au-2
+  - опыт 25-Au-2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 24-au-2
+  - node_id: Experiment::опыт 25-au-2
+- aliases:
+  - опыт 25-Au-1
+  - опыт 25-Au-2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт 25-au-1
+  - node_id: Experiment::опыт 25-au-2
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 1.2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 1.2
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 1.3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 1.3
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 1.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 1.4
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 1.5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 1.5
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 1.6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 1.6
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 1.7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 1.7
+- aliases:
+  - опыт грануляции 1.1
+  - опыт грануляции 2.1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.1
+  - node_id: Experiment::опыт грануляции 2.1
+- aliases:
+  - опыт грануляции 1.2
+  - опыт грануляции 1.3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.2
+  - node_id: Experiment::опыт грануляции 1.3
+- aliases:
+  - опыт грануляции 1.2
+  - опыт грануляции 1.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.2
+  - node_id: Experiment::опыт грануляции 1.4
+- aliases:
+  - опыт грануляции 1.2
+  - опыт грануляции 1.5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.2
+  - node_id: Experiment::опыт грануляции 1.5
+- aliases:
+  - опыт грануляции 1.2
+  - опыт грануляции 1.6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.2
+  - node_id: Experiment::опыт грануляции 1.6
+- aliases:
+  - опыт грануляции 1.2
+  - опыт грануляции 1.7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.2
+  - node_id: Experiment::опыт грануляции 1.7
+- aliases:
+  - опыт грануляции 1.2
+  - опыт грануляции 2.2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.2
+  - node_id: Experiment::опыт грануляции 2.2
+- aliases:
+  - опыт грануляции 1.3
+  - опыт грануляции 1.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.3
+  - node_id: Experiment::опыт грануляции 1.4
+- aliases:
+  - опыт грануляции 1.3
+  - опыт грануляции 1.5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.3
+  - node_id: Experiment::опыт грануляции 1.5
+- aliases:
+  - опыт грануляции 1.3
+  - опыт грануляции 1.6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.3
+  - node_id: Experiment::опыт грануляции 1.6
+- aliases:
+  - опыт грануляции 1.3
+  - опыт грануляции 1.7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.3
+  - node_id: Experiment::опыт грануляции 1.7
+- aliases:
+  - опыт грануляции 1.3
+  - опыт грануляции 2.3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.3
+  - node_id: Experiment::опыт грануляции 2.3
+- aliases:
+  - опыт грануляции 1.4
+  - опыт грануляции 1.5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.4
+  - node_id: Experiment::опыт грануляции 1.5
+- aliases:
+  - опыт грануляции 1.4
+  - опыт грануляции 1.6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.4
+  - node_id: Experiment::опыт грануляции 1.6
+- aliases:
+  - опыт грануляции 1.4
+  - опыт грануляции 1.7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.4
+  - node_id: Experiment::опыт грануляции 1.7
+- aliases:
+  - опыт грануляции 1.4
+  - опыт грануляции 2.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.4
+  - node_id: Experiment::опыт грануляции 2.4
+- aliases:
+  - опыт грануляции 1.5
+  - опыт грануляции 1.6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.5
+  - node_id: Experiment::опыт грануляции 1.6
+- aliases:
+  - опыт грануляции 1.5
+  - опыт грануляции 1.7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.5
+  - node_id: Experiment::опыт грануляции 1.7
+- aliases:
+  - опыт грануляции 1.6
+  - опыт грануляции 1.7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 1.6
+  - node_id: Experiment::опыт грануляции 1.7
+- aliases:
+  - опыт грануляции 2.1
+  - опыт грануляции 2.2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 2.1
+  - node_id: Experiment::опыт грануляции 2.2
+- aliases:
+  - опыт грануляции 2.1
+  - опыт грануляции 2.3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 2.1
+  - node_id: Experiment::опыт грануляции 2.3
+- aliases:
+  - опыт грануляции 2.1
+  - опыт грануляции 2.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 2.1
+  - node_id: Experiment::опыт грануляции 2.4
+- aliases:
+  - опыт грануляции 2.2
+  - опыт грануляции 2.3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 2.2
+  - node_id: Experiment::опыт грануляции 2.3
+- aliases:
+  - опыт грануляции 2.2
+  - опыт грануляции 2.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 2.2
+  - node_id: Experiment::опыт грануляции 2.4
+- aliases:
+  - опыт грануляции 2.3
+  - опыт грануляции 2.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыт грануляции 2.3
+  - node_id: Experiment::опыт грануляции 2.4
+- aliases:
+  - опытно-промышленные испытания
+  - опытно-промышленные испытания (ОПИ)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опытно-промышленные испытания
+  - node_id: Experiment::опытно-промышленные испытания (опи)
+- aliases:
+  - опытно-промышленные испытания на ИУ АП КГМК
+  - опытно-промышленные испытания на ИУ НТЦ КГМК
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опытно-промышленные испытания на иу ап кгмк
+  - node_id: Experiment::опытно-промышленные испытания на иу нтц кгмк
+- aliases:
+  - опыты обогащения по схеме 2ПК-ТОФ
+  - опыты обогащения по схеме 3ПК-ТОФ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::опыты обогащения по схеме 2пк-тоф
+  - node_id: Experiment::опыты обогащения по схеме 3пк-тоф
+- aliases:
+  - плавка №1
+  - плавка №2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::плавка no1
+  - node_id: Experiment::плавка no2
+- aliases:
+  - плавка №1
+  - плавка №3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::плавка no1
+  - node_id: Experiment::плавка no3
+- aliases:
+  - плавка №2
+  - плавка №3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::плавка no2
+  - node_id: Experiment::плавка no3
+- aliases:
+  - синтез образца P-4
+  - синтез образца Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца p-4
+  - node_id: Experiment::синтез образца р-14
+- aliases:
+  - синтез образца Р-10
+  - синтез образца Р-11
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-10
+  - node_id: Experiment::синтез образца р-11
+- aliases:
+  - синтез образца Р-10
+  - синтез образца Р-12
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-10
+  - node_id: Experiment::синтез образца р-12
+- aliases:
+  - синтез образца Р-10
+  - синтез образца Р-13
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-10
+  - node_id: Experiment::синтез образца р-13
+- aliases:
+  - синтез образца Р-10
+  - синтез образца Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-10
+  - node_id: Experiment::синтез образца р-14
+- aliases:
+  - синтез образца Р-10
+  - синтез образца Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-10
+  - node_id: Experiment::синтез образца р-15
+- aliases:
+  - синтез образца Р-11
+  - синтез образца Р-12
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-11
+  - node_id: Experiment::синтез образца р-12
+- aliases:
+  - синтез образца Р-11
+  - синтез образца Р-13
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-11
+  - node_id: Experiment::синтез образца р-13
+- aliases:
+  - синтез образца Р-11
+  - синтез образца Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-11
+  - node_id: Experiment::синтез образца р-14
+- aliases:
+  - синтез образца Р-11
+  - синтез образца Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-11
+  - node_id: Experiment::синтез образца р-15
+- aliases:
+  - синтез образца Р-12
+  - синтез образца Р-13
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-12
+  - node_id: Experiment::синтез образца р-13
+- aliases:
+  - синтез образца Р-12
+  - синтез образца Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-12
+  - node_id: Experiment::синтез образца р-14
+- aliases:
+  - синтез образца Р-12
+  - синтез образца Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-12
+  - node_id: Experiment::синтез образца р-15
+- aliases:
+  - синтез образца Р-13
+  - синтез образца Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-13
+  - node_id: Experiment::синтез образца р-14
+- aliases:
+  - синтез образца Р-13
+  - синтез образца Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-13
+  - node_id: Experiment::синтез образца р-15
+- aliases:
+  - синтез образца Р-14
+  - синтез образца Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образца р-14
+  - node_id: Experiment::синтез образца р-15
+- aliases:
+  - синтез образцов P-2...P-5
+  - синтез образцов P-2...P-9
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образцов p-2...p-5
+  - node_id: Experiment::синтез образцов p-2...p-9
+- aliases:
+  - синтез образцов Р-10,Р-11,P-4
+  - синтез образцов Р-11,P-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::синтез образцов р-10,р-11,p-4
+  - node_id: Experiment::синтез образцов р-11,p-4
+- aliases:
+  - эксперименты в динамических условиях
+  - эксперименты в статических условиях
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Experiment::эксперименты в динамических условиях
+  - node_id: Experiment::эксперименты в статических условиях
+- aliases:
+  - Beloglazov I.
+  - Beloglazov I.I.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::beloglazov i.
+  - node_id: Expert::beloglazov i.i.
+- aliases:
+  - Beloglazov I. I.
+  - Beloglazov I.I.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::beloglazov i. i.
+  - node_id: Expert::beloglazov i.i.
+- aliases:
+  - Brown E. T.
+  - Brown E.T.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::brown e. t.
+  - node_id: Expert::brown e.t.
+- aliases:
+  - Dowding C. H.
+  - Dowding C.H.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::dowding c. h.
+  - node_id: Expert::dowding c.h.
+- aliases:
+  - Fonseca Raul O.C.
+  - Fonseca Raúl O.C.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::fonseca raul o.c.
+  - node_id: Expert::fonseca raúl o.c.
+- aliases:
+  - George D.B.
+  - George D.K.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::george d.b.
+  - node_id: Expert::george d.k.
+- aliases:
+  - Katsabanis P.
+  - Katsabanis P.D.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::katsabanis p.
+  - node_id: Expert::katsabanis p.d.
+- aliases:
+  - Kopp J. W.
+  - Kopp J.W.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::kopp j. w.
+  - node_id: Expert::kopp j.w.
+- aliases:
+  - Levin L.Y.
+  - Levin L.Yu.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::levin l.y.
+  - node_id: Expert::levin l.yu.
+- aliases:
+  - Makarov D. V.
+  - Makarov D.V.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::makarov d. v.
+  - node_id: Expert::makarov d.v.
+- aliases:
+  - Metsärinta M.-L.
+  - Metsärinta M.L.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::metsärinta m.-l.
+  - node_id: Expert::metsärinta m.l.
+- aliases:
+  - Okabe T. H.
+  - Okabe T.H.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::okabe t. h.
+  - node_id: Expert::okabe t.h.
+- aliases:
+  - Richards K. J.
+  - Richards K.J.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::richards k. j.
+  - node_id: Expert::richards k.j.
+- aliases:
+  - Siskind D. E.
+  - Siskind D.E.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::siskind d. e.
+  - node_id: Expert::siskind d.e.
+- aliases:
+  - Stagg M. S.
+  - Stagg M.S.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::stagg m. s.
+  - node_id: Expert::stagg m.s.
+- aliases:
+  - Verbilo P.
+  - Verbilo P.E.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::verbilo p.
+  - node_id: Expert::verbilo p.e.
+- aliases:
+  - Белов А.А.
+  - Белов А.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::белов а.а.
+  - node_id: Expert::белов а.в.
+- aliases:
+  - Васильев Т.В.
+  - Васильев Ю.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::васильев т.в.
+  - node_id: Expert::васильев ю.в.
+- aliases:
+  - Власов В.А.
+  - Власов Г.А.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::власов в.а.
+  - node_id: Expert::власов г.а.
+- aliases:
+  - Головченко Ю. Ю.
+  - Головченко Ю.Ю.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::головченко ю. ю.
+  - node_id: Expert::головченко ю.ю.
+- aliases:
+  - Данилов М.Н.
+  - Данилов М.П.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::данилов м.н.
+  - node_id: Expert::данилов м.п.
+- aliases:
+  - Демидов К. А.
+  - Демидов К.А.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::демидов к. а.
+  - node_id: Expert::демидов к.а.
+- aliases:
+  - Еременко А.А.
+  - Еременко В.А.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::еременко а.а.
+  - node_id: Expert::еременко в.а.
+- aliases:
+  - Ерцева Л. Н.
+  - Ерцева Л.Н.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::ерцева л. н.
+  - node_id: Expert::ерцева л.н.
+- aliases:
+  - Зайцев В.И.
+  - Зайцев В.Я.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::зайцев в.и.
+  - node_id: Expert::зайцев в.я.
+- aliases:
+  - Иванов О.В.
+  - Иванов О.С.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::иванов о.в.
+  - node_id: Expert::иванов о.с.
+- aliases:
+  - Кириленко В. И.
+  - Кириленко В.И.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::кириленко в. и.
+  - node_id: Expert::кириленко в.и.
+- aliases:
+  - Криштал М. М.
+  - Криштал М.М.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::криштал м. м.
+  - node_id: Expert::криштал м.м.
+- aliases:
+  - Кузнецов В.В.
+  - Кузнецов В.М.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::кузнецов в.в.
+  - node_id: Expert::кузнецов в.м.
+- aliases:
+  - Кузнецов В.В.
+  - Кузнецов Р.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::кузнецов в.в.
+  - node_id: Expert::кузнецов р.в.
+- aliases:
+  - Кузнецов Н.Н.
+  - Кузнецов Н.С.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::кузнецов н.н.
+  - node_id: Expert::кузнецов н.с.
+- aliases:
+  - Лаптев В.В.
+  - Лаптев Ю.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::лаптев в.в.
+  - node_id: Expert::лаптев ю.в.
+- aliases:
+  - Левин В.А.
+  - Левин В.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::левин в.а.
+  - node_id: Expert::левин в.в.
+- aliases:
+  - Ловчиков А.
+  - Ловчиков А.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::ловчиков а.
+  - node_id: Expert::ловчиков а.в.
+- aliases:
+  - Мироевский Г.П
+  - Мироевский Г.П.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::мироевский г.п
+  - node_id: Expert::мироевский г.п.
+- aliases:
+  - Мишина O.Ю.
+  - Мишина О.Ю.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::мишина o.ю.
+  - node_id: Expert::мишина о.ю.
+- aliases:
+  - Пахомов Р. А.
+  - Пахомов Р.А.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::пахомов р. а.
+  - node_id: Expert::пахомов р.а.
+- aliases:
+  - Платонов О.
+  - Платонов О.И.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::платонов о.
+  - node_id: Expert::платонов о.и.
+- aliases:
+  - Полунин В. И.
+  - Полунин В.И.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::полунин в. и.
+  - node_id: Expert::полунин в.и.
+- aliases:
+  - Попов В. А.
+  - Попов В.А.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::попов в. а.
+  - node_id: Expert::попов в.а.
+- aliases:
+  - Портов A.Б.
+  - Портов А.Б.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::портов a.б.
+  - node_id: Expert::портов а.б.
+- aliases:
+  - Румянцев А. Е.
+  - Румянцев А.Е.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::румянцев а. е.
+  - node_id: Expert::румянцев а.е.
+- aliases:
+  - Селиванов Е. Н.
+  - Селиванов Е.Н.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::селиванов е. н.
+  - node_id: Expert::селиванов е.н.
+- aliases:
+  - Серегин А.С.
+  - Серегин П.С.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::серегин а.с.
+  - node_id: Expert::серегин п.с.
+- aliases:
+  - Смирнов К.В.
+  - Смирнов П.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::смирнов к.в.
+  - node_id: Expert::смирнов п.в.
+- aliases:
+  - Соннов М. А.
+  - Соннов М.А.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::соннов м. а.
+  - node_id: Expert::соннов м.а.
+- aliases:
+  - Трофимов А. В.
+  - Трофимов А.В.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::трофимов а. в.
+  - node_id: Expert::трофимов а.в.
+- aliases:
+  - Ульянинков А. Г.
+  - Ульянинков А.Г.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::ульянинков а. г.
+  - node_id: Expert::ульянинков а.г.
+- aliases:
+  - Фадеев А. Б.
+  - Фадеев А.Б.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::фадеев а. б.
+  - node_id: Expert::фадеев а.б.
+- aliases:
+  - Федоров А.Н.
+  - Федоров А.С.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::федоров а.н.
+  - node_id: Expert::федоров а.с.
+- aliases:
+  - Федоров А.С.
+  - Фёдоров М.С.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::федоров а.с.
+  - node_id: Expert::федоров м.с.
+- aliases:
+  - Филатов А. М.
+  - Филатов А.М.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::филатов а. м.
+  - node_id: Expert::филатов а.м.
+- aliases:
+  - Цемехман Л. Ш.
+  - Цемехман Л.Ш.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::цемехман л. ш.
+  - node_id: Expert::цемехман л.ш.
+- aliases:
+  - Цымбулов Л. Б.
+  - Цымбулов Л.Б.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::цымбулов л. б.
+  - node_id: Expert::цымбулов л.б.
+- aliases:
+  - Ясников И. С.
+  - Ясников И.С.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Expert::ясников и. с.
+  - node_id: Expert::ясников и.с.
+- aliases:
+  - Заполярный филиал (ЗФ) ПАО «ГМК Норильский Никель»
+  - Заполярный филиал ПАО ГМК «Норильский никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::заполярный филиал (зф) пао "гмк норильский никель
+  - node_id: Facility::заполярный филиал пао гмк "норильский никель
+- aliases:
+  - Заполярный филиал ГМК «Норильский никель»
+  - Заполярный филиал ПАО ГМК «Норильский никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::заполярный филиал гмк "норильский никель
+  - node_id: Facility::заполярный филиал пао гмк "норильский никель
+- aliases:
+  - ЗФ ПАО «ГМК «Норильский никель»
+  - ЗФ ПАО «ГМК Норильский Никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::зф пао "гмк "норильский никель
+  - node_id: Facility::зф пао "гмк норильский никель
+- aliases:
+  - Испытательный аналитический центр (ИАЦ) ООО «Институт Гипроникель»
+  - испытательный аналитический центр ООО «Институт Гипроникель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::испытательный аналитический центр (иац) ооо "институт гипроникель
+  - node_id: Facility::испытательный аналитический центр ооо "институт гипроникель
+- aliases:
+  - Испытательный аналитический центр (ИАЦ) ООО «Институт Гипроникель»
+  - Испытательный аналитический центр, ООО «Институт Гипроникель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::испытательный аналитический центр (иац) ооо "институт гипроникель
+  - node_id: Facility::испытательный аналитический центр, ооо "институт гипроникель
+- aliases:
+  - Испытательный аналитический центр, ООО «Институт Гипроникель»
+  - испытательный аналитический центр ООО «Институт Гипроникель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::испытательный аналитический центр ооо "институт гипроникель
+  - node_id: Facility::испытательный аналитический центр, ооо "институт гипроникель
+- aliases:
+  - лаборатория гидрометаллургии ООО «Институт Гипроникель»
+  - лаборатория пирометаллургии ООО «Институт Гипроникель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::лаборатория гидрометаллургии ооо "институт гипроникель
+  - node_id: Facility::лаборатория пирометаллургии ооо "институт гипроникель
+- aliases:
+  - Медный завод ЗФ ПАО «ГМК «Норильский Никель»
+  - Медный завод ПАО «ГМК «Норильский Никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::медный завод зф пао "гмк "норильский никель
+  - node_id: Facility::медный завод пао "гмк "норильский никель
+- aliases:
+  - Медный завод ЗФ ПАО «ГМК «Норильский Никель»
+  - Медный завод ПАО «ГМК Норильский никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::медный завод зф пао "гмк "норильский никель
+  - node_id: Facility::медный завод пао "гмк норильский никель
+- aliases:
+  - Медный завод ПАО «ГМК «Норильский Никель»
+  - Медный завод ПАО «ГМК Норильский никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::медный завод пао "гмк "норильский никель
+  - node_id: Facility::медный завод пао "гмк норильский никель
+- aliases:
+  - Норильский промышленный район
+  - Норильский промышленный регион
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::норильский промышленный район
+  - node_id: Facility::норильский промышленный регион
+- aliases:
+  - ООО «Институт Гипроникель»
+  - ООО «Институт Гипроникепь»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::ооо "институт гипроникель
+  - node_id: Facility::ооо "институт гипроникепь
+- aliases:
+  - ООО «Щёлковский катализаторный завод»
+  - ООО «Щёлковский катализаторный завод» (ЩКЗ)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::ооо "щелковский катализаторный завод
+  - node_id: Facility::ооо "щелковский катализаторный завод" (щкз)
+- aliases:
+  - ПАО «ГМК «Норильский никель»
+  - ПАО «ГМК Норильский Никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::пао "гмк "норильский никель
+  - node_id: Facility::пао "гмк норильский никель
+- aliases:
+  - ПАО «ГМК «Норильский никель»
+  - ПАО ГМК «Норильский Никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::пао "гмк "норильский никель
+  - node_id: Facility::пао гмк "норильский никель
+- aliases:
+  - ПАО «ГМК Норильский Никель»
+  - ПАО ГМК «Норильский Никель»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::пао "гмк норильский никель
+  - node_id: Facility::пао гмк "норильский никель
+- aliases:
+  - рудник «Комсомольский»
+  - рудник Комсомольский
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::рудник "комсомольский
+  - node_id: Facility::рудник комсомольский
+- aliases:
+  - рудник «Маяк»
+  - рудник Маяк
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::рудник "маяк
+  - node_id: Facility::рудник маяк
+- aliases:
+  - рудник «Скалистый»
+  - рудник Скалистый
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::рудник "скалистый
+  - node_id: Facility::рудник скалистый
+- aliases:
+  - Санкт-Петербургский политехнический университет Петра Великого
+  - Санкт-Петербургский политехнический университет Петра Великого (СПбПУ)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::санкт-петербургский политехнический университет петра великого
+  - node_id: Facility::санкт-петербургский политехнический университет петра великого
+      (спбпу)
+- aliases:
+  - шахта «Ангидрит»
+  - шахта Ангидрит
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Facility::шахта "ангидрит
+  - node_id: Facility::шахта ангидрит
+- aliases:
+  - copper-nickel matte
+  - copper-nickel mattes
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::copper-nickel matte
+  - node_id: Material::copper-nickel mattes
+- aliases:
+  - Na_CAM_NMC_1 (до отмывки)
+  - Na_CAM_NMC_1 (после отмывки)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::na_cam_nmc_1 (до отмывки)
+  - node_id: Material::na_cam_nmc_1 (после отмывки)
+- aliases:
+  - Na_CAM_NMC_2 (до отмывки)
+  - Na_CAM_NMC_2 (после отмывки)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::na_cam_nmc_2 (до отмывки)
+  - node_id: Material::na_cam_nmc_2 (после отмывки)
+- aliases:
+  - алюмооксидный катализатор
+  - алюмооксидный катализатор DR
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::алюмооксидный катализатор
+  - node_id: Material::алюмооксидный катализатор dr
+- aliases:
+  - алюмооксидный катализатор
+  - алюмооксидный катализатор О-К
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::алюмооксидный катализатор
+  - node_id: Material::алюмооксидный катализатор о-к
+- aliases:
+  - алюмооксидный катализатор DR
+  - алюмооксидный катализатор О-К
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::алюмооксидный катализатор dr
+  - node_id: Material::алюмооксидный катализатор о-к
+- aliases:
+  - алюмооксидный катализатор АОК-78-59
+  - алюмооксидный катализатор Клауса АОК-78-59
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::алюмооксидный катализатор аок-78-59
+  - node_id: Material::алюмооксидный катализатор клауса аок-78-59
+- aliases:
+  - анионит MTS984
+  - анионит MTS9841
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::анионит mts984
+  - node_id: Material::анионит mts9841
+- aliases:
+  - анионит MTS984
+  - анионит S984
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::анионит mts984
+  - node_id: Material::анионит s984
+- aliases:
+  - анионит Purolite S984
+  - анионит Purolite S985
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::анионит purolite s984
+  - node_id: Material::анионит purolite s985
+- aliases:
+  - анионит Puromet MTS984
+  - анионит Puromet MTS9841
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::анионит puromet mts984
+  - node_id: Material::анионит puromet mts9841
+- aliases:
+  - анионит S984
+  - анионит S985
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::анионит s984
+  - node_id: Material::анионит s985
+- aliases:
+  - анионообменная смола MTS9841
+  - анионообменная смола MTS9850
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::анионообменная смола mts9841
+  - node_id: Material::анионообменная смола mts9850
+- aliases:
+  - АШЦ М30 600
+  - АШЦ М30 800
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц м30 600
+  - node_id: Material::ашц м30 800
+- aliases:
+  - АШЦ М30 600
+  - АШЦ М30 900
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц м30 600
+  - node_id: Material::ашц м30 900
+- aliases:
+  - АШЦ М30 800
+  - АШЦ М30 900
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц м30 800
+  - node_id: Material::ашц м30 900
+- aliases:
+  - АШЦ ТВП 10
+  - АШЦ ТВП 20
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц твп 10
+  - node_id: Material::ашц твп 20
+- aliases:
+  - АШЦ ТВП 10
+  - АШЦ ТВП 30
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц твп 10
+  - node_id: Material::ашц твп 30
+- aliases:
+  - АШЦ ТВП 10
+  - АШЦ ТВП 60
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц твп 10
+  - node_id: Material::ашц твп 60
+- aliases:
+  - АШЦ ТВП 20
+  - АШЦ ТВП 30
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц твп 20
+  - node_id: Material::ашц твп 30
+- aliases:
+  - АШЦ ТВП 20
+  - АШЦ ТВП 60
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц твп 20
+  - node_id: Material::ашц твп 60
+- aliases:
+  - АШЦ ТВП 30
+  - АШЦ ТВП 60
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::ашц твп 30
+  - node_id: Material::ашц твп 60
+- aliases:
+  - вода деионизированная
+  - вода деионизованная
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::вода деионизированная
+  - node_id: Material::вода деионизованная
+- aliases:
+  - восстановленная закись никеля
+  - восстановленная закись никеля (ВЗН)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::восстановленная закись никеля
+  - node_id: Material::восстановленная закись никеля (взн)
+- aliases:
+  - восстановленная закись никеля трубчатой печи
+  - восстановленная закись никеля трубчатых печей
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::восстановленная закись никеля трубчатой печи
+  - node_id: Material::восстановленная закись никеля трубчатых печей
+- aliases:
+  - восстановленный газ
+  - восстановленный газ ПВ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::восстановленный газ
+  - node_id: Material::восстановленный газ пв
+- aliases:
+  - графитированный кокс
+  - графитированный коксик
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::графитированный кокс
+  - node_id: Material::графитированный коксик
+- aliases:
+  - ГСО VCH2-1
+  - ГСО VCH2-2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-1
+  - node_id: Material::гсо vch2-2
+- aliases:
+  - ГСО VCH2-1
+  - ГСО VCH2-3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-1
+  - node_id: Material::гсо vch2-3
+- aliases:
+  - ГСО VCH2-1
+  - ГСО VCH2-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-1
+  - node_id: Material::гсо vch2-4
+- aliases:
+  - ГСО VCH2-1
+  - ГСО VCH2-5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-1
+  - node_id: Material::гсо vch2-5
+- aliases:
+  - ГСО VCH2-1
+  - ГСО VCH2-6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-1
+  - node_id: Material::гсо vch2-6
+- aliases:
+  - ГСО VCH2-1
+  - ГСО VCH2-7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-1
+  - node_id: Material::гсо vch2-7
+- aliases:
+  - ГСО VCH2-2
+  - ГСО VCH2-3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-2
+  - node_id: Material::гсо vch2-3
+- aliases:
+  - ГСО VCH2-2
+  - ГСО VCH2-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-2
+  - node_id: Material::гсо vch2-4
+- aliases:
+  - ГСО VCH2-2
+  - ГСО VCH2-5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-2
+  - node_id: Material::гсо vch2-5
+- aliases:
+  - ГСО VCH2-2
+  - ГСО VCH2-6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-2
+  - node_id: Material::гсо vch2-6
+- aliases:
+  - ГСО VCH2-2
+  - ГСО VCH2-7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-2
+  - node_id: Material::гсо vch2-7
+- aliases:
+  - ГСО VCH2-3
+  - ГСО VCH2-4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-3
+  - node_id: Material::гсо vch2-4
+- aliases:
+  - ГСО VCH2-3
+  - ГСО VCH2-5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-3
+  - node_id: Material::гсо vch2-5
+- aliases:
+  - ГСО VCH2-3
+  - ГСО VCH2-6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-3
+  - node_id: Material::гсо vch2-6
+- aliases:
+  - ГСО VCH2-3
+  - ГСО VCH2-7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-3
+  - node_id: Material::гсо vch2-7
+- aliases:
+  - ГСО VCH2-4
+  - ГСО VCH2-5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-4
+  - node_id: Material::гсо vch2-5
+- aliases:
+  - ГСО VCH2-4
+  - ГСО VCH2-6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-4
+  - node_id: Material::гсо vch2-6
+- aliases:
+  - ГСО VCH2-4
+  - ГСО VCH2-7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-4
+  - node_id: Material::гсо vch2-7
+- aliases:
+  - ГСО VCH2-5
+  - ГСО VCH2-6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-5
+  - node_id: Material::гсо vch2-6
+- aliases:
+  - ГСО VCH2-5
+  - ГСО VCH2-7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-5
+  - node_id: Material::гсо vch2-7
+- aliases:
+  - ГСО VCH2-6
+  - ГСО VCH2-7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::гсо vch2-6
+  - node_id: Material::гсо vch2-7
+- aliases:
+  - зачистки фильтр-пресса
+  - зачистки фильтр-прессов
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::зачистки фильтр-пресса
+  - node_id: Material::зачистки фильтр-прессов
+- aliases:
+  - катализатор CR-31
+  - катализатор CR-3S
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катализатор cr-31
+  - node_id: Material::катализатор cr-3s
+- aliases:
+  - катализатор CR-31
+  - катализатор CRS-31
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катализатор cr-31
+  - node_id: Material::катализатор crs-31
+- aliases:
+  - катализатор CR-31
+  - катализатор СR-31
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катализатор cr-31
+  - node_id: Material::катализатор сr-31
+- aliases:
+  - катализатор CR-3S
+  - катализатор CRS-31
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катализатор cr-3s
+  - node_id: Material::катализатор crs-31
+- aliases:
+  - катализатор CRS-31
+  - катализатор СR-31
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катализатор crs-31
+  - node_id: Material::катализатор сr-31
+- aliases:
+  - катодный материал САМ1-N1
+  - катодный материал САМ1-N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n1
+  - node_id: Material::катодный материал сам1-n2
+- aliases:
+  - катодный материал САМ1-N1
+  - катодный материал САМ1-P1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n1
+  - node_id: Material::катодный материал сам1-p1
+- aliases:
+  - катодный материал САМ1-N1
+  - катодный материал САМ1-P2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n1
+  - node_id: Material::катодный материал сам1-p2
+- aliases:
+  - катодный материал САМ1-N1
+  - катодный материал САМ2-1-N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n1
+  - node_id: Material::катодный материал сам2-1-n2
+- aliases:
+  - катодный материал САМ1-N2
+  - катодный материал САМ1-P1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n2
+  - node_id: Material::катодный материал сам1-p1
+- aliases:
+  - катодный материал САМ1-N2
+  - катодный материал САМ1-P2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n2
+  - node_id: Material::катодный материал сам1-p2
+- aliases:
+  - катодный материал САМ1-N2
+  - катодный материал САМ2-1-N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n2
+  - node_id: Material::катодный материал сам2-1-n2
+- aliases:
+  - катодный материал САМ1-N2
+  - катодный материал САМ2-2-N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-n2
+  - node_id: Material::катодный материал сам2-2-n2
+- aliases:
+  - катодный материал САМ1-P1
+  - катодный материал САМ1-P2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-p1
+  - node_id: Material::катодный материал сам1-p2
+- aliases:
+  - катодный материал САМ1-P2
+  - катодный материал САМ2-1-N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам1-p2
+  - node_id: Material::катодный материал сам2-1-n2
+- aliases:
+  - катодный материал САМ2-1-N2
+  - катодный материал САМ2-2-N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::катодный материал сам2-1-n2
+  - node_id: Material::катодный материал сам2-2-n2
+- aliases:
+  - кек 2 стадии сульфатизации
+  - кек I стадии сульфатизации
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кек 2 стадии сульфатизации
+  - node_id: Material::кек i стадии сульфатизации
+- aliases:
+  - кобальт марки NORILSK I
+  - кобальт марки NORILSK II
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки norilsk i
+  - node_id: Material::кобальт марки norilsk ii
+- aliases:
+  - кобальт марки NORILSK I
+  - кобальт марки NORILSK III
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки norilsk i
+  - node_id: Material::кобальт марки norilsk iii
+- aliases:
+  - кобальт марки NORILSK I
+  - кобальт марки NORILSK PRIME
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки norilsk i
+  - node_id: Material::кобальт марки norilsk prime
+- aliases:
+  - кобальт марки NORILSK II
+  - кобальт марки NORILSK III
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки norilsk ii
+  - node_id: Material::кобальт марки norilsk iii
+- aliases:
+  - кобальт марки NORILSK II
+  - кобальт марки NORILSK PRIME
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки norilsk ii
+  - node_id: Material::кобальт марки norilsk prime
+- aliases:
+  - кобальт марки К0
+  - кобальт марки К1А
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки к0
+  - node_id: Material::кобальт марки к1а
+- aliases:
+  - кобальт марки К1А
+  - кобальт марки К1Ау
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::кобальт марки к1а
+  - node_id: Material::кобальт марки к1ау
+- aliases:
+  - комплексы [CuCl2]- и [CuCl3]2-
+  - комплексы [CuCl3]- и [CuCl4]2-
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::комплексы [cucl2]- и [cucl3]2-
+  - node_id: Material::комплексы [cucl3]- и [cucl4]2-
+- aliases:
+  - концентрат 1
+  - концентрат 2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 2
+- aliases:
+  - концентрат 1
+  - концентрат 3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 3
+- aliases:
+  - концентрат 1
+  - концентрат 4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 4
+- aliases:
+  - концентрат 1
+  - концентрат 5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 5
+- aliases:
+  - концентрат 1
+  - концентрат 6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 6
+- aliases:
+  - концентрат 1
+  - концентрат 7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 7
+- aliases:
+  - концентрат 1
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 1
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат 2
+  - концентрат 3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 2
+  - node_id: Material::концентрат 3
+- aliases:
+  - концентрат 2
+  - концентрат 4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 2
+  - node_id: Material::концентрат 4
+- aliases:
+  - концентрат 2
+  - концентрат 5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 2
+  - node_id: Material::концентрат 5
+- aliases:
+  - концентрат 2
+  - концентрат 6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 2
+  - node_id: Material::концентрат 6
+- aliases:
+  - концентрат 2
+  - концентрат 7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 2
+  - node_id: Material::концентрат 7
+- aliases:
+  - концентрат 2
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 2
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат 3
+  - концентрат 4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 3
+  - node_id: Material::концентрат 4
+- aliases:
+  - концентрат 3
+  - концентрат 5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 3
+  - node_id: Material::концентрат 5
+- aliases:
+  - концентрат 3
+  - концентрат 6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 3
+  - node_id: Material::концентрат 6
+- aliases:
+  - концентрат 3
+  - концентрат 7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 3
+  - node_id: Material::концентрат 7
+- aliases:
+  - концентрат 3
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 3
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат 4
+  - концентрат 5
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 4
+  - node_id: Material::концентрат 5
+- aliases:
+  - концентрат 4
+  - концентрат 6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 4
+  - node_id: Material::концентрат 6
+- aliases:
+  - концентрат 4
+  - концентрат 7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 4
+  - node_id: Material::концентрат 7
+- aliases:
+  - концентрат 4
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 4
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат 5
+  - концентрат 6
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 5
+  - node_id: Material::концентрат 6
+- aliases:
+  - концентрат 5
+  - концентрат 7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 5
+  - node_id: Material::концентрат 7
+- aliases:
+  - концентрат 5
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 5
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат 6
+  - концентрат 7
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 6
+  - node_id: Material::концентрат 7
+- aliases:
+  - концентрат 6
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 6
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат 7
+  - концентрат 8
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат 7
+  - node_id: Material::концентрат 8
+- aliases:
+  - концентрат металлов спутников платины
+  - концентрат металлов спутников платины (КМСП)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрат металлов спутников платины
+  - node_id: Material::концентрат металлов спутников платины (кмсп)
+- aliases:
+  - концентрированная серная кислота
+  - концентрированная серная кислота 95%
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::концентрированная серная кислота
+  - node_id: Material::концентрированная серная кислота 95%
+- aliases:
+  - магнитная фракция контрольной сепарации
+  - магнитная фракция основной сепарации
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::магнитная фракция контрольной сепарации
+  - node_id: Material::магнитная фракция основной сепарации
+- aliases:
+  - медь марки М00к
+  - медь марки М0к
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::медь марки м00к
+  - node_id: Material::медь марки м0к
+- aliases:
+  - медь марки М0к
+  - медь марки М1к
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::медь марки м0к
+  - node_id: Material::медь марки м1к
+- aliases:
+  - металлический расплав
+  - металлический сплав
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::металлический расплав
+  - node_id: Material::металлический сплав
+- aliases:
+  - образец натяг 0 МПа
+  - образец натяг 15 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 0 мпа
+  - node_id: Material::образец натяг 15 мпа
+- aliases:
+  - образец натяг 0 МПа
+  - образец натяг 30 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 0 мпа
+  - node_id: Material::образец натяг 30 мпа
+- aliases:
+  - образец натяг 0 МПа
+  - образец натяг 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 0 мпа
+  - node_id: Material::образец натяг 45 мпа
+- aliases:
+  - образец натяг 0 МПа
+  - образец с натягом 0 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 0 мпа
+  - node_id: Material::образец с натягом 0 мпа
+- aliases:
+  - образец натяг 15 МПа
+  - образец натяг 30 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 15 мпа
+  - node_id: Material::образец натяг 30 мпа
+- aliases:
+  - образец натяг 15 МПа
+  - образец натяг 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 15 мпа
+  - node_id: Material::образец натяг 45 мпа
+- aliases:
+  - образец натяг 15 МПа
+  - образец с натягом 15 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 15 мпа
+  - node_id: Material::образец с натягом 15 мпа
+- aliases:
+  - образец натяг 30 МПа
+  - образец натяг 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 30 мпа
+  - node_id: Material::образец натяг 45 мпа
+- aliases:
+  - образец натяг 30 МПа
+  - образец с натягом 30 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 30 мпа
+  - node_id: Material::образец с натягом 30 мпа
+- aliases:
+  - образец натяг 45 МПа
+  - образец с натягом 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец натяг 45 мпа
+  - node_id: Material::образец с натягом 45 мпа
+- aliases:
+  - образец Р-10
+  - образец Р-11
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-10
+  - node_id: Material::образец р-11
+- aliases:
+  - образец Р-10
+  - образец Р-12
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-10
+  - node_id: Material::образец р-12
+- aliases:
+  - образец Р-10
+  - образец Р-13
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-10
+  - node_id: Material::образец р-13
+- aliases:
+  - образец Р-10
+  - образец Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-10
+  - node_id: Material::образец р-14
+- aliases:
+  - образец Р-10
+  - образец Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-10
+  - node_id: Material::образец р-15
+- aliases:
+  - образец Р-10
+  - образец Р1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-10
+  - node_id: Material::образец р1
+- aliases:
+  - образец Р-11
+  - образец Р-12
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-11
+  - node_id: Material::образец р-12
+- aliases:
+  - образец Р-11
+  - образец Р-13
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-11
+  - node_id: Material::образец р-13
+- aliases:
+  - образец Р-11
+  - образец Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-11
+  - node_id: Material::образец р-14
+- aliases:
+  - образец Р-11
+  - образец Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-11
+  - node_id: Material::образец р-15
+- aliases:
+  - образец Р-11
+  - образец Р1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-11
+  - node_id: Material::образец р1
+- aliases:
+  - образец Р-12
+  - образец Р-13
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-12
+  - node_id: Material::образец р-13
+- aliases:
+  - образец Р-12
+  - образец Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-12
+  - node_id: Material::образец р-14
+- aliases:
+  - образец Р-12
+  - образец Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-12
+  - node_id: Material::образец р-15
+- aliases:
+  - образец Р-12
+  - образец Р1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-12
+  - node_id: Material::образец р1
+- aliases:
+  - образец Р-12
+  - образец Р2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-12
+  - node_id: Material::образец р2
+- aliases:
+  - образец Р-13
+  - образец Р-14
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-13
+  - node_id: Material::образец р-14
+- aliases:
+  - образец Р-13
+  - образец Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-13
+  - node_id: Material::образец р-15
+- aliases:
+  - образец Р-13
+  - образец Р1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-13
+  - node_id: Material::образец р1
+- aliases:
+  - образец Р-13
+  - образец Р3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-13
+  - node_id: Material::образец р3
+- aliases:
+  - образец Р-14
+  - образец Р-15
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-14
+  - node_id: Material::образец р-15
+- aliases:
+  - образец Р-14
+  - образец Р1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-14
+  - node_id: Material::образец р1
+- aliases:
+  - образец Р-15
+  - образец Р1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р-15
+  - node_id: Material::образец р1
+- aliases:
+  - образец Р1
+  - образец Р2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р1
+  - node_id: Material::образец р2
+- aliases:
+  - образец Р1
+  - образец Р3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р1
+  - node_id: Material::образец р3
+- aliases:
+  - образец Р2
+  - образец Р3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец р2
+  - node_id: Material::образец р3
+- aliases:
+  - образец РСАМ N1
+  - образец РСАМ N2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец рсам n1
+  - node_id: Material::образец рсам n2
+- aliases:
+  - образец РСАМ N1
+  - образец РСАМ P1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец рсам n1
+  - node_id: Material::образец рсам p1
+- aliases:
+  - образец РСАМ N2
+  - образец РСАМ P2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец рсам n2
+  - node_id: Material::образец рсам p2
+- aliases:
+  - образец РСАМ P1
+  - образец РСАМ P2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец рсам p1
+  - node_id: Material::образец рсам p2
+- aliases:
+  - образец с двумя отверстиями 5 мм + трещина
+  - образец с двумя отверстиями 5 мм + трещина (повтор)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с двумя отверстиями 5 мм + трещина
+  - node_id: Material::образец с двумя отверстиями 5 мм + трещина (повтор)
+- aliases:
+  - образец с двумя отверстиями 5 мм + трещина
+  - образец с двумя отверстиями 5 мм+ трещина
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с двумя отверстиями 5 мм + трещина
+  - node_id: Material::образец с двумя отверстиями 5 мм+ трещина
+- aliases:
+  - образец с натягом 0 МПа
+  - образец с натягом 15 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с натягом 0 мпа
+  - node_id: Material::образец с натягом 15 мпа
+- aliases:
+  - образец с натягом 0 МПа
+  - образец с натягом 30 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с натягом 0 мпа
+  - node_id: Material::образец с натягом 30 мпа
+- aliases:
+  - образец с натягом 0 МПа
+  - образец с натягом 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с натягом 0 мпа
+  - node_id: Material::образец с натягом 45 мпа
+- aliases:
+  - образец с натягом 15 МПа
+  - образец с натягом 30 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с натягом 15 мпа
+  - node_id: Material::образец с натягом 30 мпа
+- aliases:
+  - образец с натягом 15 МПа
+  - образец с натягом 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с натягом 15 мпа
+  - node_id: Material::образец с натягом 45 мпа
+- aliases:
+  - образец с натягом 30 МПа
+  - образец с натягом 45 МПа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с натягом 30 мпа
+  - node_id: Material::образец с натягом 45 мпа
+- aliases:
+  - образец с отверстием 10 мм
+  - образец с отверстием 3-5 мм
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с отверстием 10 мм
+  - node_id: Material::образец с отверстием 3-5 мм
+- aliases:
+  - образец с отверстием 10 мм
+  - образец с отверстиями 10 мм
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с отверстием 10 мм
+  - node_id: Material::образец с отверстиями 10 мм
+- aliases:
+  - образец с отверстием 3-5 мм
+  - образец с отверстиями 3-5 мм
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с отверстием 3-5 мм
+  - node_id: Material::образец с отверстиями 3-5 мм
+- aliases:
+  - образец с отверстиями 10 мм
+  - образец с отверстиями 3-5 мм
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::образец с отверстиями 10 мм
+  - node_id: Material::образец с отверстиями 3-5 мм
+- aliases:
+  - оксид алюминия (Al2O3)
+  - оксид алюминия Al2O3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::оксид алюминия (al2o3)
+  - node_id: Material::оксид алюминия al2o3
+- aliases:
+  - оксид кремния (SiO2)
+  - оксид кремния SiO2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::оксид кремния (sio2)
+  - node_id: Material::оксид кремния sio2
+- aliases:
+  - основная пульпа (опыт 1)
+  - основная пульпа (опыт 2)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::основная пульпа (опыт 1)
+  - node_id: Material::основная пульпа (опыт 2)
+- aliases:
+  - остаточное соединение лития Li2CO3
+  - остаточное соединение лития LiOH
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::остаточное соединение лития li2co3
+  - node_id: Material::остаточное соединение лития lioh
+- aliases:
+  - прекурсор катодного материала
+  - прекурсор катодного материала РСАМ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::прекурсор катодного материала
+  - node_id: Material::прекурсор катодного материала рсам
+- aliases:
+  - проба (опыт 1)
+  - проба (опыт 2)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::проба (опыт 1)
+  - node_id: Material::проба (опыт 2)
+- aliases:
+  - раствор ПВС 5%
+  - раствор ПВС 7,5%
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::раствор пвс 5%
+  - node_id: Material::раствор пвс 7,5%
+- aliases:
+  - раствор ХТК22
+  - раствор ХТК24
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::раствор хтк22
+  - node_id: Material::раствор хтк24
+- aliases:
+  - раствор ХТК22
+  - раствор ХТК25
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::раствор хтк22
+  - node_id: Material::раствор хтк25
+- aliases:
+  - раствор ХТК24
+  - раствор ХТК25
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::раствор хтк24
+  - node_id: Material::раствор хтк25
+- aliases:
+  - селен (IV)
+  - селен (VI)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::селен (iv)
+  - node_id: Material::селен (vi)
+- aliases:
+  - сера элементарная
+  - сера элементная
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сера элементарная
+  - node_id: Material::сера элементная
+- aliases:
+  - силикатная составляющая
+  - силикатная составляющая 2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая
+  - node_id: Material::силикатная составляющая 2
+- aliases:
+  - силикатная составляющая Тип II
+  - силикатная составляющая Тип III
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип ii
+  - node_id: Material::силикатная составляющая тип iii
+- aliases:
+  - силикатная составляющая Тип II
+  - силикатная составляющая Тип IIIа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип ii
+  - node_id: Material::силикатная составляющая тип iiiа
+- aliases:
+  - силикатная составляющая Тип II
+  - силикатная составляющая Тип IIIб
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип ii
+  - node_id: Material::силикатная составляющая тип iiiб
+- aliases:
+  - силикатная составляющая Тип II
+  - силикатная составляющая Тип IV
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип ii
+  - node_id: Material::силикатная составляющая тип iv
+- aliases:
+  - силикатная составляющая Тип III
+  - силикатная составляющая Тип IIIа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iii
+  - node_id: Material::силикатная составляющая тип iiiа
+- aliases:
+  - силикатная составляющая Тип III
+  - силикатная составляющая Тип IIIб
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iii
+  - node_id: Material::силикатная составляющая тип iiiб
+- aliases:
+  - силикатная составляющая Тип III
+  - силикатная составляющая Тип IV
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iii
+  - node_id: Material::силикатная составляющая тип iv
+- aliases:
+  - силикатная составляющая Тип III (а и б)
+  - силикатная составляющая Тип IIIа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iii (а и б)
+  - node_id: Material::силикатная составляющая тип iiiа
+- aliases:
+  - силикатная составляющая Тип III (а и б)
+  - силикатная составляющая Тип IIIб
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iii (а и б)
+  - node_id: Material::силикатная составляющая тип iiiб
+- aliases:
+  - силикатная составляющая Тип IIIа
+  - силикатная составляющая Тип IIIб
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iiiа
+  - node_id: Material::силикатная составляющая тип iiiб
+- aliases:
+  - силикатная составляющая Тип IIIа
+  - силикатная составляющая Тип IV
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iiiа
+  - node_id: Material::силикатная составляющая тип iv
+- aliases:
+  - силикатная составляющая Тип IIIб
+  - силикатная составляющая Тип IV
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатная составляющая тип iiiб
+  - node_id: Material::силикатная составляющая тип iv
+- aliases:
+  - силикатные структуры Тип IIIа
+  - силикатные структуры Тип IIIб
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::силикатные структуры тип iiiа
+  - node_id: Material::силикатные структуры тип iiiб
+- aliases:
+  - СОП №25-12 (НН-ЗФ-01)
+  - СОП №26-12 (НН-ЗФ-02)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::соп no25-12 (нн-зф-01)
+  - node_id: Material::соп no26-12 (нн-зф-02)
+- aliases:
+  - Спек 1-го типа
+  - Спек 2-го типа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::спек 1-го типа
+  - node_id: Material::спек 2-го типа
+- aliases:
+  - сплав на никелевой основе 2000
+  - сплав на никелевой основе 22
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сплав на никелевой основе 2000
+  - node_id: Material::сплав на никелевой основе 22
+- aliases:
+  - сплав на никелевой основе 2000
+  - сплав на никелевой основе 27
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сплав на никелевой основе 2000
+  - node_id: Material::сплав на никелевой основе 27
+- aliases:
+  - сплав на никелевой основе 22
+  - сплав на никелевой основе 27
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сплав на никелевой основе 22
+  - node_id: Material::сплав на никелевой основе 27
+- aliases:
+  - сплав на никелевой основе 22
+  - сплав на никелевой основе 35
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сплав на никелевой основе 22
+  - node_id: Material::сплав на никелевой основе 35
+- aliases:
+  - сплав на никелевой основе 27
+  - сплав на никелевой основе 35
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сплав на никелевой основе 27
+  - node_id: Material::сплав на никелевой основе 35
+- aliases:
+  - стандартный образец СО СР1
+  - стандартный образец СО СР3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::стандартный образец со ср1
+  - node_id: Material::стандартный образец со ср3
+- aliases:
+  - стандартный образец СОП ФШТ 84-2018
+  - стандартный образец СОП ШТН 81-2018
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::стандартный образец соп фшт 84-2018
+  - node_id: Material::стандартный образец соп штн 81-2018
+- aliases:
+  - сульфидный медно-никелевый концентрат
+  - сульфидный никелевый концентрат
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::сульфидный медно-никелевый концентрат
+  - node_id: Material::сульфидный никелевый концентрат
+- aliases:
+  - теллур (IV)
+  - теллур (VI)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::теллур (iv)
+  - node_id: Material::теллур (vi)
+- aliases:
+  - хромовые шпинели крупностью более 100 мкм
+  - хромовые шпинели крупностью менее 100 мкм
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::хромовые шпинели крупностью более 100 мкм
+  - node_id: Material::хромовые шпинели крупностью менее 100 мкм
+- aliases:
+  - эвтектика Cu2S–FeS
+  - эвтектика Cu2S–FeS–FeO
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::эвтектика cu2s-fes
+  - node_id: Material::эвтектика cu2s-fes-feo
+- aliases:
+  - эвтектика Cu2S-FeS-ZnS-FeO
+  - эвтектика Cu2S–FeS–FeO
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Material::эвтектика cu2s-fes-feo
+  - node_id: Material::эвтектика cu2s-fes-zns-feo
+- aliases:
+  - адаптированная методика Kuz-Ram (вариант №1)
+  - адаптированная методика Kuz-Ram (вариант №2)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::адаптированная методика kuz-ram (вариант no1)
+  - node_id: Process::адаптированная методика kuz-ram (вариант no2)
+- aliases:
+  - адаптированная методика Kuz-Ram (вариант №1)
+  - адаптированная методика Kuz-Ram (вариант №3)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::адаптированная методика kuz-ram (вариант no1)
+  - node_id: Process::адаптированная методика kuz-ram (вариант no3)
+- aliases:
+  - адаптированная методика Kuz-Ram (вариант №1)
+  - адаптированная методика Kuz-Ram (вариант №4)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::адаптированная методика kuz-ram (вариант no1)
+  - node_id: Process::адаптированная методика kuz-ram (вариант no4)
+- aliases:
+  - адаптированная методика Kuz-Ram (вариант №2)
+  - адаптированная методика Kuz-Ram (вариант №3)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::адаптированная методика kuz-ram (вариант no2)
+  - node_id: Process::адаптированная методика kuz-ram (вариант no3)
+- aliases:
+  - адаптированная методика Kuz-Ram (вариант №2)
+  - адаптированная методика Kuz-Ram (вариант №4)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::адаптированная методика kuz-ram (вариант no2)
+  - node_id: Process::адаптированная методика kuz-ram (вариант no4)
+- aliases:
+  - адаптированная методика Kuz-Ram (вариант №3)
+  - адаптированная методика Kuz-Ram (вариант №4)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::адаптированная методика kuz-ram (вариант no3)
+  - node_id: Process::адаптированная методика kuz-ram (вариант no4)
+- aliases:
+  - варка в режиме от 120 до 210 С
+  - варка в режиме от 210 до 230 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 120 до 210 с
+  - node_id: Process::варка в режиме от 210 до 230 с
+- aliases:
+  - варка в режиме от 120 до 210 С
+  - варка в режиме от 230 до 250 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 120 до 210 с
+  - node_id: Process::варка в режиме от 230 до 250 с
+- aliases:
+  - варка в режиме от 120 до 210 С
+  - варка в режиме от 250 до 280 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 120 до 210 с
+  - node_id: Process::варка в режиме от 250 до 280 с
+- aliases:
+  - варка в режиме от 120 до 210 С
+  - варка в режиме от 260 до 300 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 120 до 210 с
+  - node_id: Process::варка в режиме от 260 до 300 с
+- aliases:
+  - варка в режиме от 210 до 230 С
+  - варка в режиме от 230 до 250 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 210 до 230 с
+  - node_id: Process::варка в режиме от 230 до 250 с
+- aliases:
+  - варка в режиме от 210 до 230 С
+  - варка в режиме от 250 до 280 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 210 до 230 с
+  - node_id: Process::варка в режиме от 250 до 280 с
+- aliases:
+  - варка в режиме от 210 до 230 С
+  - варка в режиме от 260 до 300 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 210 до 230 с
+  - node_id: Process::варка в режиме от 260 до 300 с
+- aliases:
+  - варка в режиме от 230 до 250 С
+  - варка в режиме от 250 до 280 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 230 до 250 с
+  - node_id: Process::варка в режиме от 250 до 280 с
+- aliases:
+  - варка в режиме от 230 до 250 С
+  - варка в режиме от 260 до 300 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 230 до 250 с
+  - node_id: Process::варка в режиме от 260 до 300 с
+- aliases:
+  - варка в режиме от 250 до 280 С
+  - варка в режиме от 260 до 300 С
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::варка в режиме от 250 до 280 с
+  - node_id: Process::варка в режиме от 260 до 300 с
+- aliases:
+  - восстановление в трубчатых печах
+  - восстановление огарка в трубчатых печах
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::восстановление в трубчатых печах
+  - node_id: Process::восстановление огарка в трубчатых печах
+- aliases:
+  - каталитическая конверсия восстановленного газа
+  - каталитическая конверсия восстановленного газа ПВ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::каталитическая конверсия восстановленного газа
+  - node_id: Process::каталитическая конверсия восстановленного газа пв
+- aliases:
+  - катодное восстановление
+  - катодное восстановление меди
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::катодное восстановление
+  - node_id: Process::катодное восстановление меди
+- aliases:
+  - методика задания тектонических нарушений связями конечной жёсткости
+  - методика моделирования тектонических нарушений связями конечной жёсткости
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::методика задания тектонических нарушений связями конечной жесткости
+  - node_id: Process::методика моделирования тектонических нарушений связями конечной
+      жесткости
+- aliases:
+  - методика испытаний I
+  - методика испытаний II
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::методика испытаний i
+  - node_id: Process::методика испытаний ii
+- aliases:
+  - натрирование прекурсоров катодных материалов ЛИА
+  - натрирование прекурсоров катодных материалов ЛИА с Ni 0,87
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::натрирование прекурсоров катодных материалов лиа
+  - node_id: Process::натрирование прекурсоров катодных материалов лиа с ni 0,87
+- aliases:
+  - обеднение шлака
+  - обеднение шлаков
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::обеднение шлака
+  - node_id: Process::обеднение шлаков
+- aliases:
+  - обжиг по программе 500°С_3ч_600°C_12ч с NaOH
+  - обжиг по программе 500°С_3ч_900°C_12ч с Na2CO3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::обжиг по программе 500°с_3ч_600°c_12ч с naoh
+  - node_id: Process::обжиг по программе 500°с_3ч_900°c_12ч с na2co3
+- aliases:
+  - обогащение по схеме 2ПК-ТОФ
+  - обогащение по схеме 3ПК-ТОФ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::обогащение по схеме 2пк-тоф
+  - node_id: Process::обогащение по схеме 3пк-тоф
+- aliases:
+  - образование спеков второго типа
+  - образование спеков первого типа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::образование спеков второго типа
+  - node_id: Process::образование спеков первого типа
+- aliases:
+  - охлаждение газа
+  - охлаждение газов
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::охлаждение газа
+  - node_id: Process::охлаждение газов
+- aliases:
+  - Перечистка 1-й соли Pd (получение ХПЗ-2)
+  - Перечистка 1-й соли Pt (получение ХПА-2)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::перечистка 1-й соли pd (получение хпз-2)
+  - node_id: Process::перечистка 1-й соли pt (получение хпа-2)
+- aliases:
+  - Получение Pd аффинированного в порошке, в слитке
+  - Получение Pt аффинированной в порошке, в слитке
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::получение pd аффинированного в порошке, в слитке
+  - node_id: Process::получение pt аффинированной в порошке, в слитке
+- aliases:
+  - растворение в смеси HNO3 (1:1) и HF
+  - растворение в смеси HNO3 и HF
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::растворение в смеси hno3 (1:1) и hf
+  - node_id: Process::растворение в смеси hno3 и hf
+- aliases:
+  - растровая электронная микроскопия (РЭМ)
+  - растровая электронная микроскопия (РЭМ-РСМА)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::растровая электронная микроскопия (рэм)
+  - node_id: Process::растровая электронная микроскопия (рэм-рсма)
+- aliases:
+  - реакция (2)
+  - реакция (3)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::реакция (2)
+  - node_id: Process::реакция (3)
+- aliases:
+  - смешивание Р2 с LiOH
+  - смешивание Р3 с LiOH
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::смешивание р2 с lioh
+  - node_id: Process::смешивание р3 с lioh
+- aliases:
+  - старение катализатора
+  - старение катализаторов
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::старение катализатора
+  - node_id: Process::старение катализаторов
+- aliases:
+  - термическое оксидирование при 1050 °C, 3 часа
+  - термическое оксидирование при 900 °C, 3 часа
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::термическое оксидирование при 1050 °c, 3 часа
+  - node_id: Process::термическое оксидирование при 900 °c, 3 часа
+- aliases:
+  - термическое оксидирование при 1050 °C, 3 часа
+  - термическое оксидирование при 900 °C, 5 часов
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::термическое оксидирование при 1050 °c, 3 часа
+  - node_id: Process::термическое оксидирование при 900 °c, 5 часов
+- aliases:
+  - термическое оксидирование при 900 °C, 3 часа
+  - термическое оксидирование при 900 °C, 5 часов
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::термическое оксидирование при 900 °c, 3 часа
+  - node_id: Process::термическое оксидирование при 900 °c, 5 часов
+- aliases:
+  - химическое взаимодействие материала со шлаком
+  - химическое взаимодействие периклаза со шлаком
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::химическое взаимодействие материала со шлаком
+  - node_id: Process::химическое взаимодействие периклаза со шлаком
+- aliases:
+  - хлорное выщелачивание порошка никелевого трубчатых печей
+  - хлорное выщелачивание порошка никелевого трубчатых печей (ПНТП)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::хлорное выщелачивание порошка никелевого трубчатых печей
+  - node_id: Process::хлорное выщелачивание порошка никелевого трубчатых печей (пнтп)
+- aliases:
+  - хлорное растворение
+  - хлорное растворение МФ
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::хлорное растворение
+  - node_id: Process::хлорное растворение мф
+- aliases:
+  - цементационная очистка меди
+  - цементационная очистка от меди
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::цементационная очистка меди
+  - node_id: Process::цементационная очистка от меди
+- aliases:
+  - эксплуатация катализатора CR-31
+  - эксплуатация катализатора О-К
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::эксплуатация катализатора cr-31
+  - node_id: Process::эксплуатация катализатора о-к
+- aliases:
+  - эксплуатация катализатора АО-НКЗ-2
+  - эксплуатация катализатора О-К
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Process::эксплуатация катализатора ао-нкз-2
+  - node_id: Process::эксплуатация катализатора о-к
+- aliases:
+  - A study of free convection in a solar chimney sample
+  - A study of free convection in a solar chimney sample (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::a study of free convection in a solar chimney sample
+  - node_id: Publication::a study of free convection in a solar chimney sample (дубль)
+- aliases:
+  - Analysis of the K-Epsilon Turbulence Model
+  - Analysis of the K-Epsilon Turbulence Model (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::analysis of the k-epsilon turbulence model
+  - node_id: Publication::analysis of the k-epsilon turbulence model (дубль)
+- aliases:
+  - Assessment of environmental and occupational safety in mining industry during
+    underground coal mining
+  - Assessment of environmental and occupational safety in mining industry during
+    underground coal mining (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::assessment of environmental and occupational safety in mining
+      industry during underground coal mining
+  - node_id: Publication::assessment of environmental and occupational safety in mining
+      industry during underground coal mining (дубль)
+- aliases:
+  - Assessment of thermal storage technologies in energy sector
+  - Assessment of thermal storage technologies in energy sector (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::assessment of thermal storage technologies in energy sector
+  - node_id: Publication::assessment of thermal storage technologies in energy sector
+      (дубль)
+- aliases:
+  - Avarmaa K., O’Brien H., Johto H., Taskinen P. Equilibrium distribution of precious
+    metals between slag and copper matte at 1250–1350°C // Journal of Sustainable
+    Metallurgy. 2015. Vol. 1. P. 216–228.
+  - Avarmaa K., O’Brien H., Johto H., Taskinen P. Equilibrium distribution of precious
+    metals between slag and copper matte at 1250–1350°C // Journal of Sustainable
+    Metallurgy.2015. Vol. 1. P.216–228.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::avarmaa k., o’brien h., johto h., taskinen p. equilibrium
+      distribution of precious metals between slag and copper matte at 1250-1350°c
+      // journal of sustainable metallurgy. 2015. vol. 1. p. 216-228.
+  - node_id: Publication::avarmaa k., o’brien h., johto h., taskinen p. equilibrium
+      distribution of precious metals between slag and copper matte at 1250-1350°c
+      // journal of sustainable metallurgy.2015. vol. 1. p.216-228.
+- aliases:
+  - Avarmaa K., O’Brien H., Klemettinen L., Taskinen P. Precious metal recoveries
+    in secondary copper smelting with high-alumina slags // Journal of material cycles
+    and waste management. 2020. Vol. 22. P. 642–655.
+  - Avarmaa K., O’Brien H., Klemettinen L., Taskinen P. Precious metal recoveries
+    in secondary copper smelting with high-alumina slags //Journal of material cycles
+    and waste management. 2020. Vol. 22. P. 642–655.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::avarmaa k., o’brien h., klemettinen l., taskinen p. precious
+      metal recoveries in secondary copper smelting with high-alumina slags // journal
+      of material cycles and waste management. 2020. vol. 22. p. 642-655.
+  - node_id: Publication::avarmaa k., o’brien h., klemettinen l., taskinen p. precious
+      metal recoveries in secondary copper smelting with high-alumina slags //journal
+      of material cycles and waste management. 2020. vol. 22. p. 642-655.
+- aliases:
+  - Balazs Vasarhelyi, Dorottya Kovacs, Empirical methods of calculating the mechanical
+    parameters of the rock mass. Periodica Polytechnica Civil Engineering 61 (1) pp.
+    39-50, 2017
+  - Balazs Vasarhelyi, Dorottya Kovacs, Empirical methods of calculating the mechanical
+    parameters of the rock mass. Periodica Polytechnica Civil Engineering 61 (1) pp.
+    39-50, 2017.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::balazs vasarhelyi, dorottya kovacs, empirical methods of
+      calculating the mechanical parameters of the rock mass. periodica polytechnica
+      civil engineering 61 (1) pp. 39-50, 2017
+  - node_id: Publication::balazs vasarhelyi, dorottya kovacs, empirical methods of
+      calculating the mechanical parameters of the rock mass. periodica polytechnica
+      civil engineering 61 (1) pp. 39-50, 2017.
+- aliases:
+  - Carcinogenicity of diesel-engine and gasoline-engine exhausts and some nitroarenes
+  - Carcinogenicity of diesel-engine and gasoline-engine exhausts and some nitroarenes
+    (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::carcinogenicity of diesel-engine and gasoline-engine exhausts
+      and some nitroarenes
+  - node_id: Publication::carcinogenicity of diesel-engine and gasoline-engine exhausts
+      and some nitroarenes (дубль)
+- aliases:
+  - CFD modeling of ventilation ducts for improvement of air quality in closed mines
+  - CFD modeling of ventilation ducts for improvement of air quality in closed mines
+    (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::cfd modeling of ventilation ducts for improvement of air
+      quality in closed mines
+  - node_id: Publication::cfd modeling of ventilation ducts for improvement of air
+      quality in closed mines (дубль)
+- aliases:
+  - CFD simulation of methane dispersion and innovative methane management in underground
+    mining faces
+  - CFD simulation of methane dispersion and innovative methane management in underground
+    mining faces (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::cfd simulation of methane dispersion and innovative methane
+      management in underground mining faces
+  - node_id: Publication::cfd simulation of methane dispersion and innovative methane
+      management in underground mining faces (дубль)
+- aliases:
+  - Development of energy-saving technologies providing comfortable microclimate conditions
+    for mining
+  - Development of energy-saving technologies providing comfortable microclimate conditions
+    for mining (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::development of energy-saving technologies providing comfortable
+      microclimate conditions for mining
+  - node_id: Publication::development of energy-saving technologies providing comfortable
+      microclimate conditions for mining (дубль)
+- aliases:
+  - Developments of CO2-emissions and costs for small electric and combustion engine
+    vehicles in Germany
+  - Developments of CO2-emissions and costs for small electric and combustion engine
+    vehicles in Germany (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::developments of co2-emissions and costs for small electric
+      and combustion engine vehicles in germany
+  - node_id: Publication::developments of co2-emissions and costs for small electric
+      and combustion engine vehicles in germany (дубль)
+- aliases:
+  - Experimental research of ice cuttings transport by air while drilling of the snow-firn
+    layer
+  - Experimental research of ice cuttings transport by air while drilling of the snow-firn
+    layer (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::experimental research of ice cuttings transport by air while
+      drilling of the snow-firn layer
+  - node_id: Publication::experimental research of ice cuttings transport by air while
+      drilling of the snow-firn layer (дубль)
+- aliases:
+  - Exploring of the incompatibility of marine residual fuel. A case study using machine
+    learning methods
+  - Exploring of the incompatibility of marine residual fuel. A case study using machine
+    learning methods (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::exploring of the incompatibility of marine residual fuel.
+      a case study using machine learning methods
+  - node_id: Publication::exploring of the incompatibility of marine residual fuel.
+      a case study using machine learning methods (дубль)
+- aliases:
+  - Hoek E., Diederichs M.S. Empirical estimation of rock mass modulus. International
+    Journal of Rock Mechanics and Mining Sciences 43 (2006) 203-215
+  - Hoek E., Diederichs M.S. Empirical estimation of rock mass modulus. International
+    Journal of Rock Mechanics and Mining Sciences 43 (2006) 203-215.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::hoek e., diederichs m.s. empirical estimation of rock mass
+      modulus. international journal of rock mechanics and mining sciences 43 (2006)
+      203-215
+  - node_id: Publication::hoek e., diederichs m.s. empirical estimation of rock mass
+      modulus. international journal of rock mechanics and mining sciences 43 (2006)
+      203-215.
+- aliases:
+  - ISO 15093:2015
+  - ISO 15096:2015
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::iso 15093:2015
+  - node_id: Publication::iso 15096:2015
+- aliases:
+  - Klemettinen L., Avarmaa K., Taskinen P. Slag chemistry of high-alumina iron silicate
+    slags at 1300°C in WEEE smelting // Journal of Sustainable Metallurgy. 2017. Vol.
+    3. P. 772–781.
+  - Klemettinen L., Avarmaa K., Taskinen P. Slag chemistry of high-alumina iron silicate
+    slags at 1300°C in WEEE smelting //Journal of Sustainable Metallurgy. 2017.Vol.
+    3. P. 772–781.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::klemettinen l., avarmaa k., taskinen p. slag chemistry of
+      high-alumina iron silicate slags at 1300°c in weee smelting // journal of sustainable
+      metallurgy. 2017. vol. 3. p. 772-781.
+  - node_id: Publication::klemettinen l., avarmaa k., taskinen p. slag chemistry of
+      high-alumina iron silicate slags at 1300°c in weee smelting //journal of sustainable
+      metallurgy. 2017.vol. 3. p. 772-781.
+- aliases:
+  - Kontrol' parametrov produktov sgoraniia v fil'tratsionnykh ustanovkakh
+  - Kontrol' parametrov produktov sgoraniia v fil'tratsionnykh ustanovkakh (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::kontrol' parametrov produktov sgoraniia v fil'tratsionnykh
+      ustanovkakh
+  - node_id: Publication::kontrol' parametrov produktov sgoraniia v fil'tratsionnykh
+      ustanovkakh (дубль)
+- aliases:
+  - Numerical simulation of methane distribution in development zones of underground
+    coal mines equipped with auxiliary ventilation
+  - Numerical simulation of methane distribution in development zones of underground
+    coal mines equipped with auxiliary ventilation (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::numerical simulation of methane distribution in development
+      zones of underground coal mines equipped with auxiliary ventilation
+  - node_id: Publication::numerical simulation of methane distribution in development
+      zones of underground coal mines equipped with auxiliary ventilation (дубль)
+- aliases:
+  - Predicting Methane Emissions from Multiple Gas-Bearing Coal Seams to Longwall
+    Goafs at Russian Mines
+  - Predicting Methane Emissions from Multiple Gas-Bearing Coal Seams to Longwall
+    Goafs at Russian Mines (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::predicting methane emissions from multiple gas-bearing coal
+      seams to longwall goafs at russian mines
+  - node_id: Publication::predicting methane emissions from multiple gas-bearing coal
+      seams to longwall goafs at russian mines (дубль)
+- aliases:
+  - Prediction and innovative control strategies for oxygen and hazardous gases from
+    diesel emission in underground mines
+  - Prediction and innovative control strategies for oxygen and hazardous gases from
+    diesel emission in underground mines (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::prediction and innovative control strategies for oxygen
+      and hazardous gases from diesel emission in underground mines
+  - node_id: Publication::prediction and innovative control strategies for oxygen
+      and hazardous gases from diesel emission in underground mines (дубль)
+- aliases:
+  - Prediction and innovative control strategies for oxygen and hazardous gases from
+    diesel emission in underground mines (дубль)
+  - Prediction and innovative control strategies for oxygen and hazardous gases from
+    diesel emission in underground mines (ещё один дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::prediction and innovative control strategies for oxygen
+      and hazardous gases from diesel emission in underground mines (дубль)
+  - node_id: Publication::prediction and innovative control strategies for oxygen
+      and hazardous gases from diesel emission in underground mines (еще один дубль)
+- aliases:
+  - S. Cole, C.J. Ferron. A review of the beneficiation and extractive metallurgy
+    of the platinum group elements, highlighting recent process innovations // SGS
+    Minerals Services Technical Paper. 2002-03. P. 1-43
+  - S. Cole, C.J. Ferron. A review of the beneficiation and extractive metallurgy
+    of the platinum group elements, highlighting recent process innovations // SGS
+    Minerals Services Technical Paper. 2002-03. P. 1-43;
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::s. cole, c.j. ferron. a review of the beneficiation and
+      extractive metallurgy of the platinum group elements, highlighting recent process
+      innovations // sgs minerals services technical paper. 2002-03. p. 1-43
+  - node_id: Publication::s. cole, c.j. ferron. a review of the beneficiation and
+      extractive metallurgy of the platinum group elements, highlighting recent process
+      innovations // sgs minerals services technical paper. 2002-03. p. 1-43;
+- aliases:
+  - Shuto H., Okabe T. H., Morita K. Ruthenium solubility and dissolution behavior
+    in molten slag // Materials transactions. 2011. Vol. 52. P. 1899–1904.
+  - Shuto H., Okabe T.H., Morita K. Ruthenium solubility and dissolution behavior
+    in molten slag // Materials transactions. 2011. Vol. 52. P. 1899–1904.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::shuto h., okabe t. h., morita k. ruthenium solubility and
+      dissolution behavior in molten slag // materials transactions. 2011. vol. 52.
+      p. 1899-1904.
+  - node_id: Publication::shuto h., okabe t.h., morita k. ruthenium solubility and
+      dissolution behavior in molten slag // materials transactions. 2011. vol. 52.
+      p. 1899-1904.
+- aliases:
+  - Sukhomlinov D., Klementtinen L., Avarmaa K., O’Brien H., Taskinen P., Jokilaakso
+    A. Distribution of Ni, Co, precious and platinum group metals in copper making
+    process // Metallurgical and Materials Transactions B. 2019. Vol. 50. P. 1752–1765.
+  - Sukhomlinov D., Klementtinen L., Avarmaa K., O’Brien H., Taskinen P., Jokilaakso
+    A. Distribution of Ni, Co, precious and platinum group metals in copper making
+    process // Metallurgical and Materials Transactions B.2019. Vol. 50. P. 1752–1765.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::sukhomlinov d., klementtinen l., avarmaa k., o’brien h.,
+      taskinen p., jokilaakso a. distribution of ni, co, precious and platinum group
+      metals in copper making process // metallurgical and materials transactions
+      b. 2019. vol. 50. p. 1752-1765.
+  - node_id: Publication::sukhomlinov d., klementtinen l., avarmaa k., o’brien h.,
+      taskinen p., jokilaakso a. distribution of ni, co, precious and platinum group
+      metals in copper making process // metallurgical and materials transactions
+      b.2019. vol. 50. p. 1752-1765.
+- aliases:
+  - Ten years of industrial experience with the SST turbulence model
+  - Ten years of industrial experience with the SST turbulence model (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::ten years of industrial experience with the sst turbulence
+      model
+  - node_id: Publication::ten years of industrial experience with the sst turbulence
+      model (дубль)
+- aliases:
+  - The effects of ventilation controls and environmental cabs on diesel particulate
+    matter concentrations in some limestone mines
+  - The effects of ventilation controls and environmental cabs on diesel particulate
+    matter concentrations in some limestone mines (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::the effects of ventilation controls and environmental cabs
+      on diesel particulate matter concentrations in some limestone mines
+  - node_id: Publication::the effects of ventilation controls and environmental cabs
+      on diesel particulate matter concentrations in some limestone mines (дубль)
+- aliases:
+  - Transport of turbulence energy decay rate
+  - Transport of turbulence energy decay rate (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::transport of turbulence energy decay rate
+  - node_id: Publication::transport of turbulence energy decay rate (дубль)
+- aliases:
+  - Two-equation eddy-viscosity turbulence models for engineering applications
+  - Two-equation eddy-viscosity turbulence models for engineering applications (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::two-equation eddy-viscosity turbulence models for engineering
+      applications
+  - node_id: Publication::two-equation eddy-viscosity turbulence models for engineering
+      applications (дубль)
+- aliases:
+  - Vybrosy avtotransporta i ekologiia cheloveka (obzor literatury)
+  - Vybrosy avtotransporta i ekologiia cheloveka (obzor literatury) (дубль)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::vybrosy avtotransporta i ekologiia cheloveka (obzor literatury)
+  - node_id: Publication::vybrosy avtotransporta i ekologiia cheloveka (obzor literatury)
+      (дубль)
+- aliases:
+  - Азаркович А.Е., Шуйфер М.И., Тихомиров А.П. Взрывные работы вблизи охраняемых
+    объектов
+  - Азаркович А.Е., Шуйфер М.И., Тихомиров А.П. Взрывные работы вблизи охраняемых
+    объектов (повтор)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::азаркович а.е., шуйфер м.и., тихомиров а.п. взрывные работы
+      вблизи охраняемых объектов
+  - node_id: Publication::азаркович а.е., шуйфер м.и., тихомиров а.п. взрывные работы
+      вблизи охраняемых объектов (повтор)
+- aliases:
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК». Часть 1
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК».Часть 1
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк". часть
+      1
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк".часть
+      1
+- aliases:
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК». Часть 1
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК».Часть 2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк". часть
+      1
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк".часть
+      2
+- aliases:
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК». Часть 1
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата на АО «Кольская ГМК». Часть 1.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк". часть
+      1
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата на ао "кольская гмк".
+      часть 1.
+- aliases:
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК».Часть 1
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК».Часть 2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк".часть
+      1
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк".часть
+      2
+- aliases:
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК».Часть 1
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата на АО «Кольская ГМК». Часть 1.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк".часть
+      1
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата на ао "кольская гмк".
+      часть 1.
+- aliases:
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата в АО «Кольская ГМК».Часть 2
+  - Анализ работы и модернизация участка магнитной сепарации в новой технологии переработки
+    никелевого концентрата на АО «Кольская ГМК». Часть 1.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата в ао "кольская гмк".часть
+      2
+  - node_id: Publication::анализ работы и модернизация участка магнитной сепарации
+      в новой технологии переработки никелевого концентрата на ао "кольская гмк".
+      часть 1.
+- aliases:
+  - 'Атлас минерального сырья, технологических промышленных продуктов и товарной продукции
+    ЗФ ПАО «ГМК «Норильский Никель»/ А.И. Девочкин [и др.]; под общ. ред. чл.-корр.
+    РАЕН, д-ра техн. наук, проф. Л.Б. Цымбулова. – СПб.: Политех-пресс, 2021. – 398.'
+  - 'Атлас минерального сырья, технологических промышленных продуктов и товарной продукции
+    ЗФ ПАО «ГМК «Норильский никель» / А.И. Девочкин [и др.]; под общ. ред. чл-корр.
+    РАЕН, д-ра техн. наук, проф. Л.Б. Цымбулова. – СПб.: ПОЛИТЕХ-ПРЕСС, 2021. – 398
+    с.;'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::атлас минерального сырья, технологических промышленных
+      продуктов и товарной продукции зф пао "гмк "норильский никель" / а.и. девочкин
+      [и др.]; под общ. ред. чл-корр. раен, д-ра техн. наук, проф. л.б. цымбулова.
+      - спб.: политех-пресс, 2021. - 398 с.;'
+  - node_id: 'Publication::атлас минерального сырья, технологических промышленных
+      продуктов и товарной продукции зф пао "гмк "норильский никель"/ а.и. девочкин
+      [и др.]; под общ. ред. чл.-корр. раен, д-ра техн. наук, проф. л.б. цымбулова.
+      - спб.: политех-пресс, 2021. - 398.'
+- aliases:
+  - 'Богатырев Д.М., Петров Г.В., Цымбулов Л.Б. Пирометаллургические технологии переработки
+    сульфидных медно-никелевых руд с высоким содержанием металлов платиновой группы:
+    современное состояние и перспективы развития // Вестник Магнитогорского государственного
+    технического университета им. Г.И. Носова. 2022. Т. 20. №1. С. 14–24.'
+  - 'Богатырев Д.М., Петров Г.В., Цымбулов Л.Б. Пирометаллургические технологии переработки
+    сульфидных медно-никелевых руд с высоким содержанием металлов платиновой группы:
+    современное состояние и перспективы развития // Вестник Магнитогорского государственного
+    технического университета им. Г.И. Носова. 2022. Т. 20. №1. С. 14–24;'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::богатырев д.м., петров г.в., цымбулов л.б. пирометаллургические
+      технологии переработки сульфидных медно-никелевых руд с высоким содержанием
+      металлов платиновой группы: современное состояние и перспективы развития //
+      вестник магнитогорского государственного технического университета им. г.и.
+      носова. 2022. т. 20. no1. с. 14-24.'
+  - node_id: 'Publication::богатырев д.м., петров г.в., цымбулов л.б. пирометаллургические
+      технологии переработки сульфидных медно-никелевых руд с высоким содержанием
+      металлов платиновой группы: современное состояние и перспективы развития //
+      вестник магнитогорского государственного технического университета им. г.и.
+      носова. 2022. т. 20. no1. с. 14-24;'
+- aliases:
+  - 'Вершинин А.В., Левин В.А., Морозов Е.М. Прочностной анализ: Фидесис в руках инженера.
+    – М.: ЛЕНАНД, 2015. – 408 с.'
+  - 'Вершинин А.В., Левин В.А., Морозов Е.М. Прочностной анализ: Фидесис в руках инженера.
+    –М.: ЛЕНАНД, 2015. – 408 с.'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::вершинин а.в., левин в.а., морозов е.м. прочностной анализ:
+      фидесис в руках инженера. - м.: ленанд, 2015. - 408 с.'
+  - node_id: 'Publication::вершинин а.в., левин в.а., морозов е.м. прочностной анализ:
+      фидесис в руках инженера. -м.: ленанд, 2015. - 408 с.'
+- aliases:
+  - Влияние различных факторов на окисление железа в высококонцентрированных хлоридных
+    никелевых растворах
+  - Влияние различных факторов на окисление железа в высококонцентрированных хлоридных
+    никелевых растворах. Часть 2
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::влияние различных факторов на окисление железа в высококонцентрированных
+      хлоридных никелевых растворах
+  - node_id: Publication::влияние различных факторов на окисление железа в высококонцентрированных
+      хлоридных никелевых растворах. часть 2
+- aliases:
+  - Голотенков О.Н. Формовочные материалы. Пенза, 2004. – 164 с.
+  - Голотенков О.Н. Формовочные материалы. Пенза, 2009. – 166 с.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::голотенков о.н. формовочные материалы. пенза, 2004. - 164
+      с.
+  - node_id: Publication::голотенков о.н. формовочные материалы. пенза, 2009. - 166
+      с.
+- aliases:
+  - ГОСТ 13047.10
+  - ГОСТ 13047.11
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост 13047.10
+  - node_id: Publication::гост 13047.11
+- aliases:
+  - ГОСТ 13047.2
+  - ГОСТ 13047.4
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост 13047.2
+  - node_id: Publication::гост 13047.4
+- aliases:
+  - ГОСТ 21153.2
+  - ГОСТ 21153.3
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост 21153.2
+  - node_id: Publication::гост 21153.3
+- aliases:
+  - ГОСТ 21153.2 «Породы горные. Методы определения предела прочности при одноосном
+    сжатии»
+  - ГОСТ 21153.3 «Породы горные. Методы определения предела прочности при одноосном
+    растяжении»
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост 21153.2 "породы горные. методы определения предела
+      прочности при одноосном сжатии
+  - node_id: Publication::гост 21153.3 "породы горные. методы определения предела
+      прочности при одноосном растяжении
+- aliases:
+  - ГОСТ 33270-2016
+  - ГОСТ 33730-2016
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост 33270-2016
+  - node_id: Publication::гост 33730-2016
+- aliases:
+  - ГОСТ 8.531-2002
+  - ГОСТ 8.532-2002
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост 8.531-2002
+  - node_id: Publication::гост 8.532-2002
+- aliases:
+  - ГОСТ Р 52892-2007 «Вибрация и удар. Вибрация зданий. Измерение вибрации и оценка
+    ее воздействия на конструкцию»
+  - ГОСТ Р 52892–2007 Вибрация и удар. Вибрация зданий. Измерение вибрации и оценка
+    ее воздействия на конструкцию
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::гост р 52892-2007 "вибрация и удар. вибрация зданий. измерение
+      вибрации и оценка ее воздействия на конструкцию
+  - node_id: Publication::гост р 52892-2007 вибрация и удар. вибрация зданий. измерение
+      вибрации и оценка ее воздействия на конструкцию
+- aliases:
+  - 'Ерцева Л. Н. Исследование твердофазных превращений, происходящих при нагреве
+    сульфидного медно-никелевого сырья, и разработка на основе полученных данных усовершенствованных
+    технологических процессов его переработки: автореф. дис. докт. техн. наук. — М.:
+    Гинцветмет, 2001;'
+  - 'Ерцева Л.Н. Исследование твердофазных превращений, происходящих при нагреве сульфидного
+    медно-никелевого сырья, и разработка на основе полученных данных усовершенствованных
+    технологических процессов его переработки: автореф. дис. докт. техн. наук. — М.:
+    Гинцветмет, 2001'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::ерцева л. н. исследование твердофазных превращений, происходящих
+      при нагреве сульфидного медно-никелевого сырья, и разработка на основе полученных
+      данных усовершенствованных технологических процессов его переработки: автореф.
+      дис. докт. техн. наук. - м.: гинцветмет, 2001;'
+  - node_id: 'Publication::ерцева л.н. исследование твердофазных превращений, происходящих
+      при нагреве сульфидного медно-никелевого сырья, и разработка на основе полученных
+      данных усовершенствованных технологических процессов его переработки: автореф.
+      дис. докт. техн. наук. - м.: гинцветмет, 2001'
+- aliases:
+  - Изменение динамики газопылевого потока в ПВП НМЗ при установке защитного козырька.
+    I Модельные расчеты
+  - Изменение динамики газопылевого потока в ПВП НМЗ при установке защитного козырька.
+    Модельные расчеты
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::изменение динамики газопылевого потока в пвп нмз при установке
+      защитного козырька. i модельные расчеты
+  - node_id: Publication::изменение динамики газопылевого потока в пвп нмз при установке
+      защитного козырька. модельные расчеты
+- aliases:
+  - Исследование получения ангидрита из гипса техногенного происхождения и возможности
+    его использования при производстве закладочных смесей для условий рудников Талнаха
+  - Исследование получения ангидрита из гипса техногенного происхождения и возможность
+    его использования при производстве закладочных смесей для условий рудников Талнаха
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::исследование получения ангидрита из гипса техногенного происхождения
+      и возможности его использования при производстве закладочных смесей для условий
+      рудников талнаха
+  - node_id: Publication::исследование получения ангидрита из гипса техногенного происхождения
+      и возможность его использования при производстве закладочных смесей для условий
+      рудников талнаха
+- aliases:
+  - Клименко И. В., Сундуров А. В., Павлов А. Ю., Тарасенко Н. М. Результаты исследований
+    в области перспективного производства никеля высокопремиальных марок //Цвет. мет.
+    2024. № 11. С. 33–42
+  - Клименко И.В., Сундуров А.В., Павлов А.Ю., Тарасенко Н.М. Результаты исследований
+    в области перспективного производства никеля высокопремиальных марок. Цветные
+    металлы, 2024, №11, стр.24-31.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::клименко и. в., сундуров а. в., павлов а. ю., тарасенко
+      н. м. результаты исследований в области перспективного производства никеля высокопремиальных
+      марок //цвет. мет. 2024. no 11. с. 33-42
+  - node_id: Publication::клименко и.в., сундуров а.в., павлов а.ю., тарасенко н.м.
+      результаты исследований в области перспективного производства никеля высокопремиальных
+      марок. цветные металлы, 2024, no11, стр.24-31.
+- aliases:
+  - Колонина Н. П. Удаление малых количеств меди, свинца и цинка из никелевых и кобальтовых
+    хлоридных растворов методом ионного обмена //Журнал прикладной химии. 1960. Т.33.
+    № 16. С. 2475–2480
+  - Колонина Н.П. Удаление малых количеств меди, свинца и цинка из никелевых и кобальтовых
+    хлоридных растворов методом ионного обмена. Журн. прикл. химии. 1960. Т.33, №
+    16. С. 2475–2480.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::колонина н. п. удаление малых количеств меди, свинца и цинка
+      из никелевых и кобальтовых хлоридных растворов методом ионного обмена //журнал
+      прикладной химии. 1960. т.33. no 16. с. 2475-2480
+  - node_id: Publication::колонина н.п. удаление малых количеств меди, свинца и цинка
+      из никелевых и кобальтовых хлоридных растворов методом ионного обмена. журн.
+      прикл. химии. 1960. т.33, no 16. с. 2475-2480.
+- aliases:
+  - 'Криштал М. М., Ясников И. С., Полунин В. И., Филатов А. М., Ульянинков А. Г.
+    Сканирующая электронная микроскопия и рентгеноспектральный микроанализ в примерах
+    практического применения. – М.: Техносфера, 2009. 208 с.'
+  - 'Криштал М. М., Ясников И. С., Полунин В. И., Филатов А. М., Ульянинков А. Г.
+    Сканирующая электронная микроскопия и рентгеноспектральный микроанализ в примерах
+    практического применения. – М.: Техносфера, 2009. 208с.'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::криштал м. м., ясников и. с., полунин в. и., филатов а.
+      м., ульянинков а. г. сканирующая электронная микроскопия и рентгеноспектральный
+      микроанализ в примерах практического применения. - м.: техносфера, 2009. 208
+      с.'
+  - node_id: 'Publication::криштал м. м., ясников и. с., полунин в. и., филатов а.
+      м., ульянинков а. г. сканирующая электронная микроскопия и рентгеноспектральный
+      микроанализ в примерах практического применения. - м.: техносфера, 2009. 208с.'
+- aliases:
+  - 'Платонов О. Особенности технологии получения серы из металлургических газов (физико-химические
+    основы и практика) – Saarbrűcken, : Lambert Academic Publishing, 2012. – 444 с.'
+  - 'Платонов О. Особенности технологии получения серы из металлургических газов (физико-химические
+    основы и практика) – Saarbrűcken, Germany: Lambert Academic Publishing, 2012.
+    – 444 с.'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::платонов о. особенности технологии получения серы из металлургических
+      газов (физико-химические основы и практика) - saarbrűcken, : lambert academic
+      publishing, 2012. - 444 с.'
+  - node_id: 'Publication::платонов о. особенности технологии получения серы из металлургических
+      газов (физико-химические основы и практика) - saarbrűcken, germany: lambert
+      academic publishing, 2012. - 444 с.'
+- aliases:
+  - работа [35]
+  - работа [36]
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::работа [35]
+  - node_id: Publication::работа [36]
+- aliases:
+  - работа [36]
+  - работа [6]
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::работа [36]
+  - node_id: Publication::работа [6]
+- aliases:
+  - Раджаоалисон Х., Злотковский А., Рамболаманана Ж. Определение механических свойств
+    песчаника неразрушающим методом
+  - Раджаоалисон Х., Злотковский А., Рамболаманана Ж. Определение механических свойств
+    песчаника неразрушающим методом (повтор)
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::раджаоалисон х., злотковский а., рамболаманана ж. определение
+      механических свойств песчаника неразрушающим методом
+  - node_id: Publication::раджаоалисон х., злотковский а., рамболаманана ж. определение
+      механических свойств песчаника неразрушающим методом (повтор)
+- aliases:
+  - Сообщение о НИР «Определение причин повышенных потерь металлов-спутников платины
+    с вывозными растворами ХМЦ и выдача рекомендаций по их снижению», Этап 1, Санкт-Петербург,
+    2021 г.
+  - Сообщение о НИР «Определение причин повышенных потерь металлов-спутников платины
+    с вывозными растворами ХМЦ и выдача рекомендаций по их снижению», Этап 2, Санкт-Петербург,
+    2021 г.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::сообщение о нир "определение причин повышенных потерь металлов-спутников
+      платины с вывозными растворами хмц и выдача рекомендаций по их снижению", этап
+      1, санкт-петербург, 2021 г.
+  - node_id: Publication::сообщение о нир "определение причин повышенных потерь металлов-спутников
+      платины с вывозными растворами хмц и выдача рекомендаций по их снижению", этап
+      2, санкт-петербург, 2021 г.
+- aliases:
+  - Статья [6]
+  - Статья [7]
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::статья [6]
+  - node_id: Publication::статья [7]
+- aliases:
+  - Фадеев А. Б. Метод конечных элементов в геомеханике
+  - Фадеев А.Б. Метод конечных элементов в геомеханике
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::фадеев а. б. метод конечных элементов в геомеханике
+  - node_id: Publication::фадеев а.б. метод конечных элементов в геомеханике
+- aliases:
+  - Цемехман Л. Ш., Цымбулов Л. Б., Князев М. В., Кайтмазов Н. Г., Фомичев В. Б. Непрерывное
+    конвертирование медных и медно-никелевых штейнов. Современное состояние и результаты
+    исследований // Цветные металлы. 2009. №9. С 43-48
+  - Цемехман Л.Ш., Цымбулов Л.Б., Князев М.В., Кайтмазов Н.Г., Фомичев В.Б. Непрерывное
+    конвертирование медных и медно-никелевых штейнов. Современное состояние и результаты
+    исследований // Цветные металлы – 2009. № 9. С. 43-48.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::цемехман л. ш., цымбулов л. б., князев м. в., кайтмазов
+      н. г., фомичев в. б. непрерывное конвертирование медных и медно-никелевых штейнов.
+      современное состояние и результаты исследований // цветные металлы. 2009. no9.
+      с 43-48
+  - node_id: Publication::цемехман л.ш., цымбулов л.б., князев м.в., кайтмазов н.г.,
+      фомичев в.б. непрерывное конвертирование медных и медно-никелевых штейнов. современное
+      состояние и результаты исследований // цветные металлы - 2009. no 9. с. 43-48.
+- aliases:
+  - Цемехман Л. Ш., Цымбулов Л. Б., Пахомов Р. А., Попов В. А. Поведение платиновых
+    металлов при переработке сульфидного медно-никелевого сырья// Цветные металлы.
+    2016. № 11.С. 50–56.
+  - Цемехман Л.Ш., Цымбулов Л.Б., Пахомов Р.А., Попов В.А. Поведение платиновых металлов
+    при переработке сульфидного медно-никелевого сырья // Цветные металлы. 2016. №
+    11. С. 50–56.
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: Publication::цемехман л. ш., цымбулов л. б., пахомов р. а., попов в.
+      а. поведение платиновых металлов при переработке сульфидного медно-никелевого
+      сырья// цветные металлы. 2016. no 11.с. 50-56.
+  - node_id: Publication::цемехман л.ш., цымбулов л.б., пахомов р.а., попов в.а. поведение
+      платиновых металлов при переработке сульфидного медно-никелевого сырья // цветные
+      металлы. 2016. no 11. с. 50-56.
+- aliases:
+  - 'Цемехман Л.Ш., Фомичев В.Б., Ерцева Л.Н. и др. Атлас минерального сырья, технологических
+    промышленных продуктов и товарной продукции ЗФ ОАО ГМК «Норильский Никель». М.:
+    Издательский дом «Руда и металлы», 2010. – 336 с.'
+  - 'Цемехман Л.Ш., Фомичев В.Б., Ерцева Л.Н. и др. Атлас минерального сырья, технологических
+    промышленных продуктов и товарной продукции ЗФ ОАО ГМК «Норильский Никель». М.:
+    Издательский дом «Руда и металлы», 2010. – 336 с;'
+  source_type: fuzzy_ner
+  count: 1
+  examples:
+  - node_id: 'Publication::цемехман л.ш., фомичев в.б., ерцева л.н. и др. атлас минерального
+      сырья, технологических промышленных продуктов и товарной продукции зф оао гмк
+      "норильский никель". м.: издательский дом "руда и металлы", 2010. - 336 с.'
+  - node_id: 'Publication::цемехман л.ш., фомичев в.б., ерцева л.н. и др. атлас минерального
+      сырья, технологических промышленных продуктов и товарной продукции зф оао гмк
+      "норильский никель". м.: издательский дом "руда и металлы", 2010. - 336 с;'

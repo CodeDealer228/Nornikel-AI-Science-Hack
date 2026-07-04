@@ -1,0 +1,101 @@
+{"node_id": "Equipment::autocad", "canonical_name": "AutoCad", "rule": "exact_name", "merged_surface_forms": ["AutoCAD", "AutoCad"], "n_raw_mentions": 2}
+{"node_id": "Expert::богатырев д.м.", "canonical_name": "Богатырёв Д.М.", "rule": "exact_name", "merged_surface_forms": ["Богатырев Д.М.", "Богатырёв Д.М."], "n_raw_mentions": 10}
+{"node_id": "Expert::терешкин а.а.", "canonical_name": "Терёшкин А.А.", "rule": "exact_name", "merged_surface_forms": ["Терешкин А.А.", "Терёшкин А.А."], "n_raw_mentions": 2}
+{"node_id": "Facility::ао \"кольская горно-металлургическая компания", "canonical_name": "АО «Кольская горно-металлургическая компания»", "rule": "exact_name", "merged_surface_forms": ["АО «Кольская Горно-Металлургическая Компания»", "АО «Кольская горно-металлургическая компания»"], "n_raw_mentions": 2}
+{"node_id": "Facility::испытательный аналитический центр ооо \"институт гипроникель", "canonical_name": "испытательный аналитический центр ООО «Институт Гипроникель»", "rule": "exact_name", "merged_surface_forms": ["Испытательный аналитический центр ООО «Институт Гипроникель»", "испытательный аналитический центр ООО «Институт Гипроникель»"], "n_raw_mentions": 5}
+{"node_id": "Facility::медный завод пао \"гмк норильский никель", "canonical_name": "Медный завод ПАО «ГМК Норильский никель»", "rule": "exact_name", "merged_surface_forms": ["Медный завод ПАО «ГМК Норильский Никель»", "Медный завод ПАО «ГМК Норильский никель»"], "n_raw_mentions": 2}
+{"node_id": "Facility::ооо \"медвежий ручей", "canonical_name": "ООО «Медвежий ручей»", "rule": "exact_name", "merged_surface_forms": ["ООО «Медвежий Ручей»", "ООО «Медвежий ручей»"], "n_raw_mentions": 2}
+{"node_id": "Facility::ооо \"сибирские аналитические системы", "canonical_name": "ООО «Сибирские аналитические системы»", "rule": "exact_name", "merged_surface_forms": ["ООО «Сибирские Аналитические Системы»", "ООО «Сибирские аналитические системы»"], "n_raw_mentions": 2}
+{"node_id": "Facility::пао \"гмк \"норильский никель", "canonical_name": "ПАО «ГМК «Норильский никель»", "rule": "exact_name", "merged_surface_forms": ["ПАО «ГМК «Норильский Никель»", "ПАО «ГМК «Норильский никель»"], "n_raw_mentions": 11}
+{"node_id": "Material::ангидрит", "canonical_name": "ангидрит", "rule": "exact_name", "merged_surface_forms": ["Ангидрит", "ангидрит"], "n_raw_mentions": 12}
+{"node_id": "Material::вечномерзлые грунты", "canonical_name": "вечномёрзлые грунты", "rule": "exact_name", "merged_surface_forms": ["вечномерзлые грунты", "вечномёрзлые грунты"], "n_raw_mentions": 2}
+{"node_id": "Material::мергель", "canonical_name": "мергель", "rule": "exact_name", "merged_surface_forms": ["Мергель", "мергель"], "n_raw_mentions": 3}
+{"node_id": "Material::четвертичные отложения", "canonical_name": "четвертичные отложения", "rule": "exact_name", "merged_surface_forms": ["Четвертичные отложения", "четвертичные отложения"], "n_raw_mentions": 2}
+{"node_id": "Process::обжиг", "canonical_name": "обжиг", "rule": "exact_name", "merged_surface_forms": ["Обжиг", "обжиг"], "n_raw_mentions": 5}
+{"node_id": "Property::l", "canonical_name": "l", "rule": "exact_name", "merged_surface_forms": ["L", "l"], "n_raw_mentions": 4}
+{"node_id": "Property::l'", "canonical_name": "l'", "rule": "exact_name", "merged_surface_forms": ["L'", "l'"], "n_raw_mentions": 3}
+{"node_id": "Property::объемная скорость", "canonical_name": "объёмная скорость", "rule": "exact_name", "merged_surface_forms": ["объемная скорость", "объёмная скорость"], "n_raw_mentions": 7}
+{"node_id": "Publication::гост р 52892-2007 вибрация и удар. вибрация зданий. измерение вибрации и оценка ее воздействия на конструкцию", "canonical_name": "ГОСТ Р 52892–2007 Вибрация и удар. Вибрация зданий. Измерение вибрации и оценка ее воздействия на конструкцию", "rule": "exact_name", "merged_surface_forms": ["ГОСТ Р 52892-2007 Вибрация и удар. Вибрация зданий. Измерение вибрации и оценка ее воздействия на конструкцию", "ГОСТ Р 52892–2007 Вибрация и удар. Вибрация зданий. Измерение вибрации и оценка ее воздействия на конструкцию"], "n_raw_mentions": 2}
+{"node_id": "battery_lithium_ion", "canonical_name": "литий-ионный аккумулятор", "rule": "curated_dictionary", "merged_surface_forms": ["lithium-ion batteries", "литий-ионный аккумулятор"], "n_raw_mentions": 2}
+{"node_id": "battery_sodium_ion", "canonical_name": "натрий-ионный аккумулятор", "rule": "curated_dictionary", "merged_surface_forms": ["натрий-ионный аккумулятор"], "n_raw_mentions": 1}
+{"node_id": "compound_ammonia", "canonical_name": "аммиак", "rule": "curated_dictionary", "merged_surface_forms": ["NH3"], "n_raw_mentions": 1}
+{"node_id": "compound_hydrochloric_acid", "canonical_name": "соляная кислота", "rule": "curated_dictionary", "merged_surface_forms": ["HCl", "соляная кислота"], "n_raw_mentions": 11}
+{"node_id": "compound_sodium_hydroxide", "canonical_name": "гидроксид натрия", "rule": "curated_dictionary", "merged_surface_forms": ["NaOH", "гидроксид натрия"], "n_raw_mentions": 10}
+{"node_id": "compound_sulfuric_acid", "canonical_name": "серная кислота", "rule": "curated_dictionary", "merged_surface_forms": ["H2SO4", "серная кислота"], "n_raw_mentions": 13}
+{"node_id": "equipment_converter_vanyukov_furnace", "canonical_name": "конвертерная печь Ванюкова", "rule": "curated_dictionary", "merged_surface_forms": ["ПВК", "конвертерная печь Ванюкова", "печь Ванюкова конвертерная"], "n_raw_mentions": 4}
+{"node_id": "equipment_fluidized_bed_furnace", "canonical_name": "печь кипящего слоя", "rule": "curated_dictionary", "merged_surface_forms": ["печи КС", "печь КС", "печь кипящего слоя"], "n_raw_mentions": 8}
+{"node_id": "equipment_gas_electric_cupola", "canonical_name": "газоэлектрическая вагранка", "rule": "curated_dictionary", "merged_surface_forms": ["ГЭВ", "газоэлектрическая вагранка"], "n_raw_mentions": 2}
+{"node_id": "equipment_slag_depletion_vanyukov_furnace", "canonical_name": "обеднительная печь Ванюкова", "rule": "curated_dictionary", "merged_surface_forms": ["ПВО", "обеднительная печь Ванюкова", "печь Ванюкова обеднительная"], "n_raw_mentions": 4}
+{"node_id": "equipment_tubular_rotary_furnace", "canonical_name": "трубчатая вращающаяся печь", "rule": "curated_dictionary", "merged_surface_forms": ["трубчатая вращающаяся печь"], "n_raw_mentions": 2}
+{"node_id": "equipment_vanyukov_furnace", "canonical_name": "печь Ванюкова", "rule": "curated_dictionary", "merged_surface_forms": ["Vanyukov furnace", "ПВ", "печь Ванюкова"], "n_raw_mentions": 20}
+{"node_id": "facility_gas_cleaning_complex", "canonical_name": "комплекс очистки газов", "rule": "curated_dictionary", "merged_surface_forms": ["комплекс очистки газов"], "n_raw_mentions": 1}
+{"node_id": "facility_nickel_electrolysis_shop_2", "canonical_name": "цех электролиза никеля №2", "rule": "curated_dictionary", "merged_surface_forms": ["ЦЭН-2"], "n_raw_mentions": 1}
+{"node_id": "ion_chloride", "canonical_name": "хлорид", "rule": "curated_dictionary", "merged_surface_forms": ["хлорид-ион"], "n_raw_mentions": 1}
+{"node_id": "ion_sulfate", "canonical_name": "сульфат", "rule": "curated_dictionary", "merged_surface_forms": ["сульфат-ион"], "n_raw_mentions": 5}
+{"node_id": "material_cake", "canonical_name": "кек", "rule": "curated_dictionary", "merged_surface_forms": ["кек"], "n_raw_mentions": 3}
+{"node_id": "material_cathode_active_material", "canonical_name": "катодный активный материал", "rule": "curated_dictionary", "merged_surface_forms": ["САМ", "катодный активный материал"], "n_raw_mentions": 6}
+{"node_id": "material_cobalt", "canonical_name": "кобальт", "rule": "curated_dictionary", "merged_surface_forms": ["CO", "Co", "кобальт"], "n_raw_mentions": 13}
+{"node_id": "material_concentrate", "canonical_name": "концентрат", "rule": "curated_dictionary", "merged_surface_forms": ["концентрат"], "n_raw_mentions": 1}
+{"node_id": "material_copper", "canonical_name": "медь", "rule": "curated_dictionary", "merged_surface_forms": ["Cu", "copper", "медь"], "n_raw_mentions": 27}
+{"node_id": "material_gold", "canonical_name": "золото", "rule": "curated_dictionary", "merged_surface_forms": ["Au", "gold", "золото"], "n_raw_mentions": 36}
+{"node_id": "material_iron", "canonical_name": "железо", "rule": "curated_dictionary", "merged_surface_forms": ["Fe", "железо"], "n_raw_mentions": 14}
+{"node_id": "material_lead", "canonical_name": "свинец", "rule": "curated_dictionary", "merged_surface_forms": ["Pb", "свинец"], "n_raw_mentions": 16}
+{"node_id": "material_magnetic_fraction", "canonical_name": "магнитная фракция", "rule": "curated_dictionary", "merged_surface_forms": ["МФ", "магнитная фракция"], "n_raw_mentions": 18}
+{"node_id": "material_manganese", "canonical_name": "марганец", "rule": "curated_dictionary", "merged_surface_forms": ["марганец"], "n_raw_mentions": 5}
+{"node_id": "material_matte", "canonical_name": "штейн", "rule": "curated_dictionary", "merged_surface_forms": ["matte", "штейн"], "n_raw_mentions": 22}
+{"node_id": "material_ncm", "canonical_name": "NCM", "rule": "curated_dictionary", "merged_surface_forms": ["NCAM", "NCM", "NMC"], "n_raw_mentions": 7}
+{"node_id": "material_ncm811", "canonical_name": "NCM811", "rule": "curated_dictionary", "merged_surface_forms": ["NCM811", "NMC811"], "n_raw_mentions": 3}
+{"node_id": "material_nickel", "canonical_name": "никель", "rule": "curated_dictionary", "merged_surface_forms": ["Ni", "никель"], "n_raw_mentions": 22}
+{"node_id": "material_nickel_tubular_furnace_powder", "canonical_name": "никелевый порошок трубчатых печей", "rule": "curated_dictionary", "merged_surface_forms": ["НПТП", "ПНТП", "никелевый порошок трубчатых печей", "порошок никелевый трубчатых печей"], "n_raw_mentions": 11}
+{"node_id": "material_nonferrous_metals", "canonical_name": "цветные металлы", "rule": "curated_dictionary", "merged_surface_forms": ["ЦМ", "цветные металлы"], "n_raw_mentions": 9}
+{"node_id": "material_palladium", "canonical_name": "палладий", "rule": "curated_dictionary", "merged_surface_forms": ["Pd", "палладий"], "n_raw_mentions": 24}
+{"node_id": "material_pgm", "canonical_name": "металлы платиновой группы", "rule": "curated_dictionary", "merged_surface_forms": ["platinum group metals", "металлы платиновой группы", "платиновые металлы"], "n_raw_mentions": 9}
+{"node_id": "material_platinum", "canonical_name": "платина", "rule": "curated_dictionary", "merged_surface_forms": ["Pt", "платина"], "n_raw_mentions": 30}
+{"node_id": "material_platinum_associated_metals", "canonical_name": "металлы-спутники платины", "rule": "curated_dictionary", "merged_surface_forms": ["МСП", "металлы-спутники платины"], "n_raw_mentions": 2}
+{"node_id": "material_polyvinyl_alcohol", "canonical_name": "поливиниловый спирт", "rule": "curated_dictionary", "merged_surface_forms": ["ПВС", "поливиниловый спирт"], "n_raw_mentions": 4}
+{"node_id": "material_precious_metals", "canonical_name": "драгоценные металлы", "rule": "curated_dictionary", "merged_surface_forms": ["precious metals", "ДМ", "драгоценные металлы"], "n_raw_mentions": 8}
+{"node_id": "material_precursor_cathode_active_material", "canonical_name": "прекурсор катодного активного материала", "rule": "curated_dictionary", "merged_surface_forms": ["pCAM", "РСАМ"], "n_raw_mentions": 5}
+{"node_id": "material_rhodium", "canonical_name": "родий", "rule": "curated_dictionary", "merged_surface_forms": ["Rh", "родий"], "n_raw_mentions": 19}
+{"node_id": "material_silver", "canonical_name": "серебро", "rule": "curated_dictionary", "merged_surface_forms": ["серебро"], "n_raw_mentions": 19}
+{"node_id": "material_slag", "canonical_name": "шлак", "rule": "curated_dictionary", "merged_surface_forms": ["slag", "шлак"], "n_raw_mentions": 41}
+{"node_id": "material_technical_lignosulfonate", "canonical_name": "лигносульфонат технический", "rule": "curated_dictionary", "merged_surface_forms": ["ЛСТ", "технический лигносульфонат"], "n_raw_mentions": 2}
+{"node_id": "material_zinc", "canonical_name": "цинк", "rule": "curated_dictionary", "merged_surface_forms": ["цинк"], "n_raw_mentions": 5}
+{"node_id": "method_boundary_element_method", "canonical_name": "метод граничных элементов", "rule": "curated_dictionary", "merged_surface_forms": ["метод граничных элементов"], "n_raw_mentions": 1}
+{"node_id": "method_discontinuous_deformation_analysis", "canonical_name": "дискретный деформационный анализ", "rule": "curated_dictionary", "merged_surface_forms": ["дискретный деформационный анализ"], "n_raw_mentions": 1}
+{"node_id": "method_discrete_element_method", "canonical_name": "метод дискретных элементов", "rule": "curated_dictionary", "merged_surface_forms": ["метод дискретных элементов"], "n_raw_mentions": 3}
+{"node_id": "method_finite_difference_method", "canonical_name": "метод конечных разностей", "rule": "curated_dictionary", "merged_surface_forms": ["метод конечных разностей"], "n_raw_mentions": 1}
+{"node_id": "method_finite_element_method", "canonical_name": "метод конечных элементов", "rule": "curated_dictionary", "merged_surface_forms": ["FEM", "метод конечных элементов"], "n_raw_mentions": 15}
+{"node_id": "method_icp_aes", "canonical_name": "атомно-эмиссионная спектрометрия с индуктивно связанной плазмой", "rule": "curated_dictionary", "merged_surface_forms": ["АЭС-ИСП", "атомно-эмиссионная спектрометрия с индуктивно связанной плазмой"], "n_raw_mentions": 5}
+{"node_id": "method_limit_equilibrium", "canonical_name": "метод предельного равновесия", "rule": "curated_dictionary", "merged_surface_forms": ["LEM", "метод предельного равновесия"], "n_raw_mentions": 7}
+{"node_id": "method_sem", "canonical_name": "сканирующая электронная микроскопия", "rule": "curated_dictionary", "merged_surface_forms": ["СЭМ", "растровая электронная микроскопия", "сканирующая электронная микроскопия"], "n_raw_mentions": 8}
+{"node_id": "method_sem_xray_microanalysis", "canonical_name": "РЭМ-РСМА", "rule": "curated_dictionary", "merged_surface_forms": ["РЭМ-РСМА"], "n_raw_mentions": 1}
+{"node_id": "method_xray_spectral_microanalysis", "canonical_name": "рентгеноспектральный микроанализ", "rule": "curated_dictionary", "merged_surface_forms": ["X-ray microanalysis", "рентгеноспектральный микроанализ"], "n_raw_mentions": 9}
+{"node_id": "method_xrf", "canonical_name": "рентгенофлуоресцентный анализ", "rule": "curated_dictionary", "merged_surface_forms": ["рентгенофлуоресцентный анализ"], "n_raw_mentions": 3}
+{"node_id": "microscopy_secondary_electrons", "canonical_name": "вторичные электроны", "rule": "curated_dictionary", "merged_surface_forms": ["Se"], "n_raw_mentions": 1}
+{"node_id": "model_geomechanical_block_model", "canonical_name": "геомеханическая блочная модель", "rule": "curated_dictionary", "merged_surface_forms": ["geomechanical block model", "геомеханическая блочная модель", "геомеханические блочные модели"], "n_raw_mentions": 3}
+{"node_id": "organization_copper_plant", "canonical_name": "Медный завод", "rule": "curated_dictionary", "merged_surface_forms": ["Медный завод"], "n_raw_mentions": 2}
+{"node_id": "organization_gipronickel", "canonical_name": "Институт Гипроникель", "rule": "curated_dictionary", "merged_surface_forms": ["Gipronickel Institute", "Институт Гипроникель"], "n_raw_mentions": 3}
+{"node_id": "organization_kola_mmc", "canonical_name": "Кольская ГМК", "rule": "curated_dictionary", "merged_surface_forms": ["КГМК", "Кольская ГМК", "Кольская горно-металлургическая компания"], "n_raw_mentions": 5}
+{"node_id": "organization_nadezhda_metallurgical_plant", "canonical_name": "Надеждинский металлургический завод", "rule": "curated_dictionary", "merged_surface_forms": ["Надеждинский металлургический завод"], "n_raw_mentions": 13}
+{"node_id": "parameter_bulk_density", "canonical_name": "насыпная плотность", "rule": "curated_dictionary", "merged_surface_forms": ["насыпная плотность"], "n_raw_mentions": 1}
+{"node_id": "parameter_current_density", "canonical_name": "плотность тока", "rule": "curated_dictionary", "merged_surface_forms": ["плотность тока"], "n_raw_mentions": 1}
+{"node_id": "parameter_factor_of_safety", "canonical_name": "коэффициент запаса устойчивости", "rule": "curated_dictionary", "merged_surface_forms": ["коэффициент запаса устойчивости"], "n_raw_mentions": 3}
+{"node_id": "parameter_mixing_speed", "canonical_name": "скорость перемешивания", "rule": "curated_dictionary", "merged_surface_forms": ["скорость перемешивания"], "n_raw_mentions": 1}
+{"node_id": "parameter_orp", "canonical_name": "окислительно-восстановительный потенциал", "rule": "curated_dictionary", "merged_surface_forms": ["ОВП"], "n_raw_mentions": 2}
+{"node_id": "parameter_ph", "canonical_name": "pH", "rule": "curated_dictionary", "merged_surface_forms": ["pH", "кислотность"], "n_raw_mentions": 4}
+{"node_id": "parameter_stress_strain_state", "canonical_name": "напряженно-деформированное состояние", "rule": "curated_dictionary", "merged_surface_forms": ["напряженно-деформированное состояние"], "n_raw_mentions": 1}
+{"node_id": "parameter_temperature", "canonical_name": "температура", "rule": "curated_dictionary", "merged_surface_forms": ["temperature", "температура"], "n_raw_mentions": 6}
+{"node_id": "process_chlorination", "canonical_name": "хлорирование", "rule": "curated_dictionary", "merged_surface_forms": ["хлорирование"], "n_raw_mentions": 3}
+{"node_id": "process_chlorine_leaching", "canonical_name": "хлорное выщелачивание", "rule": "curated_dictionary", "merged_surface_forms": ["хлорное выщелачивание"], "n_raw_mentions": 4}
+{"node_id": "process_continuous_converting", "canonical_name": "непрерывное конвертирование", "rule": "curated_dictionary", "merged_surface_forms": ["комплекс непрерывного конвертирования", "непрерывное конвертирование"], "n_raw_mentions": 5}
+{"node_id": "process_coprecipitation", "canonical_name": "соосаждение", "rule": "curated_dictionary", "merged_surface_forms": ["co-precipitation", "соосаждение"], "n_raw_mentions": 9}
+{"node_id": "process_electric_slag_depletion", "canonical_name": "обеднительная электрическая плавка", "rule": "curated_dictionary", "merged_surface_forms": ["ОЭП"], "n_raw_mentions": 1}
+{"node_id": "process_electrolysis", "canonical_name": "электролиз", "rule": "curated_dictionary", "merged_surface_forms": ["электролиз"], "n_raw_mentions": 1}
+{"node_id": "process_electrowinning", "canonical_name": "электроэкстракция", "rule": "curated_dictionary", "merged_surface_forms": ["электроэкстракция"], "n_raw_mentions": 1}
+{"node_id": "process_flash_smelting", "canonical_name": "печь взвешенной плавки", "rule": "curated_dictionary", "merged_surface_forms": ["flash smelting", "flash smelting furnace", "ПВП"], "n_raw_mentions": 3}
+{"node_id": "process_leaching", "canonical_name": "выщелачивание", "rule": "curated_dictionary", "merged_surface_forms": ["выщелачивание"], "n_raw_mentions": 5}
+{"node_id": "process_microarc_oxidation", "canonical_name": "микродуговое оксидирование", "rule": "curated_dictionary", "merged_surface_forms": ["микродуговое оксидирование"], "n_raw_mentions": 3}
+{"node_id": "process_sorption", "canonical_name": "сорбция", "rule": "curated_dictionary", "merged_surface_forms": ["сорбционная очистка", "сорбция"], "n_raw_mentions": 2}
+{"node_id": "product_msp_concentrate", "canonical_name": "концентрат МСП", "rule": "curated_dictionary", "merged_surface_forms": ["КМСП"], "n_raw_mentions": 1}
+{"node_id": "product_pt_pd_concentrate", "canonical_name": "концентрат Pt-Pd", "rule": "curated_dictionary", "merged_surface_forms": ["КПП", "концентрат Pt-Pd", "концентрат платино-палладиевый", "платино-палладиевый концентрат"], "n_raw_mentions": 4}
+{"node_id": "product_silver_palladium_concentrate", "canonical_name": "серебряно-палладиевый концентрат", "rule": "curated_dictionary", "merged_surface_forms": ["концентрат серебряно-палладиевый"], "n_raw_mentions": 1}

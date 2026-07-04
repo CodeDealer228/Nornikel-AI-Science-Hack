@@ -1,0 +1,1224 @@
+groups:
+  # =========================
+  # Materials / elements / products
+  # =========================
+
+  - canonical_id: material_nickel_tubular_furnace_powder
+    type: Material
+    canonical_name: никелевый порошок трубчатых печей
+    aliases:
+      - ПНТП
+      - НПТП
+      - порошок никелевый трубчатых печей
+      - никелевый порошок трубчатых печей
+      - nickel powder from tubular furnaces
+      - tubular furnace nickel powder
+
+  - canonical_id: material_chlorination_residue
+    type: Material
+    canonical_name: остаток хлорного растворения
+    aliases:
+      - ОХР
+      - остаток хлорного растворения
+      - остатка хлорного растворения
+      - chlorination residue
+
+  - canonical_id: material_magnetic_fraction
+    type: Material
+    canonical_name: магнитная фракция
+    aliases:
+      - МФ
+      - магнитная фракция
+      - magnetic fraction
+
+  - canonical_id: material_foam_product
+    type: Material
+    canonical_name: пенный продукт
+    aliases:
+      - ПП
+      - пенный продукт
+      - пенного продукта
+      - froth product
+      - flotation froth product
+
+  - canonical_id: material_precious_metals
+    type: Material
+    canonical_name: драгоценные металлы
+    aliases:
+      - ДМ
+      - драгоценные металлы
+      - драгоценных металлов
+      - precious metals
+      - noble metals
+
+  - canonical_id: material_nonferrous_metals
+    type: Material
+    canonical_name: цветные металлы
+    aliases:
+      - ЦМ
+      - цветные металлы
+      - цветных металлов
+      - non-ferrous metals
+
+  - canonical_id: material_platinum_associated_metals
+    type: Material
+    canonical_name: металлы-спутники платины
+    aliases:
+      - МСП
+      - металлы-спутники платины
+      - металлов-спутников платины
+      - platinum-associated metals
+      - platinum companion metals
+
+  - canonical_id: product_pt_pd_concentrate
+    type: Material
+    canonical_name: концентрат Pt-Pd
+    aliases:
+      - КПП
+      - концентрат Pt-Pd
+      - концентрат платино-палладиевый
+      - платино-палладиевый концентрат
+      - Pt-Pd concentrate
+      - platinum-palladium concentrate
+
+  - canonical_id: product_msp_concentrate
+    type: Material
+    canonical_name: концентрат МСП
+    aliases:
+      - КМСП
+      - концентрат МСП
+      - концентрат металлов-спутников платины
+      - concentrate of platinum-associated metals
+      - platinum-associated metals concentrate
+
+  - canonical_id: product_silver_palladium_concentrate
+    type: Material
+    canonical_name: серебряно-палладиевый концентрат
+    aliases:
+      - КСП
+      - концентрат серебра
+      - концентрат серебряно-палладиевый
+      - серебряно-палладиевый концентрат
+      - silver concentrate
+      - silver-palladium concentrate
+
+  - canonical_id: material_cathode_active_material
+    type: Material
+    canonical_name: катодный активный материал
+    aliases:
+      - САМ
+      - CAM
+      - катодный активный материал
+      - катодного активного материала
+      - cathode active material
+
+  - canonical_id: material_precursor_cathode_active_material
+    type: Material
+    canonical_name: прекурсор катодного активного материала
+    aliases:
+      - РСАМ
+      - PCAM
+      - pCAM
+      - прекурсор катодного активного материала
+      - предшественник катодного материала
+      - precursor cathode active material
+
+  - canonical_id: material_ncm
+    type: Material
+    canonical_name: NCM
+    aliases:
+      - NCM
+      - NMC
+      - NCAM
+      - nickel cobalt manganese
+      - nickel-cobalt-manganese
+
+  - canonical_id: material_polyvinyl_alcohol
+    type: Material
+    canonical_name: поливиниловый спирт
+    aliases:
+      - ПВС
+      - поливиниловый спирт
+      - поливинилового спирта
+      - PVA
+      - polyvinyl alcohol
+
+  - canonical_id: material_polyvinylidene_fluoride
+    type: Material
+    canonical_name: поливинилиденфторид
+    aliases:
+      - PVDF
+      - поливинилиденфторид
+      - polyvinylidene fluoride
+
+  - canonical_id: material_technical_lignosulfonate
+    type: Material
+    canonical_name: лигносульфонат технический
+    aliases:
+      - ЛСТ
+      - лигносульфонат технический
+      - технический лигносульфонат
+      - technical lignosulfonate
+
+
+  - canonical_id: material_nickel
+    type: Material
+    canonical_name: никель
+    aliases:
+      - никель
+      - никеля
+      - никелевый
+      - никелевые
+      - Ni
+      - nickel
+
+  - canonical_id: material_copper
+    type: Material
+    canonical_name: медь
+    aliases:
+      - медь
+      - меди
+      - медный
+      - медные
+      - Cu
+      - copper
+
+  - canonical_id: material_lead
+    type: Material
+    canonical_name: свинец
+    aliases:
+      - свинец
+      - свинца
+      - свинцовый
+      - свинцовые
+      - Pb
+      - lead
+
+  - canonical_id: material_iron
+    type: Material
+    canonical_name: железо
+    aliases:
+      - железо
+      - железа
+      - железистый
+      - железистые
+      - Fe
+      - iron
+
+  - canonical_id: material_cobalt
+    type: Material
+    canonical_name: кобальт
+    aliases:
+      - кобальт
+      - кобальта
+      - кобальтовый
+      - кобальтовые
+      - Co
+      - cobalt
+
+  - canonical_id: material_zinc
+    type: Material
+    canonical_name: цинк
+    aliases:
+      - цинк
+      - цинка
+      - цинковый
+      - цинковые
+      - Zn
+      - zinc
+
+  - canonical_id: material_manganese
+    type: Material
+    canonical_name: марганец
+    aliases:
+      - марганец
+      - марганца
+      - марганцевый
+      - Mn
+      - manganese
+
+  - canonical_id: material_gold
+    type: Material
+    canonical_name: золото
+    aliases:
+      - золото
+      - золота
+      - золотой
+      - Au
+      - gold
+
+  - canonical_id: material_silver
+    type: Material
+    canonical_name: серебро
+    aliases:
+      - серебро
+      - серебра
+      - серебряный
+      - Ag
+      - silver
+
+  - canonical_id: material_platinum
+    type: Material
+    canonical_name: платина
+    aliases:
+      - платина
+      - платины
+      - платиновый
+      - Pt
+      - platinum
+
+  - canonical_id: material_palladium
+    type: Material
+    canonical_name: палладий
+    aliases:
+      - палладий
+      - палладия
+      - палладиевый
+      - Pd
+      - palladium
+
+  - canonical_id: material_rhodium
+    type: Material
+    canonical_name: родий
+    aliases:
+      - родий
+      - родия
+      - родиевый
+      - Rh
+      - rhodium
+
+  - canonical_id: material_pgm
+    type: Material
+    canonical_name: металлы платиновой группы
+    aliases:
+      - МПГ
+      - ПГМ
+      - платиновые металлы
+      - металлы платиновой группы
+      - платиноиды
+      - PGM
+      - PGMs
+      - platinum group metals
+
+  # =========================
+  # Ions / salts / compounds
+  # =========================
+
+  - canonical_id: ion_sulfate
+    type: Ion
+    canonical_name: сульфат
+    aliases:
+      - сульфат
+      - сульфаты
+      - сульфатный
+      - сульфатные
+      - сульфат-ион
+      - SO4
+      - SO4^2-
+      - SO₄²⁻
+      - sulfate
+      - sulphate
+
+  - canonical_id: ion_chloride
+    type: Ion
+    canonical_name: хлорид
+    aliases:
+      - хлорид
+      - хлориды
+      - хлоридный
+      - хлоридные
+      - хлорид-ион
+      - Cl-
+      - chloride
+
+  - canonical_id: compound_sulfuric_acid
+    type: Reagent
+    canonical_name: серная кислота
+    aliases:
+      - серная кислота
+      - серной кислоты
+      - H2SO4
+      - H₂SO₄
+      - sulfuric acid
+      - sulphuric acid
+
+  - canonical_id: compound_hydrochloric_acid
+    type: Reagent
+    canonical_name: соляная кислота
+    aliases:
+      - соляная кислота
+      - соляной кислоты
+      - HCl
+      - hydrochloric acid
+
+  - canonical_id: compound_sodium_hydroxide
+    type: Reagent
+    canonical_name: гидроксид натрия
+    aliases:
+      - гидроксид натрия
+      - едкий натр
+      - каустик
+      - NaOH
+      - sodium hydroxide
+
+  - canonical_id: compound_ammonia
+    type: Reagent
+    canonical_name: аммиак
+    aliases:
+      - аммиак
+      - аммиака
+      - NH3
+      - NH₃
+      - ammonia
+
+  # =========================
+  # Solutions / waters
+  # =========================
+
+  - canonical_id: solution_nickel_chloride
+    type: Solution
+    canonical_name: никелевый хлоридный раствор
+    aliases:
+      - никелевый хлоридный раствор
+      - никелевые хлоридные растворы
+      - хлоридный никелевый раствор
+      - хлоридные никелевые растворы
+      - nickel chloride solution
+      - nickel chloride solutions
+
+  - canonical_id: solution_nickel_chloride_sulfate
+    type: Solution
+    canonical_name: хлоридно-сульфатный никелевый раствор
+    aliases:
+      - хлоридно-сульфатный никелевый раствор
+      - хлоридно-сульфатные никелевые растворы
+      - сульфат-хлоридный никелевый раствор
+      - сульфат-хлоридные никелевые растворы
+      - nickel chloride-sulfate solution
+      - nickel chloride sulfate solution
+
+  - canonical_id: water_mine_water
+    type: Water
+    canonical_name: шахтные воды
+    aliases:
+      - шахтные воды
+      - шахтная вода
+      - рудничные воды
+      - рудничная вода
+      - mine water
+      - mine waters
+
+  # =========================
+  # Processes
+  # =========================
+  - canonical_id: process_microarc_oxidation
+    type: Process
+    canonical_name: микродуговое оксидирование
+    aliases:
+      - МДО
+      - микродуговое оксидирование
+      - микродугового оксидирования
+      - micro-arc oxidation
+      - MAO
+
+  - canonical_id: process_electrowinning
+    type: Process
+    canonical_name: электроэкстракция
+    aliases:
+      - электроэкстракция
+      - электроэкстракции
+      - электроизвлечение
+      - электроизвлечения
+      - электролитическое извлечение
+      - electrowinning
+
+  - canonical_id: process_electrolysis
+    type: Process
+    canonical_name: электролиз
+    aliases:
+      - электролиз
+      - электролиза
+      - electrolysis
+
+  - canonical_id: process_chlorine_leaching
+    type: Process
+    canonical_name: хлорное выщелачивание
+    aliases:
+      - хлорное выщелачивание
+      - хлорного выщелачивания
+      - chloride leaching
+      - chlorine leaching
+      - chlorination leaching
+
+  - canonical_id: process_leaching
+    type: Process
+    canonical_name: выщелачивание
+    aliases:
+      - выщелачивание
+      - выщелачивания
+      - leaching
+
+  - canonical_id: process_chlorination
+    type: Process
+    canonical_name: хлорирование
+    aliases:
+      - хлорирование
+      - хлорирования
+      - chlorination
+
+  - canonical_id: process_desalination
+    type: Process
+    canonical_name: обессоливание
+    aliases:
+      - обессоливание
+      - обессоливания
+      - деминерализация
+      - деминерализации
+      - desalination
+      - demineralization
+      - demineralisation
+
+  - canonical_id: process_flash_smelting
+    type: Process
+    canonical_name: печь взвешенной плавки
+    aliases:
+      - ПВП
+      - печь взвешенной плавки
+      - печи взвешенной плавки
+      - взвешенная плавка
+      - flash smelting
+      - flash smelting furnace
+
+  - canonical_id: process_coprecipitation
+    type: Process
+    canonical_name: соосаждение
+    aliases:
+      - соосаждение
+      - соосаждения
+      - совместное осаждение
+      - co-precipitation
+      - coprecipitation
+
+  - canonical_id: process_sorption
+    type: Process
+    canonical_name: сорбция
+    aliases:
+      - сорбция
+      - сорбционная очистка
+      - сорбционный метод
+      - sorption
+      - adsorption
+
+  - canonical_id: process_extraction
+    type: Process
+    canonical_name: экстракция
+    aliases:
+      - экстракция
+      - экстракции
+      - extraction
+      - solvent extraction
+
+  - canonical_id: process_hydrolytic_purification
+    type: Process
+    canonical_name: гидролитическая очистка
+    aliases:
+      - гидролитическая очистка
+      - гидролитической очистки
+      - гидролитический способ
+      - hydrolytic purification
+      - hydrolytic cleaning
+
+  # =========================
+  # Materials / products
+  # =========================
+
+  - canonical_id: material_catholyte
+    type: Material
+    canonical_name: католит
+    aliases:
+      - католит
+      - католита
+      - catholyte
+      - катодный электролит
+      - катодный раствор
+
+  - canonical_id: material_anolyte
+    type: Material
+    canonical_name: анолит
+    aliases:
+      - анолит
+      - анолита
+      - anolyte
+      - анодный электролит
+      - анодный раствор
+
+  - canonical_id: material_electrolyte
+    type: Material
+    canonical_name: электролит
+    aliases:
+      - электролит
+      - электролита
+      - electrolyte
+
+  - canonical_id: material_matte
+    type: Material
+    canonical_name: штейн
+    aliases:
+      - штейн
+      - штейна
+      - matte
+
+  - canonical_id: material_slag
+    type: Material
+    canonical_name: шлак
+    aliases:
+      - шлак
+      - шлака
+      - slag
+
+  - canonical_id: material_cake
+    type: Material
+    canonical_name: кек
+    aliases:
+      - кек
+      - кека
+      - cake
+
+  - canonical_id: material_concentrate
+    type: Material
+    canonical_name: концентрат
+    aliases:
+      - концентрат
+      - концентрата
+      - концентраты
+      - concentrate
+      - concentrates
+
+  - canonical_id: material_ncm811
+    type: Material
+    canonical_name: NCM811
+    aliases:
+      - NCM811
+      - NMC811
+      - NCM 811
+      - NMC 811
+      - прекурсор NCM811
+      - прекурсор NMC811
+      - pCAM NCM811
+
+  # =========================
+  # Parameters / metrics
+  # =========================
+
+  - canonical_id: parameter_tds
+    type: Parameter
+    canonical_name: сухой остаток
+    aliases:
+      - сухой остаток
+      - сухого остатка
+      - минерализация
+      - минерализации
+      - солесодержание
+      - TDS
+      - total dissolved solids
+
+  - canonical_id: parameter_ph
+    type: Parameter
+    canonical_name: pH
+    aliases:
+      - pH
+      - рН
+      - водородный показатель
+      - кислотность
+
+  - canonical_id: parameter_current_density
+    type: Parameter
+    canonical_name: плотность тока
+    aliases:
+      - плотность тока
+      - плотности тока
+      - current density
+
+  - canonical_id: parameter_voltage
+    type: Parameter
+    canonical_name: напряжение
+    aliases:
+      - напряжение
+      - напряжения
+      - voltage
+
+  - canonical_id: parameter_temperature
+    type: Parameter
+    canonical_name: температура
+    aliases:
+      - температура
+      - температуры
+      - температурный фактор
+      - temperature
+
+  - canonical_id: parameter_pressure
+    type: Parameter
+    canonical_name: давление
+    aliases:
+      - давление
+      - давления
+      - pressure
+
+  - canonical_id: parameter_flow_rate
+    type: Parameter
+    canonical_name: расход
+    aliases:
+      - расход
+      - расхода
+      - скорость потока
+      - flow rate
+
+  - canonical_id: parameter_particle_size
+    type: Parameter
+    canonical_name: размер частиц
+    aliases:
+      - размер частиц
+      - размеры частиц
+      - крупность
+      - дисперсность
+      - particle size
+      - particle size distribution
+      - PSD
+
+  - canonical_id: parameter_extraction_recovery
+    type: Parameter
+    canonical_name: извлечение
+    aliases:
+      - извлечение
+      - извлечения
+      - степень извлечения
+      - recovery
+      - extraction recovery
+
+  - canonical_id: parameter_content
+    type: Parameter
+    canonical_name: содержание
+    aliases:
+      - содержание
+      - содержания
+      - содержаний
+      - content
+
+
+  - canonical_id: parameter_mpc
+    type: Parameter
+    canonical_name: предельно допустимая концентрация
+    aliases:
+      - ПДК
+      - предельно допустимая концентрация
+      - предельно допустимые концентрации
+      - maximum permissible concentration
+      - maximum allowable concentration
+      - MPC
+
+  - canonical_id: parameter_orp
+    type: Parameter
+    canonical_name: окислительно-восстановительный потенциал
+    aliases:
+      - ОВП
+      - окислительно-восстановительный потенциал
+      - окислительно-восстановительного потенциала
+      - редокс-потенциал
+      - redox potential
+      - oxidation-reduction potential
+      - ORP
+
+  - canonical_id: parameter_particle_size_distribution
+    type: Parameter
+    canonical_name: распределение частиц по размерам
+    aliases:
+      - PSD
+      - распределение частиц по размерам
+      - particle size distribution
+
+  - canonical_id: parameter_mixing_speed
+    type: Parameter
+    canonical_name: скорость перемешивания
+    aliases:
+      - скорость перемешивания
+      - скорости перемешивания
+      - mixing speed
+      - stirring speed
+
+  - canonical_id: parameter_bulk_density
+    type: Parameter
+    canonical_name: насыпная плотность
+    aliases:
+      - НП
+      - насыпная плотность
+      - bulk density
+
+  - canonical_id: parameter_median_particle_size
+    type: Parameter
+    canonical_name: D50
+    aliases:
+      - D50
+      - средний размер частиц
+      - медианный размер частиц
+      - median particle size
+      - median particle diameter
+
+  - canonical_id: parameter_stress_strain_state
+    type: Parameter
+    canonical_name: напряженно-деформированное состояние
+    aliases:
+      - НДС
+      - напряженно-деформированное состояние
+      - stress-strain state
+      - stress and strain state
+
+  - canonical_id: parameter_factor_of_safety
+    type: Parameter
+    canonical_name: коэффициент запаса устойчивости
+    aliases:
+      - КЗУ
+      - коэффициент запаса устойчивости
+      - коэффициент устойчивости
+      - factor of safety
+      - stability factor
+
+  # =========================
+  # Organizations / facilities
+  # =========================
+  # =========================
+  # Organizations / facilities
+  # =========================
+
+  - canonical_id: organization_polar_division
+    type: Organization
+    canonical_name: Заполярный филиал
+    aliases:
+      - ЗФ
+      - Заполярный филиал
+      - Заполярного филиала
+      - Polar Division
+      - Polar Branch
+
+  - canonical_id: organization_copper_plant
+    type: Organization
+    canonical_name: Медный завод
+    aliases:
+      - МЗ
+      - Медный завод
+      - Медного завода
+      - Copper Plant
+
+  - canonical_id: organization_kola_mmc
+    type: Organization
+    canonical_name: Кольская ГМК
+    aliases:
+      - КГМК
+      - Кольская ГМК
+      - Кольская горно-металлургическая компания
+      - Kola MMC
+      - Kola Mining and Metallurgical Company
+
+  - canonical_id: organization_nadezhda_metallurgical_plant
+    type: Organization
+    canonical_name: Надеждинский металлургический завод
+    aliases:
+      - НМЗ
+      - Надеждинский металлургический завод
+      - Надеждинского металлургического завода
+      - Nadezhda Metallurgical Plant
+
+  - canonical_id: facility_elemental_sulfur_production_section
+    type: Facility
+    canonical_name: участок производства элементарной серы
+    aliases:
+      - УПЭС
+      - участок производства элементарной серы
+      - участка производства элементарной серы
+      - elemental sulfur production section
+      - elemental sulfur production unit
+
+  - canonical_id: facility_coke_chemical_production
+    type: Facility
+    canonical_name: коксохимическое производство
+    aliases:
+      - КХП
+      - коксохимическое производство
+      - коксохимического производства
+      - coke chemical production
+      - coke by-product plant
+
+  - canonical_id: facility_gas_cleaning_complex
+    type: Facility
+    canonical_name: комплекс очистки газов
+    aliases:
+      - КОГ
+      - комплекс очистки газов
+      - gas cleaning complex
+      - gas cleaning system
+
+  - canonical_id: facility_sulfur_recovery_unit
+    type: Facility
+    canonical_name: установка извлечения серы
+    aliases:
+      - SRU
+      - установка извлечения серы
+      - установки извлечения серы
+      - sulfur recovery unit
+      - sulfur recovery plant
+
+  - canonical_id: organization_gipronickel
+    type: Organization
+    canonical_name: Институт Гипроникель
+    aliases:
+      - Институт Гипроникель
+      - Гипроникель
+      - ООО Институт Гипроникель
+      - Gipronickel
+      - Gipronickel Institute
+
+  - canonical_id: organization_nornickel
+    type: Organization
+    canonical_name: Норникель
+    aliases:
+      - Норникель
+      - Норильский никель
+      - Norilsk Nickel
+      - Nornickel
+
+  # =========================
+  # Modeling / geomechanics
+  # =========================
+
+  - canonical_id: method_finite_element_method
+    type: Method
+    canonical_name: метод конечных элементов
+    aliases:
+      - МКЭ
+      - FEM
+      - метод конечных элементов
+      - finite element method
+
+  - canonical_id: method_finite_difference_method
+    type: Method
+    canonical_name: метод конечных разностей
+    aliases:
+      - МКР
+      - FDM
+      - метод конечных разностей
+      - finite difference method
+
+  - canonical_id: method_boundary_element_method
+    type: Method
+    canonical_name: метод граничных элементов
+    aliases:
+      - МГЭ
+      - BEM
+      - метод граничных элементов
+      - boundary element method
+
+  - canonical_id: method_discrete_element_method
+    type: Method
+    canonical_name: метод дискретных элементов
+    aliases:
+      - МДЭ
+      - DEM
+      - метод дискретных элементов
+      - discrete element method
+
+  - canonical_id: method_discontinuous_deformation_analysis
+    type: Method
+    canonical_name: дискретный деформационный анализ
+    aliases:
+      - ДДА
+      - DDA
+      - дискретный деформационный анализ
+      - discontinuous deformation analysis
+
+  - canonical_id: method_limit_equilibrium
+    type: Method
+    canonical_name: метод предельного равновесия
+    aliases:
+      - LEM
+      - метод предельного равновесия
+      - limit equilibrium method
+
+  - canonical_id: method_computational_fluid_dynamics
+    type: Method
+    canonical_name: вычислительная гидродинамика
+    aliases:
+      - CFD
+      - вычислительная гидродинамика
+      - computational fluid dynamics
+
+  - canonical_id: model_geomechanical_block_model
+    type: Model
+    canonical_name: геомеханическая блочная модель
+    aliases:
+      - ГБМ
+      - GBM
+      - геомеханическая блочная модель
+      - геомеханические блочные модели
+      - geomechanical block model
+
+  # =========================
+  # Analytical methods / microscopy
+  # =========================
+
+  - canonical_id: method_sem
+    type: Method
+    canonical_name: сканирующая электронная микроскопия
+    aliases:
+      - РЭМ
+      - СЭМ
+      - SEM
+      - растровая электронная микроскопия
+      - сканирующая электронная микроскопия
+      - scanning electron microscopy
+
+  - canonical_id: method_xray_spectral_microanalysis
+    type: Method
+    canonical_name: рентгеноспектральный микроанализ
+    aliases:
+      - РСМА
+      - рентгеноспектральный микроанализ
+      - рентгеноспектрального микроанализа
+      - X-ray spectral microanalysis
+      - X-ray microanalysis
+
+  - canonical_id: method_sem_xray_microanalysis
+    type: Method
+    canonical_name: РЭМ-РСМА
+    aliases:
+      - РЭМ-РСМА
+      - SEM-X-ray microanalysis
+      - SEM/EDS
+      - SEM-EDS
+
+  - canonical_id: method_xrf
+    type: Method
+    canonical_name: рентгенофлуоресцентный анализ
+    aliases:
+      - РФА
+      - рентгенофлуоресцентный анализ
+      - XRF
+      - X-ray fluorescence analysis
+
+  - canonical_id: method_icp_aes
+    type: Method
+    canonical_name: атомно-эмиссионная спектрометрия с индуктивно связанной плазмой
+    aliases:
+      - ИСП-АЭС
+      - АЭС-ИСП
+      - ICP-AES
+      - атомно-эмиссионная спектрометрия с индуктивно связанной плазмой
+      - атомно-эмиссионная спектрометрия с индуктивно-связанной плазмой
+      - inductively coupled plasma atomic emission spectrometry
+
+
+  - canonical_id: method_fib
+    type: Method
+    canonical_name: фокусированный ионный пучок
+    aliases:
+      - FIB
+      - ФИП
+      - фокусированный ионный пучок
+      - focused ion beam
+      - сфокусированный ионный пучок
+      - СИП
+
+  - canonical_id: microscopy_secondary_electrons
+    type: Method
+    canonical_name: вторичные электроны
+    aliases:
+      - SE
+      - вторичные электроны
+      - secondary electrons
+
+  - canonical_id: microscopy_backscattered_electrons
+    type: Method
+    canonical_name: отраженные электроны
+    aliases:
+      - BSE
+      - отраженные электроны
+      - обратно-рассеянные электроны
+      - backscattered electrons
+
+  - canonical_id: detector_energy_dispersive_spectroscopy
+    type: Method
+    canonical_name: энергодисперсионная спектроскопия
+    aliases:
+      - EDS
+      - энергодисперсионная спектроскопия
+      - спектроскопия с дисперсией по энергии
+      - energy-dispersive spectroscopy
+      - energy dispersive spectroscopy
+      - Energy-dispersive X-ray spectroscopy
+      - EDXS
+
+  - canonical_id: detector_wavelength_dispersive_spectroscopy
+    type: Method
+    canonical_name: волнодисперсионная спектроскопия
+    aliases:
+      - WDS
+      - спектроскопия с дисперсией по длине волны
+      - wavelength-dispersive spectroscopy
+      - wavelength dispersive X-ray spectroscopy
+
+  - canonical_id: method_thermogravimetric_analysis
+    type: Method
+    canonical_name: термогравиметрический анализ
+    aliases:
+      - ТГА
+      - термогравиметрия
+      - термогравиметрический анализ
+      - TGA
+      - thermogravimetric analysis
+
+  - canonical_id: method_differential_thermal_analysis
+    type: Method
+    canonical_name: дифференциально-термический анализ
+    aliases:
+      - ДТА
+      - дифференциально-термический анализ
+      - DTA
+      - differential thermal analysis
+
+  - canonical_id: method_infrared_spectroscopy
+    type: Method
+    canonical_name: ИК-спектроскопия
+    aliases:
+      - ИК
+      - ИК-спектроскопия
+      - инфракрасная спектроскопия
+      - IR spectroscopy
+      - infrared spectroscopy
+
+  # =========================
+  # Batteries
+  # =========================
+
+  - canonical_id: battery_lithium_ion
+    type: Product
+    canonical_name: литий-ионный аккумулятор
+    aliases:
+      - ЛИА
+      - литий-ионный аккумулятор
+      - литий-ионные аккумуляторы
+      - lithium-ion battery
+      - lithium-ion batteries
+      - Li-ion battery
+      - LIB
+
+  - canonical_id: battery_sodium_ion
+    type: Product
+    canonical_name: натрий-ионный аккумулятор
+    aliases:
+      - НИА
+      - SIB
+      - натрий-ионный аккумулятор
+      - натрий-ионные аккумуляторы
+      - sodium-ion battery
+      - sodium-ion batteries
+
+  # =========================
+  # Equipment / process units
+  # =========================
+  - canonical_id: equipment_converter_vanyukov_furnace
+    type: Equipment
+    canonical_name: конвертерная печь Ванюкова
+    aliases:
+      - ПВК
+      - печь Ванюкова конвертерная
+      - конвертерная печь Ванюкова
+      - converter Vanyukov furnace
+
+  - canonical_id: equipment_slag_depletion_vanyukov_furnace
+    type: Equipment
+    canonical_name: обеднительная печь Ванюкова
+    aliases:
+      - ПВО
+      - печь Ванюкова обеднительная
+      - обеднительная печь Ванюкова
+      - slag-depletion Vanyukov furnace
+      - slag cleaning Vanyukov furnace
+
+  - canonical_id: equipment_vanyukov_furnace
+    type: Equipment
+    canonical_name: печь Ванюкова
+    aliases:
+      - ПВ
+      - печь Ванюкова
+      - печи Ванюкова
+      - Vanyukov furnace
+      - Vanyukov furnaces
+
+  - canonical_id: process_continuous_converting
+    type: Process
+    canonical_name: непрерывное конвертирование
+    aliases:
+      - КНК
+      - комплекс непрерывного конвертирования
+      - непрерывное конвертирование
+      - continuous converting
+      - continuous converting complex
+
+  - canonical_id: process_flash_smelting
+    type: Process
+    canonical_name: взвешенная плавка
+    aliases:
+      - взвешенная плавка
+      - flash smelting
+
+  - canonical_id: process_electric_slag_depletion
+    type: Process
+    canonical_name: обеднительная электрическая плавка
+    aliases:
+      - ОЭП
+      - обеднительная электрическая плавка
+      - electric slag depletion
+
+  - canonical_id: equipment_gas_electric_cupola
+    type: Equipment
+    canonical_name: газоэлектрическая вагранка
+    aliases:
+      - ГЭВ
+      - GEC
+      - газоэлектрическая вагранка
+      - gas-electric cupola
+
+  - canonical_id: equipment_fluidized_bed_furnace
+    type: Equipment
+    canonical_name: печь кипящего слоя
+    aliases:
+      - печь КС
+      - печи КС
+      - печь кипящего слоя
+      - печи кипящего слоя
+      - fluidized bed furnace
+      - fluidized-bed furnace
+
+  - canonical_id: equipment_tubular_rotary_furnace
+    type: Equipment
+    canonical_name: трубчатая вращающаяся печь
+    aliases:
+      - ТВП
+      - трубчатая вращающаяся печь
+      - трубчатые вращающиеся печи
+      - tubular rotary furnace
+      - rotary tube furnace
+
+  - canonical_id: facility_nickel_electrolysis_shop_2
+    type: Facility
+    canonical_name: цех электролиза никеля №2
+    aliases:
+      - ЦЭН-2
+      - цех электролиза никеля №2
+      - цех электролиза никеля номер 2
+
+  - canonical_id: material_oxygen_air_mixture
+    type: Material
+    canonical_name: кислородно-воздушная смесь
+    aliases:
+      - КВС
+      - кислородно-воздушная смесь
+      - кислородно-воздушной смеси
