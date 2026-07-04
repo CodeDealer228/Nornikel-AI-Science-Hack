@@ -6,10 +6,12 @@
 `YandexGPTClient` (реальный вызов Yandex Foundation Models — один и тот же
 `/completion` endpoint + `Api-Key` auth обслуживает и YandexGPT, и DeepSeek,
 хостимый на Yandex Cloud / Yandex AI Studio; для DeepSeek передаётся `ds://`
-model URI вместо `gpt://`), `MockLLMClient` (детерминированный, для smoke-test
-без API-ключей), фабрика `create_llm_client()` (выбор по `LLM_CLIENT_MODE`/
-`LLM_MODE`/`YANDEX_GPT_USE_MOCK`; режимы `mock`/`real`/`deepseek`), `ChunkExtractor`
-и `ChunkBatchRunner` (асинхронно, пул воркеров, ошибка на одном чанке не роняет батч).
+model URI вместо `gpt://`), `OpenRouterClient` (OpenRouter chat completions API,
+включая бесплатные `*:free` модели), `MockLLMClient` (детерминированный, для
+smoke-test без API-ключей), фабрика `create_llm_client()` (выбор по
+`LLM_CLIENT_MODE`/`LLM_MODE`/`YANDEX_GPT_USE_MOCK`; режимы
+`mock`/`real`/`deepseek`/`openrouter`), `ChunkExtractor` и `ChunkBatchRunner`
+(асинхронно, пул воркеров, ошибка на одном чанке не роняет батч).
 
 **DeepSeek здесь — это модель на Yandex, а не отдельный сервис.** Промпт
 `ner_re_extraction_prompt.md` с самого начала написан под DeepSeek («один вызов
@@ -24,6 +26,20 @@ DeepSeek-формате выхода (`{doc_id, parsed:{entities,relations}}`). 
 проброшенный в фабрику режим `deepseek` закрывает пробел — когда появится
 ключ от Yandex AI Studio, `scripts.ingest` прогоняет реальный экстрактор
 DeepSeek, а не падает или уходит в mock.
+
+**OpenRouter fallback.** Если лимиты Yandex AI Studio закончились, включите
+OpenRouter без изменения кода:
+
+```env
+LLM_CLIENT_MODE=openrouter
+OPENROUTER_API_KEY=<ваш ключ OpenRouter>
+OPENROUTER_MODEL=poolside/laguna-xs-2.1:free
+```
+
+OpenRouter вызывается через `https://openrouter.ai/api/v1/chat/completions` с
+Bearer-токеном. Модель можно заменить на любой актуальный бесплатный slug с
+суффиксом `:free`; остальные стадии пайплайна получают тот же `LLMClient`
+интерфейс и не знают, какой провайдер использовался.
 
 Пайплайн встроен в `../scripts/ingest.py` (этап LLM включается по умолчанию;
 `--skip-llm` оставляет только Natasha). Результаты реальных прогонов:

@@ -89,6 +89,23 @@ class YandexGPTSettings:
 
 
 @dataclass(frozen=True)
+class OpenRouterSettings:
+    api_key: str = field(default_factory=lambda: _env("OPENROUTER_API_KEY", "") or "")
+    model: str = field(default_factory=lambda: _env("OPENROUTER_MODEL", "poolside/laguna-xs-2.1:free") or "poolside/laguna-xs-2.1:free")
+    base_url: str = field(default_factory=lambda: _env("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1") or "https://openrouter.ai/api/v1")
+    max_tokens: int = field(default_factory=lambda: _env_int("OPENROUTER_MAX_TOKENS", 3000))
+    temperature: float = field(default_factory=lambda: _env_float("OPENROUTER_TEMPERATURE", 0.0))
+    timeout: float = field(default_factory=lambda: _env_float("OPENROUTER_TIMEOUT", 60.0))
+    max_retries: int = field(default_factory=lambda: _env_int("OPENROUTER_MAX_RETRIES", 3))
+    http_referer: str = field(default_factory=lambda: _env("OPENROUTER_HTTP_REFERER", "") or "")
+    app_title: str = field(default_factory=lambda: _env("OPENROUTER_APP_TITLE", "Nornikel-AI-Science-Hack") or "Nornikel-AI-Science-Hack")
+
+    @property
+    def is_configured(self) -> bool:
+        return bool(self.api_key)
+
+
+@dataclass(frozen=True)
 class RouterSettings:
     graph_only_coverage: float = field(default_factory=lambda: _env_float("ROUTER_GRAPH_ONLY_COVERAGE", 0.62))
     graph_only_confidence: float = field(default_factory=lambda: _env_float("ROUTER_GRAPH_ONLY_CONFIDENCE", 0.55))
@@ -141,6 +158,7 @@ class Settings:
     """Top-level settings container."""
     neo4j: Neo4jSettings = field(default_factory=Neo4jSettings)
     yandex_gpt: YandexGPTSettings = field(default_factory=YandexGPTSettings)
+    openrouter: OpenRouterSettings = field(default_factory=OpenRouterSettings)
     router: RouterSettings = field(default_factory=RouterSettings)
     ingest: IngestSettings = field(default_factory=IngestSettings)
     rag: RAGSettings = field(default_factory=RAGSettings)
@@ -168,6 +186,7 @@ __all__ = [
     "IngestSettings",
     "LoggingSettings",
     "Neo4jSettings",
+    "OpenRouterSettings",
     "RAGSettings",
     "RouterSettings",
     "Settings",

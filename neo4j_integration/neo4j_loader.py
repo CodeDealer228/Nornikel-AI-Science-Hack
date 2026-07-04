@@ -271,23 +271,27 @@ class Neo4jLoader:
         if not relations:
             return 0
 
-        # Group by relation type so we can use the type as a Cypher label.
-        by_type: dict[str, list[dict[str, Any]]] = {}
+        # Group by relation type and endpoint labels so Cypher can use the
+        # per-label name constraints instead of scanning all graph nodes.
+        by_type: dict[tuple[str, str, str], list[dict[str, Any]]] = {}
         for rel in relations:
             rel_type = str(rel.relation_type)
             row = rel.model_dump()
             row["source_label"] = label_for(row.get("source_entity_type", EntityType.SUBSTANCE)).value
             row["target_label"] = label_for(row.get("target_entity_type", EntityType.SUBSTANCE)).value
-            by_type.setdefault(rel_type, []).append(row)
+            key = (rel_type, row["source_label"], row["target_label"])
+            by_type.setdefault(key, []).append(row)
 
         total = 0
-        for rel_type, batch_data in by_type.items():
+        for (rel_type, source_label, target_label), batch_data in by_type.items():
             # Sanitise the relation type for use as a Cypher label.
             safe_type = _safe_cypher_rel_type(rel_type)
+            safe_source_label = _safe_cypher_label(source_label)
+            safe_target_label = _safe_cypher_label(target_label)
             query = f"""
             UNWIND $batch AS row
-            MATCH (s {{name: row.source_entity}})
-            MATCH (t {{name: row.target_entity}})
+            MATCH (s:{safe_source_label} {{name: row.source_entity}})
+            MATCH (t:{safe_target_label} {{name: row.target_entity}})
             CALL apoc.merge.relationship(
                 s, $rel_type,
                 {{}},
@@ -318,7 +322,7 @@ class Neo4jLoader:
                     record = await result.single()
                     if record is not None:
                         total += int(record["loaded"] or 0)
-        log.info("Loaded %d relations across %d types.", total, len(by_type))
+        log.info("Loaded %d relations across %d type/label groups.", total, len(by_type))
         return total
 
     # ----------------------------------------------------------- housekeeping
@@ -351,6 +355,19 @@ def _safe_cypher_rel_type(name: str) -> str:
             out.append("_")
     if not out or not out[0].isalpha():
         out = ["R"] + out
+    return "".join(out)
+
+
+def _safe_cypher_label(name: str) -> str:
+    """Make ``name`` a safe Cypher node label."""
+    out = []
+    for i, ch in enumerate(name):
+        if ch.isalnum() or ch == "_":
+            out.append(ch)
+        else:
+            out.append("_")
+    if not out or not out[0].isalpha():
+        out = ["L"] + out
     return "".join(out)
 
 

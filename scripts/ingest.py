@@ -315,7 +315,7 @@ def ingest(
             client = create_llm_client()
             extractor = ChunkExtractor(client=client)
         except YandexGPTError as exc:
-            log.warning("YandexGPT unavailable (%s); falling back to Natasha-only", exc)
+            log.warning("LLM provider unavailable (%s); falling back to Natasha-only", exc)
             report.skipped = report.skipped + ("llm_unavailable",)
             extractor = None
 

@@ -53,6 +53,8 @@ DEFAULT_MODEL = "yandexgpt-lite"
 COMPLETION_ENDPOINT = (
     "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 )
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_DEFAULT_MODEL = "poolside/laguna-xs-2.1:free"
 DEFAULT_MAX_TOKENS = 3000
 DEFAULT_TEMPERATURE = 0.0
 DEFAULT_TIMEOUT = 60.0
@@ -99,11 +101,12 @@ class CompletionResponse:
 
 
 class YandexGPTError(RuntimeError):
-    """Raised when the Yandex Foundation Models API returns an error.
+    """Raised when the configured LLM provider returns an error.
 
     DeepSeek hosted on Yandex Cloud surfaces through the same endpoint and
     auth, so its failures raise ``YandexGPTError`` too — no separate
-    DeepSeek-specific error type.
+    DeepSeek-specific error type. OpenRouter failures also use this base
+    error so the ingestion fallback path stays provider-agnostic.
     """
 
 
@@ -306,6 +309,175 @@ class YandexGPTClient:
             text=text,
             usage=usage,
             model_version=result.get("modelVersion", ""),
+            raw=payload,
+        )
+
+
+# ---------------------------------------------------------------------------
+# OpenRouter (OpenAI-compatible chat completions)
+# ---------------------------------------------------------------------------
+
+
+class OpenRouterClient:
+    """Minimal OpenRouter client using the chat completions API.
+
+    The client intentionally mirrors ``YandexGPTClient`` and uses only
+    ``urllib``. It implements the same ``LLMClient`` protocol, so ingestion can
+    switch providers through ``LLM_CLIENT_MODE=openrouter`` without touching
+    chunking, ensemble, or graph loading code.
+    """
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+        max_tokens: int = DEFAULT_MAX_TOKENS,
+        temperature: float = DEFAULT_TEMPERATURE,
+        timeout: float = DEFAULT_TIMEOUT,
+        max_retries: int = MAX_RETRIES,
+        http_referer: str | None = None,
+        app_title: str | None = None,
+    ) -> None:
+        self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY", "")
+        if not self.api_key:
+            raise YandexGPTError(
+                "OpenRouter API key is required (set OPENROUTER_API_KEY)."
+            )
+        self.model_uri = model or os.environ.get(
+            "OPENROUTER_MODEL", OPENROUTER_DEFAULT_MODEL
+        )
+        root = (base_url or os.environ.get("OPENROUTER_BASE_URL") or OPENROUTER_BASE_URL).rstrip("/")
+        self.endpoint = f"{root}/chat/completions"
+        self.max_tokens = int(os.environ.get("OPENROUTER_MAX_TOKENS") or max_tokens)
+        self.temperature = float(os.environ.get("OPENROUTER_TEMPERATURE") or temperature)
+        self.timeout = float(os.environ.get("OPENROUTER_TIMEOUT") or timeout)
+        self.max_retries = max(
+            1,
+            int(os.environ.get("OPENROUTER_MAX_RETRIES") or max_retries),
+        )
+        self.http_referer = http_referer if http_referer is not None else os.environ.get("OPENROUTER_HTTP_REFERER", "")
+        self.app_title = app_title if app_title is not None else os.environ.get(
+            "OPENROUTER_APP_TITLE", "Nornikel-AI-Science-Hack"
+        )
+
+    def _build_payload(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> dict[str, Any]:
+        return {
+            "model": self.model_uri,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "max_tokens": int(max_tokens or self.max_tokens),
+            "temperature": self.temperature if temperature is None else temperature,
+            "stream": False,
+        }
+
+    def _post(self, payload: dict[str, Any]) -> dict[str, Any]:
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.api_key}",
+        }
+        if self.http_referer:
+            headers["HTTP-Referer"] = self.http_referer
+        if self.app_title:
+            headers["X-OpenRouter-Title"] = self.app_title
+        request = urllib.request.Request(
+            self.endpoint,
+            data=body,
+            method="POST",
+            headers=headers,
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:500]
+            raise YandexGPTError(
+                f"OpenRouter HTTP {exc.code} on {self.endpoint}: {detail}"
+            ) from exc
+        except urllib.error.URLError as exc:
+            raise YandexGPTError(
+                f"OpenRouter network error on {self.endpoint}: {exc.reason}"
+            ) from exc
+
+    def complete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        payload = self._build_payload(system_prompt, user_prompt, max_tokens, temperature)
+        last_exc: Exception | None = None
+        backoff = 1.0
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                response = self._post(payload)
+                return self._parse_response(response)
+            except YandexGPTError as exc:
+                last_exc = exc
+                if "HTTP 4" in str(exc) and "HTTP 429" not in str(exc):
+                    raise
+                if attempt < self.max_retries:
+                    log.warning(
+                        "OpenRouter attempt %d/%d failed (%s), retrying in %.1fs",
+                        attempt,
+                        self.max_retries,
+                        exc,
+                        backoff,
+                    )
+                    time.sleep(backoff)
+                    backoff *= RETRY_BACKOFF
+        raise YandexGPTError(
+            f"OpenRouter failed after {self.max_retries} attempts: {last_exc}"
+        )
+
+    async def acomplete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> CompletionResponse:
+        return self.complete(system_prompt, user_prompt, max_tokens, temperature)
+
+    @staticmethod
+    def _parse_response(payload: dict[str, Any]) -> CompletionResponse:
+        try:
+            choice = payload["choices"][0]
+            content = choice["message"]["content"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise YandexGPTError(
+                f"Malformed OpenRouter response: {payload!r}"
+            ) from exc
+        if isinstance(content, list):
+            text = "".join(
+                str(part.get("text") or part.get("content") or "")
+                if isinstance(part, dict)
+                else str(part)
+                for part in content
+            )
+        else:
+            text = str(content)
+
+        usage_payload = payload.get("usage", {}) or {}
+        usage = CompletionUsage(
+            input_tokens=_safe_int(usage_payload.get("prompt_tokens")),
+            output_tokens=_safe_int(usage_payload.get("completion_tokens")),
+            total_tokens=_safe_int(usage_payload.get("total_tokens")),
+        )
+        return CompletionResponse(
+            text=text,
+            usage=usage,
+            model_version=str(payload.get("model") or ""),
             raw=payload,
         )
 
@@ -591,7 +763,7 @@ def _env_requests_mock() -> bool:
 
 
 def create_llm_client(mode: str | None = None) -> LLMClient:
-    """Создать LLM-клиент по режиму ``mock``/``real``/``deepseek``.
+    """Создать LLM-клиент по режиму ``mock``/``real``/``deepseek``/``openrouter``.
 
     Режим берётся из аргумента или env-переменных ``LLM_CLIENT_MODE`` / ``LLM_MODE``.
     Дополнительно ``YANDEX_GPT_USE_MOCK=1`` принудительно включает mock. По
@@ -605,6 +777,10 @@ def create_llm_client(mode: str | None = None) -> LLMClient:
     если ``YANDEX_GPT_MODEL_URI`` уже задаёт ``ds://``-URI — он используется
     as-is; иначе собирается ``ds://<YANDEX_GPT_FOLDER_ID>/<DEEPSEEK_MODEL>``
     (``DEEPSEEK_MODEL`` по умолчанию ``deepseek-v3``).
+
+    ``openrouter`` — OpenRouter chat completions API. Нужен
+    ``OPENROUTER_API_KEY``; модель задаётся через ``OPENROUTER_MODEL`` и по
+    умолчанию указывает на бесплатный ``*:free`` slug.
     """
     selected = (
         mode
@@ -620,9 +796,11 @@ def create_llm_client(mode: str | None = None) -> LLMClient:
         return YandexGPTClient()
     if normalized in {"deepseek", "deepseek-chat", "deepseek-reasoner", "deepseek-v3"}:
         return _build_deepseek_via_yandex()
+    if normalized in {"openrouter", "openrouter-free", "router"}:
+        return OpenRouterClient()
     raise YandexGPTError(
         "Unsupported LLM client mode "
-        f"'{selected}'. Use 'mock', 'real'/'yandex' or 'deepseek'."
+        f"'{selected}'. Use 'mock', 'real'/'yandex', 'deepseek' or 'openrouter'."
     )
 
 

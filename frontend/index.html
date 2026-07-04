@@ -608,6 +608,27 @@ const esc = s => (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"
 const fmt = n => n==null?"—":Number(n).toLocaleString("ru-RU");
 const toast = m => { const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),2200); };
 const uniq = a => [...new Set(a)];
+const normRoute = r => String(r||"").toUpperCase().replace(/-/g,"_");
+function mdToHtml(text){
+  const lines=esc(text||"").split(/\r?\n/);
+  const out=[]; let inList=false;
+  const closeList=()=>{ if(inList){ out.push("</ul>"); inList=false; } };
+  for(const raw of lines){
+    const line=raw.trim();
+    if(!line){ closeList(); continue; }
+    if(line.startsWith("## ")){ closeList(); out.push(`<h4>${line.slice(3)}</h4>`); continue; }
+    if(line.startsWith("# ")){ closeList(); out.push(`<h4>${line.slice(2)}</h4>`); continue; }
+    if(line.startsWith("- ")){
+      if(!inList){ out.push("<ul>"); inList=true; }
+      out.push(`<li>${line.slice(2).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/`(.+?)`/g,"<code>$1</code>")}</li>`);
+      continue;
+    }
+    closeList();
+    out.push(`<p>${line.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/`(.+?)`/g,"<code>$1</code>")}</p>`);
+  }
+  closeList();
+  return out.join("");
+}
 
 /* ============================================================ AUDIT */
 function auditLoad(){ try{ STATE.audit=JSON.parse(localStorage.getItem("nk_audit")||"[]"); }catch{ STATE.audit=[]; } }
@@ -746,7 +767,16 @@ async function runQuery(){
   let ans=null;
   if(STATE.api){
     const r=await apiPost("/query",{query:q,synthesize:true});
-    if(r){ ans={api:r, q, info}; }
+    if(r){
+      ans={
+        api:r,
+        q,
+        info,
+        body:mdToHtml(r.answer || r.graph_text || "API вернул пустой ответ."),
+        route:normRoute(r.route || info.route.r),
+        used_llm:!!r.used_llm
+      };
+    }
   }
   if(!ans){ ans=localAnswer(q, info); }
   renderAnswer(ans);
@@ -1219,6 +1249,9 @@ async function init(){
 
   // render all
   renderDashboard(); initGraph(); renderChains(); renderExperts(); renderGaps(); runSearch();
+  if(!["localhost","127.0.0.1",""].includes(location.hostname)){
+    $("#apiUrl").value=location.origin;
+  }
   apiCheck();
   audit("session_start", navigator.userAgent.slice(0,40));
 }

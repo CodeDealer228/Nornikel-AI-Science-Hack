@@ -1,0 +1,23 @@
+{
+  "input_paths": [
+    "ner_re_extraction\\result\\Обзоры\\extraction_results_obzory.jsonl",
+    "ner_re_extraction\\result\\Статьи\\extraction_results_statyi.jsonl"
+  ],
+  "output_dir": "parsed_chunks\\ner_re_results_smoke",
+  "records_total": 20,
+  "records_loaded": 20,
+  "records_skipped": 0,
+  "invalid_json": 0,
+  "invalid_entities": 0,
+  "invalid_relations": 0,
+  "entities_total": 63,
+  "relations_total": 14,
+  "source_documents": 2,
+  "by_source": {
+    "Зарубежная практика складирования руды при открытой добыче как метод усреднения": 35,
+    "Закладочные комплексы 2017": 28
+  },
+  "neo4j_loaded": false,
+  "neo4j_error": null,
+  "duration_sec": 0.008
+}

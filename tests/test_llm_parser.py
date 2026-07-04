@@ -8,6 +8,7 @@ from unittest.mock import patch
 from llm_pipeline_fewshot.llm_parser import (
     ChunkExtractor,
     MockLLMClient,
+    OpenRouterClient,
     create_llm_client,
     extract_json_object,
     make_chunk_input,
@@ -120,6 +121,57 @@ class MockClientTest(unittest.TestCase):
     def test_create_llm_client_env_switches_to_mock(self):
         with patch.dict(os.environ, {"LLM_CLIENT_MODE": "mock"}, clear=False):
             self.assertIsInstance(create_llm_client(), MockLLMClient)
+
+
+class OpenRouterClientTest(unittest.TestCase):
+    def test_builds_openrouter_chat_payload(self):
+        with patch.dict(os.environ, {}, clear=True):
+            client = OpenRouterClient(
+                api_key="test-key",
+                model="test/model:free",
+                max_tokens=123,
+                temperature=0.2,
+            )
+
+        payload = client._build_payload("system", "user")
+
+        self.assertEqual(payload["model"], "test/model:free")
+        self.assertEqual(payload["messages"][0], {"role": "system", "content": "system"})
+        self.assertEqual(payload["messages"][1], {"role": "user", "content": "user"})
+        self.assertEqual(payload["max_tokens"], 123)
+        self.assertEqual(payload["temperature"], 0.2)
+        self.assertFalse(payload["stream"])
+
+    def test_parses_openrouter_response(self):
+        response = OpenRouterClient._parse_response({
+            "model": "test/model:free",
+            "choices": [
+                {"message": {"role": "assistant", "content": '{"entities": [], "relations": []}'}}
+            ],
+            "usage": {
+                "prompt_tokens": 10,
+                "completion_tokens": 5,
+                "total_tokens": 15,
+            },
+        })
+
+        self.assertEqual(response.text, '{"entities": [], "relations": []}')
+        self.assertEqual(response.model_version, "test/model:free")
+        self.assertEqual(response.usage.input_tokens, 10)
+        self.assertEqual(response.usage.output_tokens, 5)
+        self.assertEqual(response.usage.total_tokens, 15)
+
+    def test_create_llm_client_env_switches_to_openrouter(self):
+        env = {
+            "LLM_CLIENT_MODE": "openrouter",
+            "OPENROUTER_API_KEY": "test-key",
+            "OPENROUTER_MODEL": "test/model:free",
+        }
+        with patch.dict(os.environ, env, clear=True):
+            client = create_llm_client()
+
+        self.assertIsInstance(client, OpenRouterClient)
+        self.assertEqual(client.model_uri, "test/model:free")
 
 
 class MakeChunkInputTest(unittest.TestCase):

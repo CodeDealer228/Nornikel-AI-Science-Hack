@@ -23,6 +23,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 REPO = Path(__file__).resolve().parent
 CANDIDATES = [
+    REPO / "parsed_chunks" / "ner_re_results" / "merged.jsonl",
     REPO / "extraction_results_statyi_batch.jsonl",
     REPO / "parsed_chunks" / "merged.jsonl",
     REPO / "extraction_results_obzory_batch.jsonl",
@@ -143,14 +144,22 @@ def main() -> None:
             if not pred:
                 continue
             # resolve endpoints via local_id, else by name
-            s_lid = str(r.get("subject") or "")
-            o_lid = str(r.get("object") or "")
+            s_lid = str(r.get("subject") or r.get("source_local_id") or "")
+            o_lid = str(r.get("object") or r.get("target_local_id") or "")
             s_ent = local.get(s_lid, {}).get("ent")
             o_ent = local.get(o_lid, {}).get("ent")
-            if s_ent is None and r.get("subject_type"):
-                s_ent = get_ent(str(r["subject_type"]), str(r.get("subject_name") or s_lid), doc)
-            if o_ent is None and r.get("object_type"):
-                o_ent = get_ent(str(r["object_type"]), str(r.get("object_name") or o_lid), doc)
+            if s_ent is None and (r.get("subject_type") or r.get("source_entity_type")):
+                s_ent = get_ent(
+                    str(r.get("subject_type") or r.get("source_entity_type")),
+                    str(r.get("subject_name") or r.get("source_entity") or s_lid),
+                    doc,
+                )
+            if o_ent is None and (r.get("object_type") or r.get("target_entity_type")):
+                o_ent = get_ent(
+                    str(r.get("object_type") or r.get("target_entity_type")),
+                    str(r.get("object_name") or r.get("target_entity") or o_lid),
+                    doc,
+                )
             if s_ent is None or o_ent is None:
                 continue
             edge = {
