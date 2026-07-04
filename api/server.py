@@ -33,6 +33,7 @@ from pydantic import BaseModel, Field
 
 from agent import (
     AnswerSynthesizer,
+    DeepResearchAgent,
     Dispatcher,
     DispatchResult,
     StubRAGClient,
@@ -76,6 +77,7 @@ class AppState:
         self.settings = get_settings()
         self.driver: Any = None
         self.dispatcher: Dispatcher | None = None
+        self.deep_research_agent: DeepResearchAgent | None = None
         self.started_at: float = time.time()
         self.request_count: int = 0
         self.error_count: int = 0
@@ -105,6 +107,34 @@ class QueryResponse(BaseModel):
     used_llm: bool
     graph_text: str | None = None
     rag_documents: list[dict[str, Any]] = Field(default_factory=list)
+    request_id: str
+
+
+class DeepResearchRequest(BaseModel):
+    query: str = Field(..., min_length=1, description="Research query in natural language.")
+    max_iterations: int = Field(default=3, ge=1, le=5)
+
+
+class DeepResearchIterationResponse(BaseModel):
+    index: int
+    query: str
+    route: str
+    confidence: float
+    coverage_score: float
+    graph_text: str
+    rag_documents: list[dict[str, Any]] = Field(default_factory=list)
+    notes: list[str] = Field(default_factory=list)
+
+
+class DeepResearchResponse(BaseModel):
+    query: str
+    answer: str
+    used_llm: bool
+    model_uri: str
+    iterations: list[DeepResearchIterationResponse]
+    follow_up_queries: list[str]
+    sources: list[str]
+    notes: list[str]
     request_id: str
 
 
@@ -210,6 +240,21 @@ def _build_dispatcher() -> Dispatcher:
     )
 
 
+def _build_deep_research_agent(dispatcher: Dispatcher) -> DeepResearchAgent:
+    """Build the iterative research agent over the existing dispatcher tools."""
+    client: Any | None = None
+    try:
+        candidate = create_llm_client()
+        if isinstance(candidate, MockLLMClient):
+            log.info("DeepResearchAgent will use deterministic fallback (LLM client is mock).")
+        else:
+            client = candidate
+            log.info("DeepResearchAgent configured with %s", client.model_uri)
+    except Exception as exc:
+        log.warning("DeepResearchAgent LLM setup failed: %s: %s", type(exc).__name__, exc)
+    return DeepResearchAgent(dispatcher=dispatcher, llm_client=client)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     configure_logging(
@@ -220,6 +265,7 @@ async def lifespan(app: FastAPI):
     log.info("Starting Nornikel Knowledge Graph API server.")
     STATE.driver = await _connect_neo4j()
     STATE.dispatcher = _build_dispatcher()
+    STATE.deep_research_agent = _build_deep_research_agent(STATE.dispatcher)
     try:
         yield
     finally:
@@ -416,6 +462,69 @@ async def query_endpoint(req: QueryRequest) -> QueryResponse:
         used_llm=used_llm,
         graph_text=result.graph_text,
         rag_documents=rag_docs,
+        request_id=request_id,
+    )
+
+
+@app.post(
+    "/deep-research",
+    response_model=DeepResearchResponse,
+    dependencies=[Depends(require_api_key)],
+)
+async def deep_research_endpoint(req: DeepResearchRequest) -> DeepResearchResponse:
+    request_id = str(uuid.uuid4())
+    set_request_id(request_id)
+    STATE.request_count += 1
+    if STATE.deep_research_agent is None:
+        raise HTTPException(status_code=503, detail="Deep research agent not initialized")
+
+    try:
+        result = await STATE.deep_research_agent.run(
+            req.query,
+            max_iterations=req.max_iterations,
+        )
+    except Exception as exc:
+        STATE.error_count += 1
+        log.exception("Deep research failed for query=%r", req.query)
+        raise HTTPException(status_code=500, detail=f"deep_research_error: {exc}") from exc
+
+    if result.used_llm:
+        STATE.synthesis_calls += 1
+
+    iterations: list[DeepResearchIterationResponse] = []
+    for iteration in result.iterations:
+        rag_docs: list[dict[str, Any]] = []
+        for doc in iteration.rag_documents:
+            rag_docs.append({
+                "doc_id": doc.doc_id,
+                "title": doc.title,
+                "snippet": doc.snippet,
+                "score": doc.score,
+                "source": doc.source,
+                "matched_entities": list(doc.matched_entities),
+            })
+        iterations.append(
+            DeepResearchIterationResponse(
+                index=iteration.index,
+                query=iteration.query,
+                route=iteration.route,
+                confidence=iteration.confidence,
+                coverage_score=iteration.coverage_score,
+                graph_text=iteration.graph_text,
+                rag_documents=rag_docs,
+                notes=list(iteration.notes),
+            )
+        )
+
+    return DeepResearchResponse(
+        query=result.query,
+        answer=result.answer,
+        used_llm=result.used_llm,
+        model_uri=result.model_uri,
+        iterations=iterations,
+        follow_up_queries=result.follow_up_queries,
+        sources=result.sources,
+        notes=list(result.notes),
         request_id=request_id,
     )
 

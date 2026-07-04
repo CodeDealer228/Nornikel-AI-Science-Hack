@@ -6,6 +6,7 @@ The RAG client is not implemented in this package — see
 """
 
 from .dispatcher import Dispatcher, DispatchResult
+from .deep_research import DeepResearchAgent, DeepResearchResult, ResearchIteration
 from .rag_client import (
     NumericFilter,
     RAGClient,
@@ -18,12 +19,15 @@ from .synthesizer import AnswerSynthesizer, SynthesisResult, attach_synthesis
 
 __all__ = [
     "AnswerSynthesizer",
+    "DeepResearchAgent",
+    "DeepResearchResult",
     "Dispatcher",
     "DispatchResult",
     "NumericFilter",
     "RAGClient",
     "RAGDocument",
     "RAGResult",
+    "ResearchIteration",
     "StubRAGClient",
     "SynthesisResult",
     "attach_synthesis",

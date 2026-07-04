@@ -358,6 +358,7 @@ footer{max-width:1480px;margin:30px auto 0;padding:18px 22px;border-top:1px soli
       <textarea id="query" placeholder="Сформулируйте запрос на естественном языке…  Например: «Какие способы флотационного обогащения медно-никелевых шлаков применяются?»"></textarea>
       <div class="send-col">
         <button class="btn primary" id="askBtn">Спросить граф →</button>
+        <button class="btn sm" id="deepResearchBtn">Глубокое исследование</button>
         <button class="btn sm ghost" id="routeOnlyBtn">Только маршрут</button>
       </div>
     </div>
@@ -783,6 +784,47 @@ async function runQuery(){
   renderLitReview(q, info);
   renderExpertsForSeeds(info.seeds);
 }
+async function runDeepResearch(){
+  const q=$("#query").value.trim();
+  if(!q){ toast("Введите запрос"); return; }
+  audit("deep_research", q.slice(0,80));
+  const info=renderMarkers(q);
+  $("#answerCard").classList.remove("empty");
+  $("#answerBody").innerHTML='<span class="skeleton" style="width:75%"></span><br><br><span class="skeleton" style="width:55%"></span><br><br><span class="skeleton" style="width:35%"></span>';
+  $("#ansRoute").textContent="DEEP_RESEARCH";
+  $("#ansRoute").className="route-badge hybrid";
+  $("#tabs").children[0].click();
+  if(!STATE.api){
+    renderAnswer(localAnswer(q, info));
+    toast("API офлайн: глубокое исследование недоступно");
+    return;
+  }
+  const r=await apiPost("/deep-research",{query:q,max_iterations:3});
+  if(!r){
+    renderAnswer(localAnswer(q, info));
+    toast("Deep research API не ответил");
+    return;
+  }
+  const iterMeta=(r.iterations||[]).map(it=>{
+    const docs=(it.rag_documents||[]).length;
+    const graph=/(Facts:|Knowledge gaps:|Contradictions:)/.test(it.graph_text||"") ? "граф: есть" : "граф: нет";
+    return `<li>Итерация ${esc(it.index)}: <code>${esc(it.route)}</code>, coverage ${esc(it.coverage_score)}, RAG документов ${docs}, ${graph}</li>`;
+  }).join("");
+  const sources=(r.sources||[]).slice(0,8).map(s=>`<span class="src-chip">${esc(String(s).slice(0,46))}</span>`).join(" ");
+  const body=mdToHtml(r.answer || "Deep research вернул пустой ответ.")+
+    `<div class="src"><b>Агентские итерации:</b><ul>${iterMeta}</ul>`+
+    `<b>Источники:</b> ${sources || "—"}</div>`;
+  renderAnswer({
+    api:r,
+    q,
+    info,
+    body,
+    route:"DEEP_RESEARCH",
+    used_llm:!!r.used_llm
+  });
+  renderLitReview(q, info);
+  renderExpertsForSeeds(info.seeds);
+}
 function localAnswer(q, info){
   const r=localSearch(q);
   const byId=Object.fromEntries(STATE.data.entities.map(e=>[e.id,e]));
@@ -829,7 +871,7 @@ function localAnswer(q, info){
 function renderAnswer(a){
   $("#answerBody").innerHTML=a.body;
   $("#ansRoute").textContent=a.route;
-  $("#ansRoute").className="route-badge "+({GRAPH_ONLY:"graph",HYBRID:"hybrid",RAG_ONLY:"rag",NO_DATA:"nodata"}[a.route]||"");
+  $("#ansRoute").className="route-badge "+({GRAPH_ONLY:"graph",HYBRID:"hybrid",RAG_ONLY:"rag",NO_DATA:"nodata",DEEP_RESEARCH:"hybrid"}[a.route]||"");
   if(a.api){
     $("#answerBody").innerHTML+=`<div class="src">Синтез через ${esc(a.api.used_llm?"LLM":"fallback")}. request_id: ${esc(a.api.request_id||"")}</div>`;
   }
@@ -1215,6 +1257,7 @@ async function init(){
 
   // events
   $("#askBtn").onclick=runQuery;
+  $("#deepResearchBtn").onclick=runDeepResearch;
   $("#routeOnlyBtn").onclick=()=>{ const q=$("#query").value.trim(); if(!q)return; const info=renderMarkers(q); toast(`Маршрут: ${info.route.r} — ${info.route.c}`); audit("route_only",q.slice(0,60)); };
   $("#query").oninput=()=>renderMarkers($("#query").value);
   $("#query").onkeydown=e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); runQuery(); } };
