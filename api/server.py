@@ -110,6 +110,22 @@ class QueryResponse(BaseModel):
     request_id: str
 
 
+class SemanticSearchRequest(BaseModel):
+    query: str = Field(..., min_length=1, description="Semantic/RAG-only query.")
+    synthesize: bool = Field(default=True)
+    top_k: int = Field(default=8, ge=1, le=50)
+
+
+class SemanticSearchResponse(BaseModel):
+    query: str
+    route: str
+    answer: str
+    used_llm: bool
+    rag_documents: list[dict[str, Any]] = Field(default_factory=list)
+    notes: list[str] = Field(default_factory=list)
+    request_id: str
+
+
 class DeepResearchRequest(BaseModel):
     query: str = Field(..., min_length=1, description="Research query in natural language.")
     max_iterations: int = Field(default=3, ge=1, le=5)
@@ -249,10 +265,82 @@ def _build_deep_research_agent(dispatcher: Dispatcher) -> DeepResearchAgent:
             log.info("DeepResearchAgent will use deterministic fallback (LLM client is mock).")
         else:
             client = candidate
+            if hasattr(client, "reasoning_effort"):
+                client.reasoning_effort = "medium"
             log.info("DeepResearchAgent configured with %s", client.model_uri)
     except Exception as exc:
         log.warning("DeepResearchAgent LLM setup failed: %s: %s", type(exc).__name__, exc)
     return DeepResearchAgent(dispatcher=dispatcher, llm_client=client)
+
+
+def _render_semantic_fallback(query: str, documents: list[dict[str, Any]], notes: Sequence[str]) -> str:
+    lines: list[str] = [
+        "## Краткий вывод",
+        "Показаны результаты только семантического поиска по документному/RAG-слою.",
+        "",
+        "## Найденные документы",
+    ]
+    if not documents:
+        lines.append("Релевантные документы не найдены.")
+    for index, doc in enumerate(documents[:8], start=1):
+        lines.append(
+            f"{index}. **{doc.get('title') or doc.get('doc_id') or 'document'}** "
+            f"(score={float(doc.get('score') or 0.0):.2f})"
+        )
+        source = doc.get("source")
+        if source:
+            lines.append(f"   Источник: {source}")
+        snippet = str(doc.get("snippet") or "").strip()
+        if snippet:
+            lines.append(f"   {snippet[:500]}")
+    if notes:
+        lines.append("")
+        lines.append("## Notes")
+        for note in notes:
+            lines.append(f"- {note}")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+async def _synthesize_semantic_answer(
+    query: str,
+    documents: list[dict[str, Any]],
+    notes: Sequence[str],
+) -> tuple[str, bool]:
+    if not documents:
+        return _render_semantic_fallback(query, documents, notes), False
+    try:
+        client = create_llm_client()
+    except Exception as exc:
+        log.warning("Semantic synthesizer setup failed: %s: %s", type(exc).__name__, exc)
+        return _render_semantic_fallback(query, documents, notes), False
+    if isinstance(client, MockLLMClient):
+        return _render_semantic_fallback(query, documents, notes), False
+
+    system_prompt = (
+        "Ты отвечаешь на русском языке только по результатам семантического "
+        "поиска. Не используй граф знаний и не добавляй факты из головы. "
+        "Если документов недостаточно, явно скажи об этом."
+    )
+    doc_lines: list[str] = []
+    for index, doc in enumerate(documents[:8], start=1):
+        doc_lines.append(
+            f"[{index}] title={doc.get('title')}\n"
+            f"source={doc.get('source')}\n"
+            f"score={doc.get('score')}\n"
+            f"snippet={str(doc.get('snippet') or '')[:900]}"
+        )
+    user_prompt = (
+        f"# Вопрос\n{query}\n\n"
+        "# Результаты семантического поиска\n"
+        + "\n\n".join(doc_lines)
+        + "\n\n# Инструкция\nСобери краткий, проверяемый ответ и перечисли источники."
+    )
+    try:
+        response = await asyncio.to_thread(client.complete, system_prompt, user_prompt)
+        return response.text.strip(), True
+    except Exception as exc:
+        log.warning("Semantic synthesis failed: %s: %s", type(exc).__name__, exc)
+        return _render_semantic_fallback(query, documents, notes), False
 
 
 @asynccontextmanager
@@ -462,6 +550,64 @@ async def query_endpoint(req: QueryRequest) -> QueryResponse:
         used_llm=used_llm,
         graph_text=result.graph_text,
         rag_documents=rag_docs,
+        request_id=request_id,
+    )
+
+
+@app.post(
+    "/semantic-search",
+    response_model=SemanticSearchResponse,
+    dependencies=[Depends(require_api_key)],
+)
+async def semantic_search_endpoint(req: SemanticSearchRequest) -> SemanticSearchResponse:
+    request_id = str(uuid.uuid4())
+    set_request_id(request_id)
+    STATE.request_count += 1
+    if STATE.dispatcher is None:
+        raise HTTPException(status_code=503, detail="Dispatcher not initialized")
+
+    try:
+        rag_result = await STATE.dispatcher._rag_client.retrieve(  # noqa: SLF001
+            req.query,
+            entity_filter=None,
+            numeric_filter=None,
+            max_results=req.top_k,
+        )
+    except Exception as exc:
+        STATE.error_count += 1
+        log.exception("Semantic search failed for query=%r", req.query)
+        raise HTTPException(status_code=500, detail=f"semantic_search_error: {exc}") from exc
+
+    rag_docs: list[dict[str, Any]] = []
+    for doc in rag_result.documents[: req.top_k]:
+        rag_docs.append({
+            "doc_id": doc.doc_id,
+            "title": doc.title,
+            "snippet": doc.snippet,
+            "score": doc.score,
+            "source": doc.source,
+            "matched_entities": list(doc.matched_entities),
+        })
+
+    if req.synthesize:
+        answer, used_llm = await _synthesize_semantic_answer(
+            req.query,
+            rag_docs,
+            rag_result.notes,
+        )
+        if used_llm:
+            STATE.synthesis_calls += 1
+    else:
+        answer = _render_semantic_fallback(req.query, rag_docs, rag_result.notes)
+        used_llm = False
+
+    return SemanticSearchResponse(
+        query=req.query,
+        route="semantic_only",
+        answer=answer,
+        used_llm=used_llm,
+        rag_documents=rag_docs,
+        notes=list(rag_result.notes),
         request_id=request_id,
     )
 
