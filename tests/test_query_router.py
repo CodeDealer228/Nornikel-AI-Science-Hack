@@ -170,6 +170,18 @@ class QueryRouterTest(unittest.TestCase):
         surface_texts = {ent.surface.lower() for ent in analysis.seed_entities}
         self.assertTrue(any("вод" in t for t in surface_texts) or analysis.has_numeric_constraint or analysis.seed_entities)
 
+    def test_query_entity_extractor_finds_mine_water_injection_terms(self):
+        extractor = QueryEntityExtractor(synonym_dictionary=SynonymDictionary())
+        analysis = extractor.analyze(
+            "Какие способы закачки шахтных вод в глубокие горизонты описаны и их ТЭП?"
+        )
+        canonical_names = {ent.canonical.lower() for ent in analysis.seed_entities}
+
+        self.assertIn("закачка", canonical_names)
+        self.assertIn("вода", canonical_names)
+        self.assertIn("горизонт", canonical_names)
+        self.assertIn("тэп", canonical_names)
+
     def test_extracted_query_entity_validates_confidence(self):
         with self.assertRaises(ValueError):
             ExtractedQueryEntity(surface="x", canonical="x", confidence=1.5)

@@ -364,8 +364,11 @@ def ingest(
 
             report.files_processed += 1
             report.chunks_total += len(chunks)
-            report.entities_total += sum(1 for _ in all_entities)  # cumulative below
             if index % progress_every == 0 or index == len(files):
+                # Use the live list length (single source of truth) rather than
+                # a cumulative running counter; the previous ``+= sum(1 for _
+                # in all_entities)`` here produced a non-monotonic growing
+                # value because ``all_entities`` itself grows each iteration.
                 log.info(
                     "[ingest] %d/%d files | %d chunks | %d entities | %d relations",
                     index, len(files), report.chunks_total,

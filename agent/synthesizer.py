@@ -14,6 +14,7 @@ offline demos and tests.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Sequence
@@ -81,7 +82,15 @@ class AnswerSynthesizer:
             return self._fallback(dispatch_result, reason="no_llm_client")
 
         try:
-            response = self._client.complete(self._system_prompt, user_prompt)
+            # YandexGPT/OpenRouter/etc. clients use urllib + time.sleep(retries)
+            # internally — that would block the FastAPI event loop for tens of
+            # seconds while other requests pile up. Push the synchronous HTTP
+            # call into a worker thread; the rest of the pipeline is unaffected.
+            response = await asyncio.to_thread(
+                self._client.complete,
+                self._system_prompt,
+                user_prompt,
+            )
             return SynthesisResult(
                 answer=response.text.strip(),
                 used_llm=True,
@@ -247,20 +256,24 @@ def attach_synthesis(
     dispatch_result: "DispatchResult",
     synthesis: SynthesisResult,
 ) -> "DispatchResult":
-    """Return a new ``DispatchResult`` with the synthesized answer attached as a note.
+    """Return a new ``DispatchResult`` with the synthesized answer attached.
 
-    Keeps the original dispatch result immutable (the underlying dataclass
-    isn't frozen, but treating it as such makes the call sites clearer).
+    Kept for backward compatibility with downstream code that imports
+    ``attach_synthesis`` from ``agent``. The dispatcher's own
+    ``_maybe_synthesize`` constructs the result with ``synthesis=synthesis``
+    directly and is the canonical path; this helper was previously a no-op
+    (it accepted ``synthesis`` but discarded it) and is now fixed to actually
+    propagate it.
     """
+    extra_notes: tuple[str, ...] = ()
     if synthesis.notes:
-        notes = dispatch_result.notes + ("synthesis:" + ";".join(synthesis.notes),)
-    else:
-        notes = dispatch_result.notes
+        extra_notes = ("synthesis:" + ";".join(synthesis.notes),)
     return DispatchResult(
         query=dispatch_result.query,
         decision=dispatch_result.decision,
         graph_context=dispatch_result.graph_context,
         graph_text=dispatch_result.graph_text,
         rag_result=dispatch_result.rag_result,
-        notes=notes,
+        synthesis=synthesis,
+        notes=dispatch_result.notes + extra_notes,
     )

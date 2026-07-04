@@ -37,6 +37,12 @@ class GraphCoverageAnalyzer:
     ) -> None:
         self._extractor = subgraph_extractor
         self._reasoner = reasoner or GraphReasoner()
+        if max_hops < 1 or max_hops > 4:
+            log.warning(
+                "GraphCoverageAnalyzer max_hops=%d is outside the supported "
+                "[1, 4] range; clamping.",
+                max_hops,
+            )
         self._max_hops = max(1, min(max_hops, 4))
         self._max_paths = max(1, max_paths)
 

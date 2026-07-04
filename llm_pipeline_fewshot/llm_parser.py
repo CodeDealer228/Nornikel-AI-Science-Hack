@@ -1218,14 +1218,18 @@ class ChunkBatchRunner:
         if max_concurrency < 1:
             raise ValueError("max_concurrency must be >= 1")
         self._extractor = ChunkExtractor(client=client, prompt_name=prompt_name)
-        self._semaphore: Any = None  # lazily created per-loop
+        self._max_concurrency = max_concurrency
 
     async def run(self, chunks: Sequence[ChunkInput]) -> list[ChunkExtractionResult]:
         import asyncio
 
-        semaphore = asyncio.Semaphore(len(chunks) and 4 or 1)
-        if hasattr(self, "_max_concurrency"):
-            semaphore = asyncio.Semaphore(getattr(self, "_max_concurrency"))
+        # Was: ``asyncio.Semaphore(len(chunks) and 4 or 1)`` + a second
+        # ``asyncio.Semaphore(getattr(self, "_max_concurrency"))`` that was a
+        # no-op because ``self._max_concurrency`` was never assigned.
+        # Now: a single semaphore sized by ``max_concurrency`` (bounded by the
+        # number of chunks so we never overbook a thread for nothing).
+        bound = max(1, min(self._max_concurrency, len(chunks) or 1))
+        semaphore = asyncio.Semaphore(bound)
 
         async def _one(chunk: ChunkInput) -> ChunkExtractionResult:
             async with semaphore:

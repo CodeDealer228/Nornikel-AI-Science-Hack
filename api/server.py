@@ -203,7 +203,7 @@ def _build_dispatcher() -> Dispatcher:
 
     extractor = Neo4jSubgraphExtractor(STATE.driver)
     return Dispatcher(
-        router=build_query_router(),
+        router=build_query_router(driver=STATE.driver),
         graph_extractor=extractor,
         rag_client=rag,
         synthesizer=synth,
@@ -341,7 +341,7 @@ async def route_only(req: RouteOnlyRequest) -> RouteOnlyResponse:
         raise HTTPException(status_code=503, detail="Dispatcher not initialized")
     try:
         from routing import build_query_router
-        router = build_query_router()
+        router = build_query_router(driver=STATE.driver)
         decision = await router.route(req.query)
     except Exception as exc:
         STATE.error_count += 1

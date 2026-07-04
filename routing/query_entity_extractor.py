@@ -39,14 +39,34 @@ _NUMERIC_RE = re.compile(
     re.IGNORECASE | re.UNICODE,
 )
 
-# Unit-first pattern: "pH ≤ 4", "pH 10.5" — where the unit precedes the number.
+# Unit-first pattern: "pH ≤ 4", "pH > 10" — where the unit precedes the number.
 _UNIT_FIRST_RE = re.compile(
-    r"\b(?:pH)\s*[<>≤≥]=?\s*\d+(?:[.,]\d+)?\b",
+    r"\b(?:pH)\s*(?P<op>[<>≤≥]=?)\s*(?P<num>\d+(?:[.,]\d+)?)\b",
+    re.IGNORECASE | re.UNICODE,
+)
+
+# Number-first comparison with explicit operator + optional unit, e.g.
+# "≤300 мг/л", "≥ 5%", ">= 1000 м3/сут". The operator group is mandatory so
+# bare numbers (e.g. a year "2024") don't match and produce false constraints.
+_NUMERIC_OP_RE = re.compile(
+    r"(?P<op>≤|<=|≥|>=|<|>)\s*"
+    r"(?P<num>\d+(?:[.,]\d+)?)"
+    r"(?:\s*(?P<unit>мг/л|мг/дм3|г/л|м3/ч|м3/сут|т/сут|кг/ч|квт|мвт|мм/сут"
+    r"|а/м2|а/дм3|ма/см2|%|°c|°c|атм|мпа|па|об%|ppm|°))?",
     re.IGNORECASE | re.UNICODE,
 )
 
 _RANGE_RE = re.compile(
     r"\b(?:от|from|между|between)\s+\d+(?:[.,]\d+)?\s*(?:до|to|-)\s*\d+(?:[.,]\d+)?\b",
+    re.IGNORECASE | re.UNICODE,
+)
+
+# Capture the actual endpoints of a Russian/English range phrase.
+_RANGE_VALUE_RE = re.compile(
+    r"(?:от|from|между|between)\s+(?P<lo>\d+(?:[.,]\d+)?)"
+    r"\s*(?:до|to|-)\s*(?P<hi>\d+(?:[.,]\d+)?)"
+    r"(?:\s*(?P<unit>мг/л|мг/дм3|г/л|м3/ч|м3/сут|т/сут|кг/ч|квт|мвт|мм/сут"
+    r"|а/м2|а/дм3|ма/см2|%|°c|атм|мпа|па|об%|ppm|°))?",
     re.IGNORECASE | re.UNICODE,
 )
 
@@ -156,6 +176,10 @@ _DOMAIN_SEEDS: tuple[tuple[str, str], ...] = (
     ("техногенн", "техногенный"),
     ("гипс", "гипс"),
     ("шахтн", "шахтная"),
+    ("вод", "вода"),
+    ("закач", "закачка"),
+    ("горизонт", "горизонт"),
+    ("тэп", "ТЭП"),
     ("рудничн", "рудничная"),
     ("сульфат", "сульфат"),
     ("хлорид", "хлорид"),
@@ -252,10 +276,14 @@ class QueryEntityExtractor:
         )
 
         has_question_mark = "?" in query or bool(_QUESTION_CUE_RE.search(query))
-        has_numeric_constraint = bool(
-            _NUMERIC_RE.search(query)
-            or _RANGE_RE.search(query)
-            or _UNIT_FIRST_RE.search(query)
+        numeric_operator, numeric_min, numeric_max, numeric_unit = _parse_numeric_constraint(query)
+        has_numeric_constraint = (
+            bool(
+                _NUMERIC_RE.search(query)
+                or _RANGE_RE.search(query)
+                or _UNIT_FIRST_RE.search(query)
+                or _NUMERIC_OP_RE.search(query)
+            )
         )
         has_geo_marker = bool(_GEO_RE.search(query) or _GEO_COMPARISON_RE.search(query))
         has_temporal_marker = bool(_TEMPORAL_RE.search(query))
@@ -307,6 +335,10 @@ class QueryEntityExtractor:
             is_causal=is_causal,
             is_comparison=is_comparison,
             is_geo_comparison=is_geo_comparison,
+            numeric_min=numeric_min,
+            numeric_max=numeric_max,
+            numeric_operator=numeric_operator,
+            numeric_unit=numeric_unit,
             notes=tuple(notes),
         )
 
@@ -431,6 +463,130 @@ class QueryEntityExtractor:
         if resolved and resolved != surface:
             return resolved
         return surface
+
+
+def _parse_numeric_constraint(query: str) -> tuple[str | None, float | None, float | None, str | None]:
+    """Extract a single, best-effort numeric constraint from ``query``.
+
+    Returns ``(operator, min, max, unit)`` where ``operator`` ∈
+    ``{"<=", ">=", "<", ">", "range", None}``. The first match wins; later
+    matches (if any) are ignored because the dispatcher can only pass one
+    NumericFilter through to RAG.
+
+    Precedence:
+      1. Range phrases ("от 100 до 300 мг/л") → operator="range", min, max, unit.
+      2. Unit-first operators ("pH ≤ 4") → operator with single-bound bounds.
+      3. Number-first operators ("≤ 300 мг/л") → operator with single-bound.
+      4. Bare numbers with units ("300 мг/л") → operator="=", single value.
+    """
+    # 1) Range
+    m = _RANGE_VALUE_RE.search(query)
+    if m:
+        try:
+            lo = float(m.group("lo").replace(",", "."))
+            hi = float(m.group("hi").replace(",", "."))
+        except (TypeError, ValueError):
+            return ("range", None, None, _norm_unit(m.group("unit")))
+        return ("range", lo, hi, _norm_unit(m.group("unit")))
+
+    # 2) Unit-first operator, e.g. "pH ≤ 4"
+    m = _UNIT_FIRST_RE.search(query)
+    if m:
+        op = _normalise_op(m.group("op"))
+        try:
+            value = float(m.group("num").replace(",", "."))
+        except (TypeError, ValueError):
+            return (op, None, None, "pH")
+        return (op, *(_bound_from(op, value)), "pH")
+
+    # 3) Number-first operator with unit, e.g. "≤ 300 мг/л"
+    m = _NUMERIC_OP_RE.search(query)
+    if m:
+        op = _normalise_op(m.group("op"))
+        try:
+            value = float(m.group("num").replace(",", "."))
+        except (TypeError, ValueError):
+            return (op, None, None, _norm_unit(m.group("unit")))
+        return (op, *(_bound_from(op, value)), _norm_unit(m.group("unit")))
+
+    # 4) Bare numeric value with unit (treat as equality, no upper bound).
+    m = _NUMERIC_RE.search(query)
+    if m:
+        token = m.group(0)
+        try:
+            value = float(_first_number_in(token))
+        except (TypeError, ValueError):
+            return (None, None, None, None)
+        unit = _unit_in(token)
+        return ("=", value, value, _norm_unit(unit))
+
+    return (None, None, None, None)
+
+
+def _normalise_op(raw: str) -> str:
+    raw = raw.strip()
+    if raw.startswith("≤") or raw.startswith("<="):
+        return "<="
+    if raw.startswith("≥") or raw.startswith(">="):
+        return ">="
+    if raw.startswith(">"):
+        return ">"
+    if raw.startswith("<"):
+        return "<"
+    return "="
+
+
+def _bound_from(operator: str, value: float) -> tuple[float | None, float | None]:
+    """Translate ``(operator, value)`` into ``(min, max)`` bounds."""
+    if operator in {"<=", "<"}:
+        return (None, value)
+    if operator in {">=", ">"}:
+        return (value, None)
+    # "=" or range: caller will set both bounds directly.
+    return (value, value)
+
+
+def _extract_first_number(text: str) -> float | None:
+    m = re.search(r"\d+(?:[.,]\d+)?", text)
+    if not m:
+        return None
+    try:
+        return float(m.group(0).replace(",", "."))
+    except ValueError:
+        return None
+
+
+def _first_number_in(token: str) -> str | None:
+    m = re.search(r"\d+(?:[.,]\d+)?", token)
+    return m.group(0) if m else None
+
+
+def _unit_in(token: str) -> str | None:
+    m = re.search(
+        r"(мг/л|мг/дм3|г/л|м3/ч|м3/сут|т/сут|кг/ч|квт|мвт|мм/сут|"
+        r"а/м2|а/дм3|ма/см2|°c|°c|атм|мпа|па|об%|ppm|%|°)",
+        token,
+        re.IGNORECASE | re.UNICODE,
+    )
+    return m.group(0) if m else None
+
+
+def _norm_unit(unit: str | None) -> str | None:
+    """Canonicalise unit spellings seen in queries."""
+    if not unit:
+        return None
+    u = unit.strip().lower().replace(" ", "")
+    aliases = {
+        "°c": "°C",
+        "°c": "°C",
+        "мг/дм3": "мг/дм3",
+        "мг/дм³": "мг/дм³",
+        "м3/ч": "м³/ч",
+        "м3/сут": "м³/сут",
+    }
+    canon = aliases.get(u, unit)
+    # Always preserve the original-case variant we know about.
+    return canon
 
 
 def merge_seed_names(entities: Iterable[ExtractedQueryEntity]) -> tuple[str, ...]:

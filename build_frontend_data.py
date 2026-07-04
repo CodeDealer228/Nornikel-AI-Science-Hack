@@ -215,7 +215,7 @@ def main() -> None:
             if t:
                 t["publications"] += 1
 
-    # --- graph sample (top connected entities + their ego edges) ---
+    # --- graph sample (visual 140-node canvas) + search-ready edge pool ---
     top_ids = {e["id"] for e in entities[:120]}
     g_nodes = []
     for e in entities:
@@ -224,7 +224,11 @@ def main() -> None:
             if len(g_nodes) >= 140:
                 break
     g_ids = {n["id"] for n in g_nodes}
-    g_edges = [ed for ed in edges if ed["s"] in g_ids and ed["t"] in g_ids][:400]
+    g_edges_visual = [ed for ed in edges if ed["s"] in g_ids and ed["t"] in g_ids][:400]
+    # Full edge pool is kept so the in-browser RAG/HybridSearcher and the
+    # API can rank over ALL knowledge, not just the 140-node visual sample.
+    # Cap at 6000 to keep payload sane; the per-query top_k still prunes.
+    g_edges = edges[:6000]
 
     # --- chains: Material -uses_material-> Process -produces_output/uses_equipment-> X ---
     by_id = {e["id"]: e for e in entities}
@@ -349,9 +353,9 @@ def main() -> None:
         },
         "entities": [
             {**{k: v for k, v in e.items() if k in ("id","type","name","degree","doc_count","confidence","mentions","docs","attributes")}}
-            for e in entities[:1500]
+            for e in entities[:6000]
         ],
-        "graph": {"nodes": g_nodes, "edges": g_edges, "chains": chains},
+        "graph": {"nodes": g_nodes, "edges": g_edges, "edges_visual": g_edges_visual, "chains": chains},
         "experts": [
             {"name": e["name"], "affiliations": list(dict.fromkeys(e["affiliations"]))[:5],
              "publications": e["publications"], "doc_count": e["doc_count"]}

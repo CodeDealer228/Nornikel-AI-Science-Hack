@@ -129,7 +129,13 @@ class EdgeHybridSearcher:
 
     @classmethod
     def from_data_dict(cls, data: dict[str, Any], *, enable_dense: bool = False) -> "EdgeHybridSearcher":
-        """Build a searcher from a frontend ``data.json``-style dict."""
+        """Build a searcher from a frontend ``data.json``-style dict.
+
+        Prefers the search-ready edge pool (``data["graph"]["edges"]``) which
+        now carries up to 6000 edges. Falls back to ``edges_visual`` (the
+        400-edge canvas sample) if the new pool is missing — keeps backwards
+        compat with older ``data.json`` builds.
+        """
         nodes_by_id: dict[str, dict[str, Any]] = {}
         for n in data.get("graph", {}).get("nodes", []) or []:
             nodes_by_id[n["id"]] = {
@@ -138,7 +144,12 @@ class EdgeHybridSearcher:
             }
         for n in (data.get("entities") or []):
             nodes_by_id[n["id"]] = {"name": n.get("name", ""), "type": n.get("type", "")}
-        edges = list((data.get("graph") or {}).get("edges", []) or [])
+        # Prefer the wider search pool; only fall back to the canvas subset
+        # when the JSONL hasn't been rebuilt with the new schema.
+        edges = (
+            list((data.get("graph") or {}).get("edges") or [])
+            or list((data.get("graph") or {}).get("edges_visual") or [])
+        )
         return cls(edges, nodes_by_id=nodes_by_id, enable_dense=enable_dense)
 
     # ------------------------------------------------------------- search

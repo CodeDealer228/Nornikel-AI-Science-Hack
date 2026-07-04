@@ -32,7 +32,8 @@ x-common-env: &common-env
   OPENROUTER_APP_TITLE: ${OPENROUTER_APP_TITLE:-Nornikel-AI-Science-Hack}
   LLM_CLIENT_MODE: ${LLM_CLIENT_MODE:-mock}
   API_KEY: ${API_KEY:-}
-  RAG_BACKEND: ${RAG_BACKEND:-stub}
+  RAG_BACKEND: ${RAG_BACKEND:-hybrid_search}
+  RAG_DATA_JSON: ${RAG_DATA_JSON:-/app/frontend/data.json}
 
 services:
   neo4j:

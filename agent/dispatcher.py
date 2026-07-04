@@ -176,6 +176,15 @@ class Dispatcher:
         self._context_builder = GraphContextBuilder()
         self._rag_client: RAGClient = rag_client or StubRAGClient()
         self._synthesizer = synthesizer
+        # Clamp hops to [1, 4]. The upper bound matches the contract in
+        # ``GraphCoverageAnalyzer``; if the caller passes more, the value is
+        # silently ignored — surface that so tuning doesn't get lost in
+        # dev/staging.
+        if max_hops < 1 or max_hops > 4:
+            log.warning(
+                "Dispatcher max_hops=%d is outside the supported [1, 4] range; clamping.",
+                max_hops,
+            )
         self._max_hops = max(1, min(max_hops, 4))
         self._max_paths = max(1, max_paths)
         self._rag_max_results = max(1, rag_max_results)
@@ -357,16 +366,21 @@ class Dispatcher:
                     seeds.append(key)
 
         numeric_filter = None
-        if decision.query_analysis is not None and decision.query_analysis.has_numeric_constraint:
-            # Heuristic: surface this to the RAG client as a generic
-            # numeric constraint. The real RAG backend will translate
-            # this into its own predicate language.
+        if (
+            decision.query_analysis is not None
+            and decision.query_analysis.has_numeric_constraint
+        ):
+            analysis = decision.query_analysis
+            # Surface the parsed numeric bounds to the RAG backend so it can
+            # actually filter by them. Previously this block always emitted
+            # ``NumericFilter(operator="range", min=None, max=None)`` which
+            # was a no-op for every numeric query.
             from .rag_client import NumericFilter
             numeric_filter = NumericFilter(
-                property_name="any",
-                operator="range",
-                min_value=None,
-                max_value=None,
+                property_name=analysis.numeric_unit or "any",
+                operator=analysis.numeric_operator or "range",
+                min_value=analysis.numeric_min,
+                max_value=analysis.numeric_max,
             )
 
         return (seeds or None), numeric_filter

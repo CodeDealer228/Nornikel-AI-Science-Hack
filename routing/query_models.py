@@ -31,7 +31,16 @@ class QueryRoute(StrEnum):
 
 @dataclass(frozen=True)
 class QuerySignal:
-    """A single named measurement that feeds into routing logic."""
+    """A single named measurement that feeds into routing logic.
+
+    The ``weight`` field is informational/observable at the moment — it is
+    serialised in ``to_dict()`` and ``as_dict()`` for debugging and
+    future-tuning, but the active scoring formulas in
+    ``routing.query_router._decide`` and ``_apply_marker_rules`` do not yet
+    consume it. Routing decisions are determined by the named, explicit
+    signals (``seed_coverage_ratio``, ``coverage_score`` …) and the marker
+    rules, not by these weights.
+    """
 
     name: str
     value: float | int | str | bool
@@ -124,6 +133,11 @@ class QueryAnalysis:
     is_causal: bool = False
     is_comparison: bool = False
     is_geo_comparison: bool = False
+    # --- numeric constraint payload (populated when has_numeric_constraint=True) ---
+    numeric_min: float | None = None
+    numeric_max: float | None = None
+    numeric_operator: str | None = None  # "<=", ">=", "<", ">", "=", "range"
+    numeric_unit: str | None = None      # "мг/л", "°C", "м3/ч", ...
     notes: tuple[str, ...] = ()
 
 
