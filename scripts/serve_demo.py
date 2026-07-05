@@ -24,6 +24,7 @@ API_ROUTES = {
     "/entities",
     "/route",
     "/query",
+    "/semantic-search",
     "/deep-research",
     "/metrics",
 }

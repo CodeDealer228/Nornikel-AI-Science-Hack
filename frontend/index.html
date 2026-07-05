@@ -357,8 +357,12 @@ footer{max-width:1480px;margin:30px auto 0;padding:18px 22px;border-top:1px soli
     <div class="query-row">
       <textarea id="query" placeholder="Сформулируйте запрос на естественном языке…  Например: «Какие способы флотационного обогащения медно-никелевых шлаков применяются?»"></textarea>
       <div class="send-col">
-        <button class="btn primary" id="askBtn">Спросить граф →</button>
-        <button class="btn sm" id="deepResearchBtn">Глубокое исследование</button>
+        <select id="searchMode" title="Режим поиска">
+          <option value="standard">Стандартный</option>
+          <option value="semantic">Семантический</option>
+          <option value="deep">Deep research</option>
+        </select>
+        <button class="btn primary" id="askBtn">Искать →</button>
         <button class="btn sm ghost" id="routeOnlyBtn">Только маршрут</button>
       </div>
     </div>
@@ -757,6 +761,12 @@ function localSearch(q){
 }
 
 /* ============================================================ ANSWER RENDER */
+async function runSelectedMode(){
+  const mode=$("#searchMode") ? $("#searchMode").value : "standard";
+  if(mode==="semantic") return runSemanticSearch();
+  if(mode==="deep") return runDeepResearch();
+  return runQuery();
+}
 async function runQuery(){
   const q=$("#query").value.trim();
   if(!q){ toast("Введите запрос"); return; }
@@ -781,6 +791,41 @@ async function runQuery(){
   }
   if(!ans){ ans=localAnswer(q, info); }
   renderAnswer(ans);
+  renderLitReview(q, info);
+  renderExpertsForSeeds(info.seeds);
+}
+async function runSemanticSearch(){
+  const q=$("#query").value.trim();
+  if(!q){ toast("Введите запрос"); return; }
+  audit("semantic_search", q.slice(0,80));
+  const info=renderMarkers(q);
+  $("#answerCard").classList.remove("empty");
+  $("#answerBody").innerHTML='<span class="skeleton" style="width:70%"></span><br><br><span class="skeleton" style="width:45%"></span>';
+  $("#ansRoute").textContent="SEMANTIC_ONLY";
+  $("#ansRoute").className="route-badge rag";
+  $("#tabs").children[0].click();
+  if(!STATE.api){
+    renderAnswer(localAnswer(q, info));
+    toast("API офлайн: семантический поиск недоступен");
+    return;
+  }
+  const r=await apiPost("/semantic-search",{query:q,synthesize:true,top_k:8});
+  if(!r){
+    renderAnswer(localAnswer(q, info));
+    toast("Semantic search API не ответил");
+    return;
+  }
+  const docs=(r.rag_documents||[]).map(d=>`<li><b>${esc(d.title||d.doc_id||"document")}</b> <span class="src-chip">score ${esc(d.score)}</span><br><span class="muted2">${esc((d.snippet||"").slice(0,180))}</span></li>`).join("");
+  const body=mdToHtml(r.answer || "Семантический поиск вернул пустой ответ.")+
+    `<div class="src"><b>RAG документы:</b><ul>${docs || "<li>—</li>"}</ul></div>`;
+  renderAnswer({
+    api:r,
+    q,
+    info,
+    body,
+    route:"SEMANTIC_ONLY",
+    used_llm:!!r.used_llm
+  });
   renderLitReview(q, info);
   renderExpertsForSeeds(info.seeds);
 }
@@ -871,7 +916,7 @@ function localAnswer(q, info){
 function renderAnswer(a){
   $("#answerBody").innerHTML=a.body;
   $("#ansRoute").textContent=a.route;
-  $("#ansRoute").className="route-badge "+({GRAPH_ONLY:"graph",HYBRID:"hybrid",RAG_ONLY:"rag",NO_DATA:"nodata",DEEP_RESEARCH:"hybrid"}[a.route]||"");
+  $("#ansRoute").className="route-badge "+({GRAPH_ONLY:"graph",HYBRID:"hybrid",RAG_ONLY:"rag",NO_DATA:"nodata",DEEP_RESEARCH:"hybrid",SEMANTIC_ONLY:"rag"}[a.route]||"");
   if(a.api){
     $("#answerBody").innerHTML+=`<div class="src">Синтез через ${esc(a.api.used_llm?"LLM":"fallback")}. request_id: ${esc(a.api.request_id||"")}</div>`;
   }
@@ -1256,11 +1301,10 @@ async function init(){
   $$(".chip").forEach(c=>c.onclick=()=>{ $("#query").value=c.textContent; renderMarkers(c.textContent); });
 
   // events
-  $("#askBtn").onclick=runQuery;
-  $("#deepResearchBtn").onclick=runDeepResearch;
+  $("#askBtn").onclick=runSelectedMode;
   $("#routeOnlyBtn").onclick=()=>{ const q=$("#query").value.trim(); if(!q)return; const info=renderMarkers(q); toast(`Маршрут: ${info.route.r} — ${info.route.c}`); audit("route_only",q.slice(0,60)); };
   $("#query").oninput=()=>renderMarkers($("#query").value);
-  $("#query").onkeydown=e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); runQuery(); } };
+  $("#query").onkeydown=e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); runSelectedMode(); } };
   $("#exportMd").onclick=exportMd; $("#exportJsonld").onclick=exportJsonld;
   $("#printPdf").onclick=()=>{ audit("export","pdf(print)"); window.print(); };
   $$(".tab").forEach(b=>b.onclick=()=>setTab(b.dataset.t));
