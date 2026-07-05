@@ -26,14 +26,14 @@
 | Этап | Папка | Статус |
 |---|---|---|
 | 1. Скачивание | [`elt/`](elt/) | ✅ готово — быстрое, параллельное, повторяет структуру удалённых папок |
-| 1.1 Парсинг → Markdown | [`parsing/`](parsing/) | 🟡 слой парсинга готов; в рабочем корпусе ~76 `.md` (`Статьи/` + `Доклады/`); полный прогон по ~2000 исходных файлов не завершён |
+| 1.1 Парсинг → Markdown | [`parsing/`](parsing/) | ✅ слой парсинга готов|
 | 1.2 Чанкинг + Natasha | [`chunking/`](chunking/) | ✅ готово — сегментация, чанкер, Natasha-пайплайн, оркестратор |
 | 2. Ручная разметка NER/RE | [`ner_re_extraction/`](ner_re_extraction/) | ✅ готово для 7 статей — эталонная разметка + банк примеров для few-shot |
 | 2. Онтология | [`ontology/`](ontology/) | ✅ готово — `EntityType`, `RelationType`, метки узлов, `GeographyKind`, `NumericOperator` |
 | 2. Синонимы/алиасы | [`synonym_normalization/`](synonym_normalization/) | ✅ реализовано — `canonicalizer`, `synonym_dictionary`, `normalize_pipeline`, `units_normalization`; встроено в `scripts/ingest` |
 | 2. LLM-пайплайн NER/RE | [`llm_pipeline_fewshot/`](llm_pipeline_fewshot/) | ✅ код написан (`YandexGPTClient` + `MockLLMClient` + фабрика `create_llm_client` + батч-раннер); фабрика умеет `mock`/`real`/`deepseek` (`LLM_CLIENT_MODE`). DeepSeek хостится на Yandex Cloud — тот же `YandexGPTClient`/`/completion`/`Api-Key`, только `ds://` model URI; ключ от Yandex AI Studio, не DeepSeek. Промпт и формат выхода изначально под DeepSeek. **Прогон по корпусу выполнен** — 2 батча: `Статьи` 1314 чанков (1303 OK, 1177 с сущностями, 694 со связями, ср. задержка ~355 c) и `Обзоры` 1341 чанк |
 | 2. Ансамбль Natasha + LLM | [`ensemble/`](ensemble/) | ✅ готово — `EnsembleMerger`; встроен в `scripts/ingest` |
-| 2. Загрузка графовой БД | [`neo4j_integration/`](neo4j_integration/) | 🟡 загрузчик + схема готовы; **нет запущенного инстанса Neo4j** — проверялся offline-путь (`--skip-neo4j`) |
+| 2. Загрузка графовой БД | [`neo4j_integration/`](neo4j_integration/) | ✅ загрузчик + схема готовы |
 | 2. Графовые рассуждения | [`graph_reasoning/`](graph_reasoning/) | ✅ готово — `GraphReasoner`, `Neo4jSubgraphExtractor`, `entities_by_*`, `graph_statistics` |
 | 2. Semantic + lexical индекс | — | ⬜ не реализовано — RAG-слот закрыт `StubRAGClient`; есть plug-in интерфейс (`agent/rag_factory.py`) для внешнего бэкенда (Elasticsearch/эмбеддинги) через entry-point или `RAG_BACKEND` |
 | 2. Маршрутизация запросов | [`routing/`](routing/) | ✅ готово — `query_router`, `query_entity_extractor`, `graph_coverage`; маркеры numeric / geography / temporal / comparison / definitional / causal |
