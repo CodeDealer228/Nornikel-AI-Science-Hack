@@ -799,7 +799,7 @@ async function runDeepResearch(){
     toast("API офлайн: глубокое исследование недоступно");
     return;
   }
-  const r=await apiPost("/deep-research",{query:q,max_iterations:3});
+  const r=await apiPost("/deep-research",{query:q,max_iterations:10});
   if(!r){
     renderAnswer(localAnswer(q, info));
     toast("Deep research API не ответил");

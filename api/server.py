@@ -110,9 +110,20 @@ class QueryResponse(BaseModel):
     request_id: str
 
 
+_DEEP_RESEARCH_MAX_TOOL_CALLS = get_settings().deep_research.max_tool_calls
+
+
 class DeepResearchRequest(BaseModel):
     query: str = Field(..., min_length=1, description="Research query in natural language.")
-    max_iterations: int = Field(default=3, ge=1, le=5)
+    max_iterations: int = Field(
+        default=_DEEP_RESEARCH_MAX_TOOL_CALLS,
+        ge=1,
+        le=_DEEP_RESEARCH_MAX_TOOL_CALLS,
+        description=(
+            "Total graph_search + rag_search tool-call budget for this run "
+            "(the agent decides the mix; capped by DEEP_RESEARCH_MAX_TOOL_CALLS)."
+        ),
+    )
 
 
 class DeepResearchIterationResponse(BaseModel):
@@ -252,7 +263,13 @@ def _build_deep_research_agent(dispatcher: Dispatcher) -> DeepResearchAgent:
             log.info("DeepResearchAgent configured with %s", client.model_uri)
     except Exception as exc:
         log.warning("DeepResearchAgent LLM setup failed: %s: %s", type(exc).__name__, exc)
-    return DeepResearchAgent(dispatcher=dispatcher, llm_client=client)
+    return DeepResearchAgent(
+        rag_client=dispatcher.rag_client,
+        graph_extractor=dispatcher.graph_extractor,
+        llm_client=client,
+        max_hops=dispatcher.max_hops,
+        max_paths=dispatcher.max_paths,
+    )
 
 
 @asynccontextmanager

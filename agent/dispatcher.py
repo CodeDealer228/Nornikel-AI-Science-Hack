@@ -189,6 +189,26 @@ class Dispatcher:
         self._max_paths = max(1, max_paths)
         self._rag_max_results = max(1, rag_max_results)
 
+    # ------------------------------------------------------------- accessors
+
+    @property
+    def rag_client(self) -> RAGClient:
+        """The configured RAG backend (stub or real) — reused by other agents."""
+        return self._rag_client
+
+    @property
+    def graph_extractor(self) -> Neo4jSubgraphExtractor | None:
+        """The Neo4j subgraph extractor, or ``None`` when offline."""
+        return self._graph_extractor
+
+    @property
+    def max_hops(self) -> int:
+        return self._max_hops
+
+    @property
+    def max_paths(self) -> int:
+        return self._max_paths
+
     async def dispatch(
         self,
         query: str,

@@ -116,6 +116,14 @@ class RouterSettings:
 
 
 @dataclass(frozen=True)
+class DeepResearchSettings:
+    # Total budget shared between graph_search + rag_search tool calls for a
+    # single ``DeepResearchAgent.run()`` — the agent's LangGraph loop stops
+    # once it hits this ceiling, regardless of what the LLM asks for.
+    max_tool_calls: int = field(default_factory=lambda: _env_int("DEEP_RESEARCH_MAX_TOOL_CALLS", 10))
+
+
+@dataclass(frozen=True)
 class IngestSettings:
     default_input_dir: Path = field(
         default_factory=lambda: Path(_env("INGEST_INPUT_DIR", "./Статьи") or "./Статьи")
@@ -160,6 +168,7 @@ class Settings:
     yandex_gpt: YandexGPTSettings = field(default_factory=YandexGPTSettings)
     openrouter: OpenRouterSettings = field(default_factory=OpenRouterSettings)
     router: RouterSettings = field(default_factory=RouterSettings)
+    deep_research: DeepResearchSettings = field(default_factory=DeepResearchSettings)
     ingest: IngestSettings = field(default_factory=IngestSettings)
     rag: RAGSettings = field(default_factory=RAGSettings)
     api: APISettings = field(default_factory=APISettings)
@@ -183,6 +192,7 @@ def reset_settings_cache() -> None:
 
 __all__ = [
     "APISettings",
+    "DeepResearchSettings",
     "IngestSettings",
     "LoggingSettings",
     "Neo4jSettings",

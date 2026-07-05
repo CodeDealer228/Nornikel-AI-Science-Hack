@@ -8,3 +8,4 @@ requests>=2.31
 natasha>=1.6
 setuptools>=70,<81
 streamlit>=1.30
+langgraph>=0.2
